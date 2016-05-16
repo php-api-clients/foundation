@@ -14,6 +14,6 @@ class TransportAwareTraitTest extends TestCase
         $resource = new DummyResource();
         $transport = Phake::mock(Client::class);
         $resource->setTransport($transport);
-        $this->assertSame($transport, $resource->getTransport());
+        $this->assertSame($transport, $resource->getTransportWrapper());
     }
 }
