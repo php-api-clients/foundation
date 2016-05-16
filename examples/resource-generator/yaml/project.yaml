@@ -1,0 +1,12 @@
+namespace: Example\Client\Resource
+class: Project
+properties:
+  id: int
+  name: string
+  desription: string
+  config:
+    type: array
+    default: []
+  plugins: SplObjectStorage
+  created: DateTimeInterface
+  updated: DateTimeInterface
