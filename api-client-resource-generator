@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+use League\CLImate\CLImate;
+use WyriHaximus\ApiClient\Tools\ResourceGenerator;
+
+foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
+
+$climate = new CLImate();
+$resourceGenerator = new ResourceGenerator($climate);
+
+try {
+    @$climate->arguments->parse();
+    $resourceGenerator->run();
+} catch (Exception $e) {
+    $message = $e->getMessage();
+    $climate->backgroundRed(str_pad(' ', strlen($message)));
+    $climate->backgroundRed($message);
+    $climate->backgroundRed(str_pad(' ', strlen($message)));
+    $climate->br();
+    $climate->usage();
+}
