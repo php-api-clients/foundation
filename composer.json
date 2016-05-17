@@ -24,7 +24,7 @@
     "vectorface/dunit": "~2.0",
     "phake/phake": "^2.3"
   },
-  "sugggest": {
+  "suggest": {
     "wyrihaximus/api-client-resource-generator": "Easy wireframing of resources"
   },
   "autoload": {
