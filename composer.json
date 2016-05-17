@@ -15,17 +15,16 @@
     "ocramius/generated-hydrator": "^2.0",
     "clue/block-react": "^1.1",
     "reactivex/rxphp": "^1.2",
-    "react/cache": "^0.4.1",
-    "league/climate": "^3.2",
-    "nikic/php-parser": "^2.1",
-    "symfony/yaml": "^2.0||^3.0",
-    "doctrine/inflector": "^1.1"
+    "react/cache": "^0.4.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.2.3",
     "squizlabs/php_codesniffer": "^2.6",
     "vectorface/dunit": "~2.0",
     "phake/phake": "^2.3"
+  },
+  "sugggest": {
+    "wyrihaximus/api-client-resource-generator": "Easy wireframing of resources"
   },
   "autoload": {
     "psr-4": {
@@ -36,8 +35,5 @@
     "psr-4": {
       "WyriHaximus\\Tests\\ApiClient\\": "tests/"
     }
-  },
-  "bin": [
-    "bin/api-client-resource-generator"
-  ]
+  }
 }
