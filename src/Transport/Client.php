@@ -96,7 +96,9 @@ class Client
         });
 
         return $deferred->promise()->then(function ($json) use ($path) {
-            $this->cache->set($path, $json);
+            if ($this->cache instanceof CacheInterface) {
+                $this->cache->set($path, $json);
+            }
             return $this->jsonDecode($json);
         });
     }
