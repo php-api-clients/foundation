@@ -53,7 +53,7 @@ class Client
     {
         $this->loop = $loop;
         $this->handler = $handler;
-        $this->options = self::DEFAULT_OPTIONS + $options;
+        $this->options = $options + self::DEFAULT_OPTIONS;
         if (isset($this->options['cache']) && $this->options['cache'] instanceof CacheInterface) {
             $this->cache = $this->options['cache'];
         }
