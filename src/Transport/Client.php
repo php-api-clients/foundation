@@ -89,8 +89,7 @@ class Client
         $this->handler->sendAsync(
             $this->createRequest($method, $path)
         )->then(function (ResponseInterface $response) use ($deferred) {
-            $contents = $response->getBody()->getContents();
-            $deferred->resolve($contents);
+            $deferred->resolve($response->getBody()->getContents());
         }, function ($error) use ($deferred) {
             $deferred->reject($error);
         });

@@ -18,6 +18,7 @@ use React\Promise\RejectedPromise;
 use WyriHaximus\ApiClient\Transport\Client;
 use WyriHaximus\ApiClient\Transport\Hydrator;
 use function Clue\React\Block\await;
+use function React\Promise\resolve;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,9 +45,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $loop = Factory::create();
 
         $stream = Phake::mock(StreamInterface::class);
-        Phake::when($stream)->getContents()->thenReturn(json_encode([
-            'foo' => 'bar',
-        ]));
+        Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
 
         $response = Phake::mock(ResponseInterface::class);
         Phake::when($response)->getBody()->thenReturn($stream);
@@ -83,20 +82,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $cache = Phake::mock(CacheInterface::class);
 
         $stream = Phake::mock(StreamInterface::class);
-        Phake::when($stream)->getContents()->thenReturn(json_encode([
-            'foo' => 'bar',
-        ]));
+        Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
 
         $response = Phake::mock(Response::class);
         Phake::when($response)->getBody()->thenReturn($stream);
 
         $handler = Phake::mock(GuzzleClient::class);
-        Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class))->thenReturn(new FulfilledPromise($response));
+        Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class))->thenReturn(resolve($response));
 
         $client = new Client(
             $loop,
             $handler,
             [
+                'cache' => $cache,
                 'host' => 'api.example.com',
             ]
         );
@@ -106,6 +104,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($handler)->sendAsync($this->isInstanceOf(Request::class));
         Phake::verify($cache, Phake::never())->get('status');
+        Phake::verify($cache)->set('status', '{"foo":"bar"}');
     }
 
     public function testRequestNoCacheHitAPI()
@@ -113,9 +112,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $loop = Factory::create();
 
         $stream = Phake::mock(StreamInterface::class);
-        Phake::when($stream)->getContents()->thenReturn(json_encode([
-            'foo' => 'bar',
-        ]));
+        Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
 
         $response = Phake::mock(Response::class);
         Phake::when($response)->getBody()->thenReturn($stream);
@@ -131,9 +128,73 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $client->request('status', true);
+        $client->request('status');
         $loop->run();
 
         Phake::verify($handler)->sendAsync($this->isInstanceOf(Request::class));
+    }
+
+    public function testRequestCacheMissHitAPI()
+    {
+        $loop = Factory::create();
+
+        $cache = Phake::mock(CacheInterface::class);
+        Phake::when($cache)->get('status')->thenReturn(new RejectedPromise());
+
+        $stream = Phake::mock(StreamInterface::class);
+        Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
+
+        $response = Phake::mock(Response::class);
+        Phake::when($response)->getBody()->thenReturn($stream);
+
+        $handler = Phake::mock(GuzzleClient::class);
+        Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class))->thenReturn(resolve($response));
+
+        $client = new Client(
+            $loop,
+            $handler,
+            [
+                'cache' => $cache,
+                'host' => 'api.example.com',
+            ]
+        );
+
+        $result = await($client->request('status'), $loop, 3);
+        $this->assertSame([
+            'foo' => 'bar',
+        ], $result);
+
+        Phake::inOrder(
+            Phake::verify($cache)->get('status'),
+            Phake::verify($handler)->sendAsync($this->isInstanceOf(RequestInterface::class)),
+            Phake::verify($cache)->set('status', '{"foo":"bar"}')
+        );
+    }
+
+    public function testRequestCacheHitIgnoreAPI()
+    {
+        $loop = Factory::create();
+
+        $cache = Phake::mock(CacheInterface::class);
+        Phake::when($cache)->get('status')->thenReturn(resolve('{"foo":"bar"}'));
+
+        $handler = Phake::mock(GuzzleClient::class);
+
+        $client = new Client(
+            $loop,
+            $handler,
+            [
+                'cache' => $cache,
+                'host' => 'api.example.com',
+            ]
+        );
+
+        $result = await($client->request('status'), $loop, 3);
+        $this->assertSame([
+            'foo' => 'bar',
+        ], $result);
+
+        Phake::verify($cache)->get('status');
+        Phake::verify($handler, Phake::never())->sendAsync($this->isInstanceOf(RequestInterface::class));
     }
 }
