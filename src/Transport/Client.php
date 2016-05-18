@@ -49,7 +49,7 @@ class Client
      */
     protected $cache;
 
-    public function __construct(LoopInterface $loop, GuzzleClient $handler, $options = [])
+    public function __construct(LoopInterface $loop, GuzzleClient $handler, array $options = [])
     {
         $this->loop = $loop;
         $this->handler = $handler;
