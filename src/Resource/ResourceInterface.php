@@ -5,5 +5,5 @@ namespace WyriHaximus\ApiClient\Resource;
 
 interface ResourceInterface
 {
-    public function refresh();
+    //public function refresh();
 }
