@@ -113,7 +113,7 @@ class Client
         return new Request($method, $url, $headers);
     }
 
-    protected function jsonDecode($json): PromiseInterface
+    protected function jsonDecode(string $json): PromiseInterface
     {
         return futureFunctionPromise($this->loop, $json, function ($json) {
             return json_decode($json, true);
