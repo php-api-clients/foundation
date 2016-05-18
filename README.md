@@ -1,7 +1,6 @@
 # API Client Foundation for PHP 7
 
-[![Linux Build Status](https://appveyor-ci.org/WyriHaximus/php-api-client.svg?branch=master)](https://appveyor-ci.org/WyriHaximus/php-api-client)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/2pw9aha809sm5b36?svg=true)](https://ci.appveyor.com/project/WyriHaximus/php-api-client)
+[![Build Status](https://travis-ci.org/WyriHaximus/php-api-client.svg?branch=master)](https://travis-ci.org/WyriHaximus/php-api-client)
 [![Latest Stable Version](https://poser.pugx.org/WyriHaximus/api-client/v/stable.png)](https://packagist.org/packages/WyriHaximus/api-client)
 [![Total Downloads](https://poser.pugx.org/WyriHaximus/api-client/downloads.png)](https://packagist.org/packages/WyriHaximus/api-client)
 [![Code Coverage](https://scrutinizer-ci.com/g/WyriHaximus/php-api-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/WyriHaximus/php-api-client/?branch=master)
