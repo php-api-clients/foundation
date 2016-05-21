@@ -37,7 +37,7 @@ class DummyResource implements ResourceInterface
         return $this->wait($promise);
     }
 
-    public function hydrateWrapper(string $class, array $json)
+    public function hydrateWrapper(string $class, array $json): ResourceInterface
     {
         return $this->hydrate($class, $json);
     }
