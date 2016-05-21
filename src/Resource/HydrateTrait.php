@@ -10,7 +10,7 @@ trait HydrateTrait
 {
     abstract protected function getTransport(): Client;
 
-    protected function hydrate(string $class, array $json)
+    protected function hydrate(string $class, array $json): ResourceInterface
     {
         return $this->getTransport()->getHydrator()->hydrate($class, $json);
     }
