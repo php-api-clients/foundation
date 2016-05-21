@@ -85,6 +85,9 @@ class Hydrator
         $object->setTransport($this->transport);
         if (isset($this->options['setters'])) {
             foreach ($this->options['setters'] as $method => $argument) {
+                if (!method_exists($object, $method)) {
+                    continue;
+                }
                 $object->$method($argument);
             }
         }
