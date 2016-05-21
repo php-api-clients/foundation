@@ -30,7 +30,7 @@ class CallAsyncTraitTest extends TestCase
         $resource->setTransport($transport);
         $resource->callAsyncWrapper('refresh', 1, 2, 3);
 
-        Phake::verify($resourceMock)-refresh(1, 2, 3);
+        Phake::verify($resourceMock)->refresh(1, 2, 3);
     }
 
     public function testObservableToPromise()
