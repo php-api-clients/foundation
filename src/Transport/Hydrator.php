@@ -19,14 +19,14 @@ class Hydrator
         $this->options = $options;
     }
 
-    public function hydrateFQCN($class, $json): ResourceInterface
+    public function hydrateFQCN(string $class, array $json): ResourceInterface
     {
         $hydrator = $this->getHydrator($class);
         $object = $this->createObject($class);
         return $hydrator->hydrate($json, $object);
     }
 
-    public function hydrate($class, $json): ResourceInterface
+    public function hydrate(string $class, array $json): ResourceInterface
     {
         $fullClassName = $this->options['namespace'] . '\\' . $this->options['resource_namespace'] . '\\' . $class;
         return $this->hydrateFQCN($fullClassName, $json);
@@ -34,22 +34,22 @@ class Hydrator
 
     /**
      * Takes a fully qualified class name and extracts the data for that class from the given $object
-     * @param $class
-     * @param $object
+     * @param string $class
+     * @param ResourceInterface $object
      * @return array
      */
-    public function extractFQCN($class, $object): array
+    public function extractFQCN(string $class, ResourceInterface $object): array
     {
         return $this->getHydrator($class)->extract($object);
     }
 
-    public function extract($class, $object): array
+    public function extract(string $class, ResourceInterface $object): array
     {
         $fullClassName = $this->options['namespace'] . '\\' . $this->options['resource_namespace'] . '\\' . $class;
         return $this->extractFQCN($fullClassName, $object);
     }
 
-    public function buildAsyncFromSync($resource, $object): ResourceInterface
+    public function buildAsyncFromSync(string $resource, ResourceInterface $object): ResourceInterface
     {
         return $this->hydrateFQCN(
             $this->options['namespace'] . '\\Async\\' . $resource,
@@ -60,7 +60,7 @@ class Hydrator
         );
     }
 
-    protected function getHydrator($class): HydratorInterface
+    protected function getHydrator(string $class): HydratorInterface
     {
         if (isset($this->hydrators[$class])) {
             return $this->hydrators[$class];
@@ -79,7 +79,7 @@ class Hydrator
         return $this->hydrators[$class];
     }
 
-    protected function createObject($class): ResourceInterface
+    protected function createObject(string $class): ResourceInterface
     {
         $object = new $class();
         $object->setTransport($this->transport);
