@@ -20,7 +20,10 @@ class HydrateTraitTest extends TestCase
         $resource = new DummyResource();
 
         $hydrator = Phake::mock(Hydrator::class);
-        Phake::when($hydrator)->hydrate($this->any(), $this->any())->thenReturn($resource);
+        Phake::when($hydrator)->hydrate('Beer', [
+            'brewery' => 'Nøgne',
+            'name' => 'Dark Horizon 4th edition',
+        ])->thenReturn(Phake::mock(ResourceInterface::class));
 
         $transport = Phake::mock(Client::class);
         Phake::when($transport)->getHydrator()->thenReturn($hydrator);
