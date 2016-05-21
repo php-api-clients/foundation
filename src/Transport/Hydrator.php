@@ -83,6 +83,11 @@ class Hydrator
     {
         $object = new $class();
         $object->setTransport($this->transport);
+        if (isset($this->options['setters'])) {
+            foreach ($this->options['setters'] as $method => $argument) {
+                $object->$method($argument);
+            }
+        }
         return $object;
     }
 }
