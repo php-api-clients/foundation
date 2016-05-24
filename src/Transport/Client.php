@@ -5,6 +5,7 @@ namespace WyriHaximus\ApiClient\Transport;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use React\Cache\CacheInterface;
 use React\EventLoop\LoopInterface;
@@ -49,6 +50,11 @@ class Client
      */
     protected $cache;
 
+    /**
+     * @param LoopInterface $loop
+     * @param GuzzleClient $handler
+     * @param array $options
+     */
     public function __construct(LoopInterface $loop, GuzzleClient $handler, array $options = [])
     {
         $this->loop = $loop;
@@ -60,6 +66,11 @@ class Client
         $this->hydrator = new Hydrator($this, $options);
     }
 
+    /**
+     * @param string $path
+     * @param bool $refresh
+     * @return PromiseInterface
+     */
     public function request(string $path, bool $refresh = false): PromiseInterface
     {
         if ($refresh) {
@@ -71,7 +82,11 @@ class Client
         });
     }
 
-    protected function checkCache(string $path)
+    /**
+     * @param string $path
+     * @return PromiseInterface
+     */
+    protected function checkCache(string $path): PromiseInterface
     {
         if ($this->cache instanceof CacheInterface) {
             return $this->cache->get($path)->then(function ($json) use ($path) {
@@ -82,6 +97,11 @@ class Client
         return reject();
     }
 
+    /**
+     * @param string $path
+     * @param string $method
+     * @return PromiseInterface
+     */
     protected function sendRequest(string $path, string $method = 'GET'): PromiseInterface
     {
         $deferred = new Deferred();
@@ -102,7 +122,12 @@ class Client
         });
     }
 
-    protected function createRequest(string $method, string $path)
+    /**
+     * @param string $method
+     * @param string $path
+     * @return Request
+     */
+    protected function createRequest(string $method, string $path): RequestInterface
     {
         $url = $this->options['schema'] . '://' . $this->options['host'] . $this->options['path'] . $path;
         $headers = [
@@ -112,6 +137,10 @@ class Client
         return new Request($method, $url, $headers);
     }
 
+    /**
+     * @param string $json
+     * @return PromiseInterface
+     */
     protected function jsonDecode(string $json): PromiseInterface
     {
         return futureFunctionPromise($this->loop, $json, function ($json) {
@@ -119,11 +148,17 @@ class Client
         });
     }
 
+    /**
+     * @return Hydrator
+     */
     public function getHydrator(): Hydrator
     {
         return $this->hydrator;
     }
 
+    /**
+     * @return LoopInterface
+     */
     public function getLoop(): LoopInterface
     {
         return $this->loop;

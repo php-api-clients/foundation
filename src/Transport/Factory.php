@@ -11,6 +11,11 @@ use WyriHaximus\React\GuzzlePsr7\HttpClientAdapter;
 
 class Factory
 {
+    /**
+     * @param LoopInterface|null $loop
+     * @param array $options
+     * @return Client
+     */
     public static function create(LoopInterface $loop = null, array $options = []): Client
     {
         if (!($loop instanceof LoopInterface)) {

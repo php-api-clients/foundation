@@ -7,13 +7,22 @@ use WyriHaximus\ApiClient\Transport\Client;
 
 trait TransportAwareTrait
 {
+    /**
+     * @var
+     */
     private $transport;
 
+    /**
+     * @param Client $transport
+     */
     public function setTransport(Client $transport)
     {
         $this->transport = $transport;
     }
 
+    /**
+     * @return Client
+     */
     protected function getTransport(): Client
     {
         return $this->transport;

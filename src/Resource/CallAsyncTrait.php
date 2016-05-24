@@ -11,8 +11,16 @@ use WyriHaximus\ApiClient\Transport\Client;
 
 trait CallAsyncTrait
 {
+    /**
+     * @return Client
+     */
     abstract protected function getTransport(): Client;
 
+    /**
+     * @param string $function
+     * @param array ...$args
+     * @return mixed
+     */
     protected function callAsync(string $function, ...$args)
     {
         $classChunks = explode('\\', get_class($this));
@@ -23,11 +31,20 @@ trait CallAsyncTrait
             ->$function(...$args);
     }
 
+    /**
+     * @param ObservableInterface $observable
+     * @return PromiseInterface
+     */
     protected function observableToPromise(ObservableInterface $observable): PromiseInterface
     {
         return Promise::fromObservable($observable);
     }
 
+    /**
+     * @param PromiseInterface $promise
+     * @return mixed
+     * @throws null
+     */
     protected function wait(PromiseInterface $promise)
     {
         return await(

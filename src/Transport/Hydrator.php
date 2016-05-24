@@ -9,16 +9,36 @@ use Zend\Hydrator\HydratorInterface;
 
 class Hydrator
 {
+    /**
+     * @var array
+     */
     protected $options;
+
+    /**
+     * @var Client
+     */
     protected $transport;
+
+    /**
+     * @var array
+     */
     protected $hydrators = [];
 
+    /**
+     * @param Client $transport
+     * @param array $options
+     */
     public function __construct(Client $transport, array $options)
     {
         $this->transport = $transport;
         $this->options = $options;
     }
 
+    /**
+     * @param string $class
+     * @param array $json
+     * @return ResourceInterface
+     */
     public function hydrateFQCN(string $class, array $json): ResourceInterface
     {
         $hydrator = $this->getHydrator($class);
@@ -26,6 +46,11 @@ class Hydrator
         return $hydrator->hydrate($json, $object);
     }
 
+    /**
+     * @param string $class
+     * @param array $json
+     * @return ResourceInterface
+     */
     public function hydrate(string $class, array $json): ResourceInterface
     {
         $fullClassName = $this->options['namespace'] . '\\' . $this->options['resource_namespace'] . '\\' . $class;
@@ -43,12 +68,22 @@ class Hydrator
         return $this->getHydrator($class)->extract($object);
     }
 
+    /**
+     * @param string $class
+     * @param ResourceInterface $object
+     * @return array
+     */
     public function extract(string $class, ResourceInterface $object): array
     {
         $fullClassName = $this->options['namespace'] . '\\' . $this->options['resource_namespace'] . '\\' . $class;
         return $this->extractFQCN($fullClassName, $object);
     }
 
+    /**
+     * @param string $resource
+     * @param ResourceInterface $object
+     * @return ResourceInterface
+     */
     public function buildAsyncFromSync(string $resource, ResourceInterface $object): ResourceInterface
     {
         return $this->hydrateFQCN(
@@ -60,6 +95,10 @@ class Hydrator
         );
     }
 
+    /**
+     * @param string $class
+     * @return HydratorInterface
+     */
     protected function getHydrator(string $class): HydratorInterface
     {
         if (isset($this->hydrators[$class])) {
@@ -79,6 +118,10 @@ class Hydrator
         return $this->hydrators[$class];
     }
 
+    /**
+     * @param string $class
+     * @return ResourceInterface
+     */
     protected function createObject(string $class): ResourceInterface
     {
         $object = new $class();
