@@ -2,7 +2,7 @@ build: false
 platform:
   - x86
   - x64
-clone_folder: c:\projects\reactphp-child-process-messenger
+clone_folder: c:\projects\php-api-client
 
 
 ## Build matrix for lowest and highest possible targets
@@ -15,7 +15,7 @@ environment:
 ## Cache composer bits
 cache:
     - c:\tools\php -> appveyor.yml
-    - c:\projects\reactphp-child-process-messenger\vendor -> composer.lock
+    - c:\projects\php-api-client\vendor -> composer.lock
     - '%LOCALAPPDATA%\Composer\files -> composer.lock'
 
 ## Set up environment varriables
@@ -48,5 +48,5 @@ install:
 
 ## Run the actual test
 test_script:
-    - cd c:\projects\reactphp-child-process-messenger
+    - cd c:\projects\php-api-client
     - vendor/bin/phpunit -c phpunit.xml.dist
