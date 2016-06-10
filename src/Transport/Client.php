@@ -10,7 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 use React\Cache\CacheInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
-use React\Promise\FulfilledPromise;
 use React\Promise\PromiseInterface;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -73,6 +72,18 @@ class Client
      */
     public function request(string $path, bool $refresh = false): PromiseInterface
     {
+        return $this->requestRaw($path, $refresh)->then(function ($json) {
+            return $this->jsonDecode($json);
+        });
+    }
+
+    /**
+     * @param string $path
+     * @param bool $refresh
+     * @return PromiseInterface
+     */
+    public function requestRaw(string $path, bool $refresh = false): PromiseInterface
+    {
         if ($refresh) {
             return $this->sendRequest($path);
         }
@@ -89,9 +100,7 @@ class Client
     protected function checkCache(string $path): PromiseInterface
     {
         if ($this->cache instanceof CacheInterface) {
-            return $this->cache->get($path)->then(function ($json) use ($path) {
-                return $this->jsonDecode($json);
-            });
+            return $this->cache->get($path);
         }
 
         return reject();
@@ -102,34 +111,37 @@ class Client
      * @param string $method
      * @return PromiseInterface
      */
-    protected function sendRequest(string $path, string $method = 'GET'): PromiseInterface
+    protected function sendRequest(string $path, string $method = 'GET', bool $raw = false): PromiseInterface
     {
         $deferred = new Deferred();
 
         $this->handler->sendAsync(
             $this->createRequest($method, $path)
         )->then(function (ResponseInterface $response) use ($deferred) {
-            $deferred->resolve($response->getBody()->getContents());
+            $deferred->resolve($response);
         }, function ($error) use ($deferred) {
             $deferred->reject($error);
         });
 
-        return $deferred->promise()->then(function ($json) use ($path) {
+        return $deferred->promise()->then(function ($response) use ($path, $raw) {
+            $json = $response->getBody()->getContents();
+
             if ($this->cache instanceof CacheInterface) {
                 $this->cache->set($path, $json);
             }
-            return $this->jsonDecode($json);
+
+            return resolve($json);
         });
     }
 
     /**
      * @param string $method
      * @param string $path
-     * @return Request
+     * @return RequestInterface
      */
     protected function createRequest(string $method, string $path): RequestInterface
     {
-        $url = $this->options['schema'] . '://' . $this->options['host'] . $this->options['path'] . $path;
+        $url = $this->getBaseURL() . $path;
         $headers = [
             'User-Agent' => $this->options['user_agent'],
         ];
@@ -141,7 +153,7 @@ class Client
      * @param string $json
      * @return PromiseInterface
      */
-    protected function jsonDecode(string $json): PromiseInterface
+    public function jsonDecode(string $json): PromiseInterface
     {
         return futureFunctionPromise($this->loop, $json, function ($json) {
             return json_decode($json, true);
@@ -162,5 +174,13 @@ class Client
     public function getLoop(): LoopInterface
     {
         return $this->loop;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseURL(): string
+    {
+        return $this->options['schema'] . '://' . $this->options['host'] . $this->options['path'];
     }
 }
