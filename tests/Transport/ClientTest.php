@@ -197,4 +197,48 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         Phake::verify($cache)->get('status');
         Phake::verify($handler, Phake::never())->sendAsync($this->isInstanceOf(RequestInterface::class));
     }
+
+    public function provideGetBaseURL()
+    {
+        yield [
+            [
+                'schema' => 'http',
+                'host' => 'api.wyrihaximus.net',
+            ],
+            'http://api.wyrihaximus.net/'
+        ];
+
+        yield [
+            [
+                'host' => 'wyrihaximus.net',
+                'path' => '/api/',
+            ],
+            'https://wyrihaximus.net/api/'
+        ];
+
+        yield [
+            [
+                'schema' => 'gopher',
+                'host' => 'thorerik.com',
+            ],
+            'gopher://thorerik.com/'
+        ];
+    }
+
+    /**
+     * @dataProvider provideGetBaseURL
+     */
+    public function testGetBaseURL(array $options, string $baseURL)
+    {
+        $loop = Factory::create();
+        $handler = Phake::mock(GuzzleClient::class);
+
+        $client = new Client(
+            $loop,
+            $handler,
+            $options
+        );
+
+        $this->assertSame($baseURL, $client->getBaseURL());
+    }
 }
