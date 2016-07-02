@@ -109,6 +109,7 @@ class Client
     /**
      * @param string $path
      * @param string $method
+     * @param bool $raw
      * @return PromiseInterface
      */
     protected function sendRequest(string $path, string $method = 'GET', bool $raw = false): PromiseInterface
