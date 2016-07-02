@@ -113,17 +113,9 @@ class Client
      */
     protected function sendRequest(string $path, string $method = 'GET', bool $raw = false): PromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->handler->sendAsync(
+        return $this->requestPsr7(
             $this->createRequest($method, $path)
-        )->then(function (ResponseInterface $response) use ($deferred) {
-            $deferred->resolve($response);
-        }, function ($error) use ($deferred) {
-            $deferred->reject($error);
-        });
-
-        return $deferred->promise()->then(function ($response) use ($path, $raw) {
+        )->then(function ($response) use ($path, $raw) {
             $json = $response->getBody()->getContents();
 
             if ($this->cache instanceof CacheInterface) {
@@ -135,6 +127,25 @@ class Client
     }
 
     /**
+     * @param RequestInterface $request
+     * @return PromiseInterface
+     */
+    public function requestPsr7(RequestInterface $request): PromiseInterface
+    {
+        $deferred = new Deferred();
+
+        $this->handler->sendAsync(
+            $request
+        )->then(function (ResponseInterface $response) use ($deferred) {
+            $deferred->resolve($response);
+        }, function ($error) use ($deferred) {
+            $deferred->reject($error);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
      * @param string $method
      * @param string $path
      * @return RequestInterface
@@ -142,11 +153,20 @@ class Client
     protected function createRequest(string $method, string $path): RequestInterface
     {
         $url = $this->getBaseURL() . $path;
+        $headers = $this->getHeaders();
+        return new Request($method, $url, $headers);
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
         $headers = [
             'User-Agent' => $this->options['user_agent'],
         ];
         $headers += $this->options['headers'];
-        return new Request($method, $url, $headers);
+        return $headers;
     }
 
     /**
