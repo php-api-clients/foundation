@@ -31,7 +31,8 @@
   "autoload": {
     "psr-4": {
       "WyriHaximus\\ApiClient\\": "src/"
-    }
+    },
+    "files": ["src/bootstrap.php"]
   },
   "autoload-dev": {
     "psr-4": {
