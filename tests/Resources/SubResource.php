@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Transport\Sync;
+namespace WyriHaximus\Tests\ApiClient\Resources;
 
 use WyriHaximus\ApiClient\Resource\ResourceInterface;
 use WyriHaximus\ApiClient\Transport\Client;
 
-class Resource implements ResourceInterface
+class SubResource implements ResourceInterface
 {
     /**
      * @var int

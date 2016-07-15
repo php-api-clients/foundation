@@ -28,7 +28,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $this->tmpDir = 'C:\\t\\';
         }
         mkdir($this->tmpDir, 0777, true);
-        $this->tmpNamespace = Configuration::DEFAULT_GENERATED_CLASS_NAMESPACE . uniqid('WyriHaximusPHPAPIClientTestNamespace');
+        $this->tmpNamespace = Configuration::DEFAULT_GENERATED_CLASS_NAMESPACE . uniqid('WHPACTN');
     }
 
     public function tearDown()
@@ -72,7 +72,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     public function hydrate($class, $json, $namespace)
     {
         return (new Hydrator(Phake::mock(Client::class), [
-            'namespace' => 'WyriHaximus\Tests\ApiClient\Transport',
+            'namespace' => 'WyriHaximus\Tests\ApiClient\Resources',
             'resource_namespace' => $namespace,
             'resource_hydrator_cache_dir' => $this->getTmpDir(),
             'resource_hydrator_namespace' => $this->getRandomNameSpace(),
