@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace WyriHaximus\ApiClient\Transport;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use GeneratedHydrator\Configuration;
+use ReflectionClass;
+use WyriHaximus\ApiClient\Annotations\Nested;
 use WyriHaximus\ApiClient\Resource\ResourceInterface;
 use Zend\Hydrator\HydratorInterface;
 
@@ -25,6 +28,11 @@ class Hydrator
     protected $hydrators = [];
 
     /**
+     * @var AnnotationReader
+     */
+    protected $annotationReader;
+
+    /**
      * @param Client $transport
      * @param array $options
      */
@@ -32,6 +40,7 @@ class Hydrator
     {
         $this->transport = $transport;
         $this->options = $options;
+        $this->annotationReader = new AnnotationReader();
     }
 
     /**
@@ -43,7 +52,28 @@ class Hydrator
     {
         $hydrator = $this->getHydrator($class);
         $object = $this->createObject($class);
+        $json = $this->hydrateNestedResources($object, $json);
         return $hydrator->hydrate($json, $object);
+    }
+
+    /**
+     * @param ResourceInterface $object
+     * @param array $json
+     * @return array
+     */
+    protected function hydrateNestedResources(ResourceInterface $object, array $json)
+    {
+        $annotation = $this->getAnnotation($object);
+
+        if (!($annotation instanceof Nested)) {
+            return $json;
+        }
+
+        foreach ($annotation->properties() as $property) {
+            $json[$property] = $this->hydrate($annotation->get($property), $json[$property]);
+        }
+
+        return $json;
     }
 
     /**
@@ -65,7 +95,53 @@ class Hydrator
      */
     public function extractFQCN(string $class, ResourceInterface $object): array
     {
-        return $this->getHydrator($class)->extract($object);
+        $json = $this->getHydrator($class)->extract($object);
+        return $this->extractNestedResources($json, $object);
+    }
+
+    /**
+     * @param array $json
+     * @param ResourceInterface $object
+     * @return array
+     */
+    protected function extractNestedResources(array $json, ResourceInterface $object)
+    {
+        $annotation = $this->getAnnotation($object);
+
+        if (!($annotation instanceof Nested)) {
+            return $json;
+        }
+
+        foreach ($annotation->properties() as $property) {
+            $json[$property] = $this->extract($annotation->get($property), $json[$property]);
+        }
+
+        return $json;
+    }
+
+    /**
+     * @param ResourceInterface $object
+     * @return null|Nested
+     */
+    protected function getAnnotation(ResourceInterface $object)
+    {
+        $annotation = $this->annotationReader
+            ->getClassAnnotation(
+                new ReflectionClass($object),
+                Nested::class
+            )
+        ;
+
+        if ($annotation instanceof Nested) {
+            return $annotation;
+        }
+
+        return $this->annotationReader
+            ->getClassAnnotation(
+                new ReflectionClass(get_parent_class($object)),
+                Nested::class
+            )
+        ;
     }
 
     /**

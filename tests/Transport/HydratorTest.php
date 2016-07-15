@@ -5,6 +5,7 @@ namespace WyriHaximus\Tests\ApiClient\Transport;
 
 use Phake;
 use WyriHaximus\Tests\ApiClient\Resources\Async\Resource as AsyncResource;
+use WyriHaximus\Tests\ApiClient\Resources\Async\SubResource as AsyncSubResource;
 use WyriHaximus\Tests\ApiClient\Resources\Sync\Resource as SyncResource;
 use WyriHaximus\Tests\ApiClient\TestCase;
 use WyriHaximus\ApiClient\Transport\Client;
@@ -16,6 +17,7 @@ class HydratorTest extends TestCase
     {
         $hydrator = new Hydrator(Phake::mock(Client::class), [
             'namespace' => 'WyriHaximus\Tests\ApiClient\Resources',
+            'resource_namespace' => 'Async',
             'resource_hydrator_cache_dir' => $this->getTmpDir(),
             'resource_hydrator_namespace' => $this->getRandomNameSpace(),
         ]);
@@ -24,6 +26,10 @@ class HydratorTest extends TestCase
             [
                 'id' => 1,
                 'slug' => 'Wyrihaximus/php-travis-client',
+                'sub' => [
+                    'id' => 1,
+                    'slug' => 'Wyrihaximus/php-travis-client',
+                ],
             ],
             'Async'
         );
@@ -31,6 +37,9 @@ class HydratorTest extends TestCase
         $this->assertInstanceOf(AsyncResource::class, $asyncRepository);
         $this->assertSame(1, $asyncRepository->id());
         $this->assertSame('Wyrihaximus/php-travis-client', $asyncRepository->slug());
+        $this->assertInstanceOf(AsyncSubResource::class, $asyncRepository->sub());
+        $this->assertSame(1, $asyncRepository->sub()->id());
+        $this->assertSame('Wyrihaximus/php-travis-client', $asyncRepository->sub()->slug());
     }
 
     public function testSetGeneratedClassesTargetDir()
@@ -38,6 +47,10 @@ class HydratorTest extends TestCase
         $json = [
             'id' => 1,
             'slug' => 'Wyrihaximus/php-travis-client',
+            'sub' => [
+                'id' => 1,
+                'slug' => 'Wyrihaximus/php-travis-client',
+            ],
         ];
         $tmpDir = $this->getTmpDir();
         $hydrator = new Hydrator(Phake::mock(Client::class), [
@@ -63,7 +76,7 @@ class HydratorTest extends TestCase
             }
         }
         $directory->close();
-        $this->assertSame(1, count($files));
+        $this->assertSame(2, count($files));
     }
 
     public function testExtract()
@@ -71,6 +84,10 @@ class HydratorTest extends TestCase
         $json = [
             'id' => 1,
             'slug' => 'Wyrihaximus/php-travis-client',
+            'sub' => [
+                'id' => 1,
+                'slug' => 'Wyrihaximus/php-travis-client',
+            ],
         ];
         $tmpDir = $this->getTmpDir();
         $hydrator = new Hydrator(Phake::mock(Client::class), [
