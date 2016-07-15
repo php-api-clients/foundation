@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Transport\Async;
+namespace WyriHaximus\Tests\ApiClient\Resources\Async;
 
 use WyriHaximus\ApiClient\Resource\ResourceInterface;
 use WyriHaximus\ApiClient\Transport\Client;

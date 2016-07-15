@@ -72,7 +72,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     public function hydrate($class, $json, $namespace)
     {
         return (new Hydrator(Phake::mock(Client::class), [
-            'namespace' => 'WyriHaximus\Tests\ApiClient\Transport',
+            'namespace' => 'WyriHaximus\Tests\ApiClient\Resources',
             'resource_namespace' => $namespace,
             'resource_hydrator_cache_dir' => $this->getTmpDir(),
             'resource_hydrator_namespace' => $this->getRandomNameSpace(),
