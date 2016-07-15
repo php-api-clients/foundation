@@ -28,7 +28,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $this->tmpDir = 'C:\\t\\';
         }
         mkdir($this->tmpDir, 0777, true);
-        $this->tmpNamespace = Configuration::DEFAULT_GENERATED_CLASS_NAMESPACE . uniqid('WyriHaimusPHPAPIClientTestNamespace');
+        $this->tmpNamespace = Configuration::DEFAULT_GENERATED_CLASS_NAMESPACE . uniqid('WHPACTN');
     }
 
     public function tearDown()
