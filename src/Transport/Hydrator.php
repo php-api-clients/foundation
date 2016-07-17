@@ -28,6 +28,11 @@ class Hydrator
     protected $hydrators = [];
 
     /**
+     * @var array
+     */
+    protected $annotations = [];
+
+    /**
      * @var AnnotationReader
      */
     protected $annotationReader;
@@ -125,23 +130,30 @@ class Hydrator
      */
     protected function getAnnotation(ResourceInterface $object)
     {
-        $annotation = $this->annotationReader
+        $class = get_class($object);
+        if (isset($this->annotations[$class])) {
+            return $this->annotations[$class];
+        }
+
+        $this->annotations[$class] = $this->annotationReader
             ->getClassAnnotation(
                 new ReflectionClass($object),
                 Nested::class
             )
         ;
 
-        if ($annotation instanceof Nested) {
-            return $annotation;
+        if ($this->annotations[$class] instanceof Nested) {
+            return $this->annotations[$class];
         }
 
-        return $this->annotationReader
+        $this->annotations[$class] = $this->annotationReader
             ->getClassAnnotation(
                 new ReflectionClass(get_parent_class($object)),
                 Nested::class
             )
         ;
+
+        return $this->annotations[$class];
     }
 
     /**
