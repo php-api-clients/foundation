@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace WyriHaximus\Tests\ApiClient\Resources;
 
+use WyriHaximus\ApiClient\Annotations\Collection;
 use WyriHaximus\ApiClient\Annotations\Nested;
 use WyriHaximus\ApiClient\Resource\ResourceInterface;
 use WyriHaximus\ApiClient\Transport\Client;
 
 /**
  * @Nested(sub="SubResource")
+ * @Collection(subs="SubResource")
  */
 class Resource implements ResourceInterface
 {
@@ -27,6 +29,11 @@ class Resource implements ResourceInterface
      */
     protected $sub;
 
+    /**
+     * @var array
+     */
+    protected $subs;
+
     public function id() : int
     {
         return $this->id;
@@ -40,6 +47,11 @@ class Resource implements ResourceInterface
     public function sub() : SubResource
     {
         return $this->sub;
+    }
+
+    public function subs() : array
+    {
+        return $this->subs;
     }
 
     public function refresh()
