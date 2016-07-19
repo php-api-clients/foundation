@@ -5,6 +5,7 @@ namespace WyriHaximus\Tests\ApiClient\Resource;
 
 use React\Promise\PromiseInterface;
 use Rx\ObservableInterface;
+use WyriHaximus\ApiClient\Annotations\Collection;
 use WyriHaximus\ApiClient\Annotations\Nested;
 use WyriHaximus\ApiClient\Resource\CallAsyncTrait;
 use WyriHaximus\ApiClient\Resource\HydrateTrait;
@@ -14,6 +15,7 @@ use WyriHaximus\ApiClient\Transport\Client;
 
 /**
  * @Nested(foo="Acme\Bar", bar="Acme\Foo")
+ * @Collection(foo="Acme\Bar", bar="Acme\Foo")
  */
 class DummyResource implements ResourceInterface
 {
