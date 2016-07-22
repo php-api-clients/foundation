@@ -77,6 +77,10 @@ class Hydrator
         }
 
         foreach ($annotation->properties() as $property) {
+            if ($json[$property] === null) {
+                continue;
+            }
+
             $json[$property] = $this->hydrate($annotation->get($property), $json[$property]);
         }
 
@@ -100,6 +104,10 @@ class Hydrator
             $array = $json[$property];
             $json[$property] = [];
             foreach ($array as $resource) {
+                if ($resource === null) {
+                    continue;
+                }
+
                 $json[$property][] = $this->hydrate($annotation->get($property), $resource);
             }
         }
