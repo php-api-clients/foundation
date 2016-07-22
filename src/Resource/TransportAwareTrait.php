@@ -27,4 +27,9 @@ trait TransportAwareTrait
     {
         return $this->transport;
     }
+
+    public function unsetTransport()
+    {
+        $this->transport = null;
+    }
 }
