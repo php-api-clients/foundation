@@ -9,7 +9,7 @@ use WyriHaximus\ApiClient\Resource\ResourceInterface;
 /**
  * @param ResourceInterface $resource
  */
-function debug_print(ResourceInterface $resource)
+function resource_pretty_print(ResourceInterface $resource)
 {
     $printResource = clone $resource;
 
