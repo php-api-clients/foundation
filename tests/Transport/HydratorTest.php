@@ -86,30 +86,4 @@ class HydratorTest extends TestCase
         );
         $this->assertSame($json, $hydrator->extract('Resource', $repository));
     }
-
-    protected function getJson()
-    {
-        return [
-            'id' => 1,
-            'slug' => 'Wyrihaximus/php-travis-client',
-            'sub' => [
-                'id' => 1,
-                'slug' => 'Wyrihaximus/php-travis-client',
-            ],
-            'subs' => [
-                [
-                    'id' => 1,
-                    'slug' => 'Wyrihaximus/php-travis-client',
-                ],
-                [
-                    'id' => 2,
-                    'slug' => 'Wyrihaximus/php-travis-client',
-                ],
-                [
-                    'id' => 3,
-                    'slug' => 'Wyrihaximus/php-travis-client',
-                ],
-            ],
-        ];
-    }
 }
