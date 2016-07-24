@@ -8,6 +8,7 @@ use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use WyriHaximus\ApiClient\Annotations\Collection;
 use WyriHaximus\ApiClient\Annotations\Nested;
+use WyriHaximus\ApiClient\Annotations\Rename;
 use WyriHaximus\ApiClient\Resource\ResourceInterface;
 use Zend\Hydrator\HydratorInterface;
 
@@ -60,6 +61,7 @@ class Hydrator
         $object = $this->createObject($class);
         $json = $this->hydrateNestedResources($object, $json);
         $json = $this->hydrateCollectionResources($object, $json);
+        $json = $this->hydrateRenameResourceProperties($object, $json);
         return $hydrator->hydrate($json, $object);
     }
 
@@ -116,6 +118,27 @@ class Hydrator
     }
 
     /**
+     * @param ResourceInterface $object
+     * @param array $json
+     * @return array
+     */
+    protected function hydrateRenameResourceProperties(ResourceInterface $object, array $json)
+    {
+        $annotation = $this->getAnnotation($object, Rename::class);
+
+        if (!($annotation instanceof Rename)) {
+            return $json;
+        }
+
+        foreach ($annotation->properties() as $property) {
+            $json[$property] = $json[$annotation->get($property)];
+            unset($json[$annotation->get($property)]);
+        }
+
+        return $json;
+    }
+
+    /**
      * @param string $class
      * @param array $json
      * @return ResourceInterface
@@ -137,6 +160,7 @@ class Hydrator
         $json = $this->getHydrator($class)->extract($object);
         $json = $this->extractNestedResources($json, $object);
         $json = $this->extractCollectionResources($json, $object);
+        $json = $this->extractRenameResourceProperties($json, $object);
         return $json;
     }
 
@@ -179,6 +203,27 @@ class Hydrator
             foreach ($array as $resource) {
                 $json[$property][] = $this->extract($annotation->get($property), $resource);
             }
+        }
+
+        return $json;
+    }
+
+    /**
+     * @param array $json
+     * @param ResourceInterface $object
+     * @return array
+     */
+    protected function extractRenameResourceProperties(array $json, ResourceInterface $object)
+    {
+        $annotation = $this->getAnnotation($object, Rename::class);
+
+        if (!($annotation instanceof Rename)) {
+            return $json;
+        }
+
+        foreach ($annotation->properties() as $property) {
+            $json[$annotation->get($property)] = $json[$property];
+            unset($json[$property]);
         }
 
         return $json;

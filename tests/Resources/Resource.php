@@ -5,12 +5,14 @@ namespace WyriHaximus\Tests\ApiClient\Resources;
 
 use WyriHaximus\ApiClient\Annotations\Collection;
 use WyriHaximus\ApiClient\Annotations\Nested;
+use WyriHaximus\ApiClient\Annotations\Rename;
 use WyriHaximus\ApiClient\Resource\ResourceInterface;
 use WyriHaximus\ApiClient\Transport\Client;
 
 /**
  * @Nested(sub="SubResource")
  * @Collection(subs="SubResource")
+ * @Rename(slug="slog")
  */
 class Resource implements ResourceInterface
 {
