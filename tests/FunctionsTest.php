@@ -39,4 +39,35 @@ class FunctionsTest extends TestCase
             get_property($syncRepository, 'id')->getValue($syncRepository)
         );
     }
+
+    public function testResourcePrettyPrint()
+    {
+        $resource = $this->hydrate(
+            Resource::class,
+            $this->getJson(),
+            'Async'
+        );
+        $expected = "WyriHaximus\Tests\ApiClient\Resources\Sync\Resource
+	id: 1
+	slug: Wyrihaximus/php-travis-client
+	sub: WyriHaximus\Tests\ApiClient\Resources\Async\SubResource
+		id: 1
+		slug: Wyrihaximus/php-travis-client
+	subs: [
+		WyriHaximus\Tests\ApiClient\Resources\Async\SubResource
+			id: 1
+			slug: Wyrihaximus/php-travis-client
+		WyriHaximus\Tests\ApiClient\Resources\Async\SubResource
+			id: 2
+			slug: Wyrihaximus/php-travis-client
+		WyriHaximus\Tests\ApiClient\Resources\Async\SubResource
+			id: 3
+			slug: Wyrihaximus/php-travis-client
+	]
+";
+        ob_start();
+        \WyriHaximus\ApiClient\resource_pretty_print($resource);
+        $actual = ob_get_clean();
+        $this->assertSame($expected, $actual);
+    }
 }
