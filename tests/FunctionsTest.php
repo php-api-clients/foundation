@@ -68,6 +68,26 @@ class FunctionsTest extends TestCase
         ob_start();
         \WyriHaximus\ApiClient\resource_pretty_print($resource);
         $actual = ob_get_clean();
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $expected = str_replace(
+                [
+                    "\r",
+                    "\n",
+                ],
+                '',
+                $expected
+            );
+            $actual = str_replace(
+                [
+                    "\r",
+                    "\n",
+                ],
+                '',
+                $actual
+            );
+        }
+
         $this->assertSame($expected, $actual);
     }
 }
