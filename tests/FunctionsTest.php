@@ -7,6 +7,7 @@ use WyriHaximus\Tests\ApiClient\Resources\Sync\Resource;
 use WyriHaximus\Tests\ApiClient\TestCase;
 use function WyriHaximus\ApiClient\get_properties;
 use function WyriHaximus\ApiClient\get_property;
+use function WyriHaximus\ApiClient\resource_pretty_print;
 
 class FunctionsTest extends TestCase
 {
@@ -66,7 +67,7 @@ class FunctionsTest extends TestCase
 	]
 ";
         ob_start();
-        \WyriHaximus\ApiClient\resource_pretty_print($resource);
+        resource_pretty_print($resource);
         $actual = ob_get_clean();
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
