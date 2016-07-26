@@ -83,7 +83,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         return [
             'id' => 1,
-            'slug' => 'Wyrihaximus/php-travis-client',
+            'slog' => 'Wyrihaximus/php-travis-client',
             'sub' => [
                 'id' => 1,
                 'slug' => 'Wyrihaximus/php-travis-client',

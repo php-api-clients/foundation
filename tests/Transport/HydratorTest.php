@@ -84,6 +84,6 @@ class HydratorTest extends TestCase
             'Resource',
             $json
         );
-        $this->assertSame($json, $hydrator->extract('Resource', $repository));
+        $this->assertEquals($json, $hydrator->extract('Resource', $repository));
     }
 }
