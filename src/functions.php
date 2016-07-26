@@ -8,89 +8,40 @@ use WyriHaximus\ApiClient\Resource\ResourceInterface;
 
 /**
  * @param ResourceInterface $resource
+ * @param int $indentLevel
+ * @param bool $resourceIndent
  */
-function resource_pretty_print(ResourceInterface $resource)
+function resource_pretty_print(ResourceInterface $resource, int $indentLevel = 0, bool $resourceIndent = false)
 {
-    $printResource = clone $resource;
+    $indent = str_repeat("\t", $indentLevel);
+    $propertyIndent = str_repeat("\t", $indentLevel + 1);
 
-    call_method($printResource, 'unsetTransport');
-
-    var_export($printResource);
-}
-
-/**
- * @param ResourceInterface $resource
- * @param string $method
- * @return ResourceInterface
- */
-function call_method(ResourceInterface $resource, string $method): ResourceInterface
-{
-    if (method_exists($resource, $method)) {
-        $resource->$method();
+    if ($resourceIndent) {
+        echo $indent;
     }
+    echo get_class($resource), PHP_EOL;
 
-    $properties = get_properties($resource);
-    call_method_properties($resource, $properties, $method);
+    foreach (get_properties($resource) as $property) {
+        echo $propertyIndent, $property->getName(), ': ';
 
-    return $resource;
-}
+        $propertyValue = get_property($resource, $property->getName())->getValue($resource);
 
-/**
- * @param ResourceInterface $resource
- * @param array $properties
- * @param string $method
- */
-function call_method_properties(ResourceInterface $resource, array $properties, string $method)
-{
-    foreach ($properties as $property) {
-        call_method_property($resource, $property->getName(), $method);
-        call_method_array_property($resource, $property->getName(), $method);
-    }
-}
-
-/**
- * @param ResourceInterface $resource
- * @param string $propertyName
- * @param string $method
- */
-function call_method_property(ResourceInterface $resource, string $propertyName, string $method)
-{
-    $property = get_property($resource, $propertyName);
-    if (!($property->getValue($resource) instanceof ResourceInterface)) {
-        return;
-    }
-
-    $property->setValue(
-        $resource,
-        call_method(
-            $property->getValue($resource),
-            $method
-        )
-    );
-}
-
-/**
- * @param ResourceInterface $resource
- * @param string $propertyName
- * @param string $method
- */
-function call_method_array_property(ResourceInterface $resource, string $propertyName, string $method)
-{
-    $property = get_property($resource, $propertyName);
-    if (!is_array($property->getValue($resource))) {
-        return;
-    }
-    $newCollection = [];
-
-    foreach ($property->getValue($resource) as $key => $value) {
-        if (!($value instanceof ResourceInterface)) {
+        if ($propertyValue instanceof ResourceInterface) {
+            resource_pretty_print($propertyValue, $indentLevel + 1);
             continue;
         }
 
-        $newCollection[$key] = call_method($value, $method);
-    }
+        if (is_array($propertyValue)) {
+            echo '[', PHP_EOL;
+            foreach ($propertyValue as $arrayValue) {
+                resource_pretty_print($arrayValue, $indentLevel + 2, true);
+            }
+            echo $propertyIndent, ']', PHP_EOL;
+            continue;
+        }
 
-    $property->setValue($resource, $newCollection);
+        echo $propertyValue, PHP_EOL;
+    }
 }
 
 /**
