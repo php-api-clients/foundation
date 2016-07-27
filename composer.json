@@ -1,5 +1,5 @@
 {
-  "name": "wyrihaximus/api-client",
+  "name": "api-clients/foundation",
   "license": "MIT",
   "authors": [
     {
@@ -26,11 +26,11 @@
     "phake/phake": "^2.3"
   },
   "suggest": {
-    "wyrihaximus/api-client-resource-generator": "Easy wireframing of resources"
+    "api-clients/resource-generator": "Easy wireframing of resources"
   },
   "autoload": {
     "psr-4": {
-      "WyriHaximus\\ApiClient\\": "src/"
+      "ApiClients\\Foundation\\": "src/"
     },
     "files": [
       "src/bootstrap.php",
@@ -39,7 +39,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "WyriHaximus\\Tests\\ApiClient\\": "tests/"
+      "ApiClients\\Tests\\Foundation\\": "tests/"
     }
   }
 }

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Resources;
+namespace ApiClients\Tests\Foundation\Resources;
 
-use WyriHaximus\ApiClient\Resource\ResourceInterface;
-use WyriHaximus\ApiClient\Transport\Client;
+use ApiClients\Foundation\Resource\ResourceInterface;
+use ApiClients\Foundation\Transport\Client;
 
 class SubResource implements ResourceInterface
 {

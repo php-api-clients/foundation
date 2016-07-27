@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\ApiClient\Resource;
+namespace ApiClients\Foundation\Resource;
 
 interface ResourceInterface
 {

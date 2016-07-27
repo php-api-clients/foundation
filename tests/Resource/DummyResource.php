@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Resource;
+namespace ApiClients\Tests\Foundation\Resource;
 
 use React\Promise\PromiseInterface;
 use Rx\ObservableInterface;
-use WyriHaximus\ApiClient\Annotations\Collection;
-use WyriHaximus\ApiClient\Annotations\Nested;
-use WyriHaximus\ApiClient\Resource\CallAsyncTrait;
-use WyriHaximus\ApiClient\Resource\HydrateTrait;
-use WyriHaximus\ApiClient\Resource\ResourceInterface;
-use WyriHaximus\ApiClient\Resource\TransportAwareTrait;
-use WyriHaximus\ApiClient\Transport\Client;
+use ApiClients\Foundation\Annotations\Collection;
+use ApiClients\Foundation\Annotations\Nested;
+use ApiClients\Foundation\Resource\CallAsyncTrait;
+use ApiClients\Foundation\Resource\HydrateTrait;
+use ApiClients\Foundation\Resource\ResourceInterface;
+use ApiClients\Foundation\Resource\TransportAwareTrait;
+use ApiClients\Foundation\Transport\Client;
 
 /**
  * @Nested(foo="Acme\Bar", bar="Acme\Foo")

@@ -1,10 +1,10 @@
 <?php
 
-namespace WyriHaximus\ApiClient;
+namespace ApiClients\Foundation;
 
 use ReflectionClass;
 use ReflectionProperty;
-use WyriHaximus\ApiClient\Resource\ResourceInterface;
+use ApiClients\Foundation\Resource\ResourceInterface;
 
 /**
  * @param ResourceInterface $resource

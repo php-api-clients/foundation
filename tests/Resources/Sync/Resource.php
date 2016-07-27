@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Resources\Sync;
+namespace ApiClients\Tests\Foundation\Resources\Sync;
 
-use WyriHaximus\Tests\ApiClient\Resources\Resource as BaseResource;
+use ApiClients\Tests\Foundation\Resources\Resource as BaseResource;
 
 class Resource extends BaseResource
 {

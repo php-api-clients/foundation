@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Transport;
+namespace ApiClients\Tests\Foundation\Transport;
 
 use Phake;
-use WyriHaximus\Tests\ApiClient\Resources\Async\Resource as AsyncResource;
-use WyriHaximus\Tests\ApiClient\Resources\Async\SubResource as AsyncSubResource;
-use WyriHaximus\Tests\ApiClient\Resources\Sync\Resource as SyncResource;
-use WyriHaximus\Tests\ApiClient\TestCase;
-use WyriHaximus\ApiClient\Transport\Client;
-use WyriHaximus\ApiClient\Transport\Hydrator;
+use ApiClients\Tests\Foundation\Resources\Async\Resource as AsyncResource;
+use ApiClients\Tests\Foundation\Resources\Async\SubResource as AsyncSubResource;
+use ApiClients\Tests\Foundation\Resources\Sync\Resource as SyncResource;
+use ApiClients\Tests\Foundation\TestCase;
+use ApiClients\Foundation\Transport\Client;
+use ApiClients\Foundation\Transport\Hydrator;
 
 class HydratorTest extends TestCase
 {
     public function testBuildAsyncFromSync()
     {
         $hydrator = new Hydrator(Phake::mock(Client::class), [
-            'namespace' => 'WyriHaximus\Tests\ApiClient\Resources',
+            'namespace' => 'ApiClients\Tests\Foundation\Resources',
             'resource_namespace' => 'Async',
             'resource_hydrator_cache_dir' => $this->getTmpDir(),
             'resource_hydrator_namespace' => $this->getRandomNameSpace(),
@@ -45,7 +45,7 @@ class HydratorTest extends TestCase
     {
         $tmpDir = $this->getTmpDir();
         $hydrator = new Hydrator(Phake::mock(Client::class), [
-            'namespace' => 'WyriHaximus\Tests\ApiClient\Resources',
+            'namespace' => 'ApiClients\Tests\Foundation\Resources',
             'resource_namespace' => 'Async',
             'resource_hydrator_cache_dir' => $tmpDir,
             'resource_hydrator_namespace' => $this->getRandomNameSpace(),
@@ -75,7 +75,7 @@ class HydratorTest extends TestCase
         $json = $this->getJson();
         $tmpDir = $this->getTmpDir();
         $hydrator = new Hydrator(Phake::mock(Client::class), [
-            'namespace' => 'WyriHaximus\Tests\ApiClient\Resources',
+            'namespace' => 'ApiClients\Tests\Foundation\Resources',
             'resource_namespace' => 'Async',
             'resource_hydrator_cache_dir' => $tmpDir,
             'resource_hydrator_namespace' => $this->getRandomNameSpace(),

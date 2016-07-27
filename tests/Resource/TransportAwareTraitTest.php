@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Resource;
+namespace ApiClients\Tests\Foundation\Resource;
 
 use Phake;
-use WyriHaximus\ApiClient\Transport\Client;
-use WyriHaximus\Tests\ApiClient\TestCase;
+use ApiClients\Foundation\Transport\Client;
+use ApiClients\Tests\Foundation\TestCase;
 
 class TransportAwareTraitTest extends TestCase
 {

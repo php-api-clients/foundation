@@ -15,8 +15,8 @@ use React\Cache\CacheInterface;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use React\Promise\RejectedPromise;
-use WyriHaximus\ApiClient\Transport\Client;
-use WyriHaximus\ApiClient\Transport\Hydrator;
+use ApiClients\Foundation\Transport\Client;
+use ApiClients\Foundation\Transport\Hydrator;
 use function Clue\React\Block\await;
 use function React\Promise\resolve;
 

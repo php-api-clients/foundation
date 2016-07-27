@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\ApiClient\Annotations;
+namespace ApiClients\Foundation\Annotations;
 
 /**
  * @Annotation

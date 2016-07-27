@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\ApiClient\Transport;
+namespace ApiClients\Foundation\Transport;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use GeneratedHydrator\Configuration;
 use ReflectionClass;
-use WyriHaximus\ApiClient\Annotations\Collection;
-use WyriHaximus\ApiClient\Annotations\Nested;
-use WyriHaximus\ApiClient\Annotations\Rename;
-use WyriHaximus\ApiClient\Resource\ResourceInterface;
+use ApiClients\Foundation\Annotations\Collection;
+use ApiClients\Foundation\Annotations\Nested;
+use ApiClients\Foundation\Annotations\Rename;
+use ApiClients\Foundation\Resource\ResourceInterface;
 use Zend\Hydrator\HydratorInterface;
 
 class Hydrator

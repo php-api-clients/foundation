@@ -1,9 +1,9 @@
 <?php
 
-namespace WyriHaximus\ApiClient;
+namespace ApiClients\Foundation;
 
 // @codeCoverageIgnoreStart
-if (!function_exists('WyriHaximus\ApiClient\resource_pretty_print')) {
+if (!function_exists('ApiClients\Foundation\resource_pretty_print')) {
     require __DIR__ . '/functions.php';
 }
 // @codeCoverageIgnoreEnd

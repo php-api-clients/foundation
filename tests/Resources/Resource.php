@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Resources;
+namespace ApiClients\Tests\Foundation\Resources;
 
-use WyriHaximus\ApiClient\Annotations\Collection;
-use WyriHaximus\ApiClient\Annotations\Nested;
-use WyriHaximus\ApiClient\Annotations\Rename;
-use WyriHaximus\ApiClient\Resource\ResourceInterface;
-use WyriHaximus\ApiClient\Transport\Client;
+use ApiClients\Foundation\Annotations\Collection;
+use ApiClients\Foundation\Annotations\Nested;
+use ApiClients\Foundation\Annotations\Rename;
+use ApiClients\Foundation\Resource\ResourceInterface;
+use ApiClients\Foundation\Transport\Client;
 
 /**
  * @Nested(sub="SubResource")

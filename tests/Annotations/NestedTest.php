@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\ApiClient\Annotations;
+namespace ApiClients\Tests\Foundation\Annotations;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use WyriHaximus\ApiClient\Annotations\Nested;
-use WyriHaximus\Tests\ApiClient\Resource\DummyResource;
-use WyriHaximus\Tests\ApiClient\TestCase;
+use ApiClients\Foundation\Annotations\Nested;
+use ApiClients\Tests\Foundation\Resource\DummyResource;
+use ApiClients\Tests\Foundation\TestCase;
 
 class NestedTest extends TestCase
 {

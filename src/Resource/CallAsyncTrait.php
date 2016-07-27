@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\ApiClient\Resource;
+namespace ApiClients\Foundation\Resource;
 
 use function Clue\React\Block\await;
 use React\Promise\PromiseInterface;
 use Rx\ObservableInterface;
 use Rx\React\Promise;
-use WyriHaximus\ApiClient\Transport\Client;
+use ApiClients\Foundation\Transport\Client;
 
 trait CallAsyncTrait
 {

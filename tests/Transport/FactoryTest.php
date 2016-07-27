@@ -5,8 +5,8 @@ namespace WyriHaximus\Tests\AppVeyor\Transport;
 
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
-use WyriHaximus\ApiClient\Transport\Client;
-use WyriHaximus\ApiClient\Transport\Factory;
+use ApiClients\Foundation\Transport\Client;
+use ApiClients\Foundation\Transport\Factory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
