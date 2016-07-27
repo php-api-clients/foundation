@@ -1,11 +1,11 @@
 # API Client Foundation for PHP 7
 
-[![Build Status](https://travis-ci.org/WyriHaximus/php-api-client.svg?branch=master)](https://travis-ci.org/WyriHaximus/php-api-client)
-[![Latest Stable Version](https://poser.pugx.org/WyriHaximus/api-client/v/stable.png)](https://packagist.org/packages/WyriHaximus/api-client)
-[![Total Downloads](https://poser.pugx.org/WyriHaximus/api-client/downloads.png)](https://packagist.org/packages/WyriHaximus/api-client)
-[![Code Coverage](https://scrutinizer-ci.com/g/WyriHaximus/php-api-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/WyriHaximus/php-api-client/?branch=master)
-[![License](https://poser.pugx.org/WyriHaximus/api-client/license.png)](https://packagist.org/packages/wyrihaximus/api-client)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/WyriHaximus/php-api-client/badge.svg)](https://appveyor-ci.org/WyriHaximus/php-api-client)
+[![Build Status](https://travis-ci.org/php-api-clients/foundation.svg?branch=master)](https://travis-ci.org/php-api-clients/foundation)
+[![Latest Stable Version](https://poser.pugx.org/api-clients/foundation/v/stable.png)](https://packagist.org/packages/api-clients/foundation)
+[![Total Downloads](https://poser.pugx.org/api-clients/foundation/downloads.png)](https://packagist.org/packages/api-clients/foundation/stats)
+[![Code Coverage](https://scrutinizer-ci.com/g/php-api-clients/foundation/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/php-api-clients/foundation/?branch=master)
+[![License](https://poser.pugx.org/api-clients/foundation/license.png)](https://packagist.org/packages/api-clients/foundation)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/php-api-clients/foundation/badge.svg)](https://appveyor-ci.org/php-api-clients/foundation)
 
 
 # Goals
