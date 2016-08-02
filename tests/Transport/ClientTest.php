@@ -104,7 +104,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($handler)->sendAsync($this->isInstanceOf(Request::class));
         Phake::verify($cache, Phake::never())->get('status');
-        Phake::verify($cache)->set('status', '{"foo":"bar"}');
+        Phake::verify($cache)->set(
+            'https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e',
+            '{"body":"{\"foo\":\"bar\"}","headers":null,"protocol_version":null,"reason_phrase":null,"status_code":null}'
+        );
     }
 
     public function testRequestNoCacheHitAPI()
@@ -139,7 +142,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $loop = Factory::create();
 
         $cache = Phake::mock(CacheInterface::class);
-        Phake::when($cache)->get('status')->thenReturn(new RejectedPromise());
+        Phake::when($cache)->get('https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e')->thenReturn(new RejectedPromise());
 
         $stream = Phake::mock(StreamInterface::class);
         Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
@@ -165,9 +168,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         ], $result);
 
         Phake::inOrder(
-            Phake::verify($cache)->get('status'),
+            Phake::verify($cache)->get('https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e'),
             Phake::verify($handler)->sendAsync($this->isInstanceOf(RequestInterface::class)),
-            Phake::verify($cache)->set('status', '{"foo":"bar"}')
+            Phake::verify($cache)->set(
+                'https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e',
+                '{"body":"{\"foo\":\"bar\"}","headers":null,"protocol_version":null,"reason_phrase":null,"status_code":null}'
+            )
         );
     }
 
@@ -176,7 +182,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $loop = Factory::create();
 
         $cache = Phake::mock(CacheInterface::class);
-        Phake::when($cache)->get('status')->thenReturn(resolve('{"foo":"bar"}'));
+        Phake::when($cache)
+            ->get('https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e')
+            ->thenReturn(resolve('{"body":"{\"foo\":\"bar\"}","headers":[],"protocol_version":"1.1","reason_phrase":"OK","status_code":200}'));
 
         $handler = Phake::mock(GuzzleClient::class);
 
@@ -194,7 +202,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         ], $result);
 
-        Phake::verify($cache)->get('status');
+        Phake::verify($cache)->get('https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e');
         Phake::verify($handler, Phake::never())->sendAsync($this->isInstanceOf(RequestInterface::class));
     }
 

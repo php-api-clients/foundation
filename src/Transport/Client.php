@@ -5,13 +5,16 @@ namespace ApiClients\Foundation\Transport;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use React\Cache\CacheInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use function React\Promise\reject;
+use React\Promise\RejectedPromise;
 use function React\Promise\resolve;
 use function WyriHaximus\React\futureFunctionPromise;
 
@@ -84,78 +87,129 @@ class Client
      */
     public function requestRaw(string $path, bool $refresh = false): PromiseInterface
     {
-        if ($refresh) {
-            return $this->sendRequest($path);
-        }
-
-        return $this->checkCache($path)->otherwise(function () use ($path) {
-            return $this->sendRequest($path);
+        return $this->requestPsr7(
+            $this->createRequest($path),
+            $refresh
+        )->then(function ($response) {
+            return resolve($response->getBody()->getContents());
         });
     }
 
     /**
-     * @param string $path
+     * @param UriInterface $uri
      * @return PromiseInterface
      */
-    protected function checkCache(string $path): PromiseInterface
+    protected function checkCache(UriInterface $uri): PromiseInterface
     {
-        if ($this->cache instanceof CacheInterface) {
-            return $this->cache->get($path);
+        if (!($this->cache instanceof CacheInterface)) {
+            return reject();
         }
 
-        return reject();
-    }
+        $key = $this->determineCacheKey($uri);
+        return $this->cache->get($key)->then(function ($document) {
+            $document = json_decode($document, true);
+            $response = new Response(
+                $document['status_code'],
+                $document['headers'],
+                $document['body'],
+                $document['protocol_version'],
+                $document['reason_phrase']
+            );
 
-    /**
-     * @param string $path
-     * @param string $method
-     * @param bool $raw
-     * @return PromiseInterface
-     */
-    protected function sendRequest(string $path, string $method = 'GET', bool $raw = false): PromiseInterface
-    {
-        return $this->requestPsr7(
-            $this->createRequest($method, $path)
-        )->then(function ($response) use ($path, $raw) {
-            $json = $response->getBody()->getContents();
-
-            if ($this->cache instanceof CacheInterface) {
-                $this->cache->set($path, $json);
-            }
-
-            return resolve($json);
+            return resolve($response);
         });
     }
 
     /**
      * @param RequestInterface $request
-     * @return PromiseInterface
+     * @param ResponseInterface $response
      */
-    public function requestPsr7(RequestInterface $request): PromiseInterface
+    protected function storeCache(RequestInterface $request, ResponseInterface $response)
     {
-        $deferred = new Deferred();
+        if (!($this->cache instanceof CacheInterface)) {
+            return;
+        }
 
-        $this->handler->sendAsync(
-            $request
-        )->then(function (ResponseInterface $response) use ($deferred) {
-            $deferred->resolve($response);
-        }, function ($error) use ($deferred) {
-            $deferred->reject($error);
-        });
+        $document = [
+            'body' => $response->getBody()->getContents(),
+            'headers' => $response->getHeaders(),
+            'protocol_version' => $response->getProtocolVersion(),
+            'reason_phrase' => $response->getReasonPhrase(),
+            'status_code' => $response->getStatusCode(),
+        ];
 
-        return $deferred->promise();
+        $key = $this->determineCacheKey($request->getUri());
+
+        $this->cache->set($key, json_encode($document));
     }
 
     /**
-     * @param string $method
+     * @param UriInterface $uri
+     * @return string
+     */
+    protected function determineCacheKey(UriInterface $uri): string
+    {
+        return $this->stripExtraSlashes(
+            implode(
+                '/',
+                [
+                    $uri->getScheme(),
+                    $uri->getHost(),
+                    $uri->getPort(),
+                    $uri->getPath(),
+                    md5($uri->getQuery()),
+                ]
+            )
+        );
+    }
+
+    /**
+     * @param string $string
+     * @return string
+     */
+    protected function stripExtraSlashes(string $string): string
+    {
+        return preg_replace('#/+#', '/', $string);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param bool $refresh
+     * @return PromiseInterface
+     */
+    public function requestPsr7(RequestInterface $request, bool $refresh = false): PromiseInterface
+    {
+        $promise = new RejectedPromise();
+
+        if (!$refresh) {
+            $promise = $this->checkCache($request->getUri());
+        }
+
+        return $promise->otherwise(function () use ($request) {
+            $deferred = new Deferred();
+
+            $this->handler->sendAsync(
+                $request
+            )->then(function (ResponseInterface $response) use ($deferred, $request) {
+                $this->storeCache($request, $response);
+                $deferred->resolve($response);
+            }, function ($error) use ($deferred) {
+                $deferred->reject($error);
+            });
+
+            return $deferred->promise();
+        });
+    }
+
+    /**
      * @param string $path
      * @return RequestInterface
      */
-    protected function createRequest(string $method, string $path): RequestInterface
+    protected function createRequest(string $path): RequestInterface
     {
         $url = $this->getBaseURL() . $path;
         $headers = $this->getHeaders();
-        return new Request($method, $url, $headers);
+        return new Request('GET', $url, $headers);
     }
 
     /**
