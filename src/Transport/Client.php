@@ -192,22 +192,25 @@ class Client
                 $request
             )->then(function (ResponseInterface $response) use ($deferred, $request) {
                 $contents = $response->getBody()->getContents();
-                $cacheResponse = new Response(
-                    $response->getStatusCode(),
-                    $response->getHeaders(),
-                    $contents,
-                    $response->getProtocolVersion(),
-                    $response->getReasonPhrase()
+                $this->storeCache(
+                    $request,
+                    new Response(
+                        $response->getStatusCode(),
+                        $response->getHeaders(),
+                        $contents,
+                        $response->getProtocolVersion(),
+                        $response->getReasonPhrase()
+                    )
                 );
-                $deferredResponse = new Response(
-                    $response->getStatusCode(),
-                    $response->getHeaders(),
-                    $contents,
-                    $response->getProtocolVersion(),
-                    $response->getReasonPhrase()
+                $deferred->resolve(
+                    new Response(
+                        $response->getStatusCode(),
+                        $response->getHeaders(),
+                        $contents,
+                        $response->getProtocolVersion(),
+                        $response->getReasonPhrase()
+                    )
                 );
-                $this->storeCache($request, $cacheResponse);
-                $deferred->resolve($deferredResponse);
             }, function ($error) use ($deferred) {
                 $deferred->reject($error);
             });

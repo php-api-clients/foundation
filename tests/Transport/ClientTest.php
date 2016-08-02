@@ -86,6 +86,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $response = Phake::mock(Response::class);
         Phake::when($response)->getBody()->thenReturn($stream);
+        Phake::when($response)->getStatusCode()->thenReturn(200);
+        Phake::when($response)->getHeaders()->thenReturn([]);
+        Phake::when($response)->getProtocolVersion()->thenReturn('1.1');
+        Phake::when($response)->getReasonPhrase ()->thenReturn('OK');
 
         $handler = Phake::mock(GuzzleClient::class);
         Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class))->thenReturn(resolve($response));
@@ -106,7 +110,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         Phake::verify($cache, Phake::never())->get('status');
         Phake::verify($cache)->set(
             'https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e',
-            '{"body":"{\"foo\":\"bar\"}","headers":null,"protocol_version":null,"reason_phrase":null,"status_code":null}'
+            '{"body":"{\"foo\":\"bar\"}","headers":[],"protocol_version":"1.1","reason_phrase":"OK","status_code":200}'
         );
     }
 
@@ -149,6 +153,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $response = Phake::mock(Response::class);
         Phake::when($response)->getBody()->thenReturn($stream);
+        Phake::when($response)->getStatusCode()->thenReturn(200);
+        Phake::when($response)->getHeaders()->thenReturn([]);
+        Phake::when($response)->getProtocolVersion()->thenReturn('1.1');
+        Phake::when($response)->getReasonPhrase ()->thenReturn('OK');
 
         $handler = Phake::mock(GuzzleClient::class);
         Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class))->thenReturn(resolve($response));
@@ -172,7 +180,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             Phake::verify($handler)->sendAsync($this->isInstanceOf(RequestInterface::class)),
             Phake::verify($cache)->set(
                 'https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e',
-                '{"body":"{\"foo\":\"bar\"}","headers":null,"protocol_version":null,"reason_phrase":null,"status_code":null}'
+                '{"body":"{\"foo\":\"bar\"}","headers":[],"protocol_version":"1.1","reason_phrase":"OK","status_code":200}'
             )
         );
     }
