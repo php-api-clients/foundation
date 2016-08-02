@@ -191,8 +191,23 @@ class Client
             $this->handler->sendAsync(
                 $request
             )->then(function (ResponseInterface $response) use ($deferred, $request) {
-                $this->storeCache($request, $response);
-                $deferred->resolve($response);
+                $contents = $response->getBody()->getContents();
+                $cacheResponse = new Response(
+                    $response->getStatusCode(),
+                    $response->getHeaders(),
+                    $contents,
+                    $response->getProtocolVersion(),
+                    $response->getReasonPhrase()
+                );
+                $deferredResponse = new Response(
+                    $response->getStatusCode(),
+                    $response->getHeaders(),
+                    $contents,
+                    $response->getProtocolVersion(),
+                    $response->getReasonPhrase()
+                );
+                $this->storeCache($request, $cacheResponse);
+                $deferred->resolve($deferredResponse);
             }, function ($error) use ($deferred) {
                 $deferred->reject($error);
             });
