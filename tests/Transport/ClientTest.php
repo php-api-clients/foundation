@@ -49,6 +49,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $response = Phake::mock(ResponseInterface::class);
         Phake::when($response)->getBody()->thenReturn($stream);
+        Phake::when($response)->getStatusCode()->thenReturn(200);
+        Phake::when($response)->getHeaders()->thenReturn([]);
+        Phake::when($response)->getProtocolVersion()->thenReturn('1.1');
+        Phake::when($response)->getReasonPhrase ()->thenReturn('OK');
 
         $request = false;
         $handler = Phake::mock(GuzzleClient::class);
@@ -123,6 +127,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $response = Phake::mock(Response::class);
         Phake::when($response)->getBody()->thenReturn($stream);
+        Phake::when($response)->getStatusCode()->thenReturn(200);
+        Phake::when($response)->getHeaders()->thenReturn([]);
+        Phake::when($response)->getProtocolVersion()->thenReturn('1.1');
+        Phake::when($response)->getReasonPhrase ()->thenReturn('OK');
 
         $handler = Phake::mock(GuzzleClient::class);
         Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class))->thenReturn(new FulfilledPromise($response));
