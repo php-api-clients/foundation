@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ApiClients\Tests\Foundation\Resource;
 
+use ApiClients\Tests\Foundation\Hydrator\DummyResource;
 use Phake;
 use ApiClients\Foundation\Transport\Client;
 use ApiClients\Tests\Foundation\TestCase;

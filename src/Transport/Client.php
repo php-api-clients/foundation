@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ApiClients\Foundation\Transport;
 
+use ApiClients\Foundation\Hydrator\Factory;
+use ApiClients\Foundation\Hydrator\Hydrator;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -21,10 +23,10 @@ use function WyriHaximus\React\futureFunctionPromise;
 class Client
 {
     const DEFAULT_OPTIONS = [
-        'schema' => 'https',
-        'path' => '/',
-        'user_agent' => 'WyriHaximus/php-api-client',
-        'headers' => [],
+        Options::SCHEMA => 'https',
+        Options::PATH => '/',
+        Options::USER_AGENT => 'WyriHaximus/php-api-client',
+        Options::HEADERS => [],
     ];
 
     /**
@@ -62,10 +64,22 @@ class Client
         $this->loop = $loop;
         $this->handler = $handler;
         $this->options = $options + self::DEFAULT_OPTIONS;
-        if (isset($this->options['cache']) && $this->options['cache'] instanceof CacheInterface) {
-            $this->cache = $this->options['cache'];
+        if (isset($this->options[Options::CACHE]) && $this->options[Options::CACHE] instanceof CacheInterface) {
+            $this->cache = $this->options[Options::CACHE];
         }
-        $this->hydrator = new Hydrator($this, $options);
+        $this->hydrator = $this->determineHydrator();
+    }
+
+    /**
+     * @return Hydrator
+     */
+    protected function determineHydrator(): Hydrator
+    {
+        if (isset($this->options[Options::HYDRATOR]) && $this->options[Options::HYDRATOR] instanceof Hydrator) {
+            return $this->options[Options::HYDRATOR];
+        }
+
+        return Factory::create($this->options[Options::HYDRATOR] ?? []);
     }
 
     /**
@@ -236,9 +250,9 @@ class Client
     public function getHeaders(): array
     {
         $headers = [
-            'User-Agent' => $this->options['user_agent'],
+            'User-Agent' => $this->options[Options::USER_AGENT],
         ];
-        $headers += $this->options['headers'];
+        $headers += $this->options[Options::HEADERS];
         return $headers;
     }
 
@@ -274,6 +288,6 @@ class Client
      */
     public function getBaseURL(): string
     {
-        return $this->options['schema'] . '://' . $this->options['host'] . $this->options['path'];
+        return $this->options[Options::SCHEMA] . '://' . $this->options[Options::HOST] . $this->options[Options::PATH];
     }
 }

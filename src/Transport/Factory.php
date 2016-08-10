@@ -26,11 +26,11 @@ class Factory
             $loop = LoopFactory::create();
         }
 
-        if (!isset($options['dns'])) {
-            $options['dns'] = '8.8.8.8';
+        if (!isset($options[Options::DNS])) {
+            $options[Options::DNS] = '8.8.8.8';
         }
 
-        $resolver = (new ResolverFactory())->createCached($options['dns'], $loop);
+        $resolver = (new ResolverFactory())->createCached($options[Options::DNS], $loop);
         $httpClient = (new HttpClientFactory())->create($loop, $resolver);
 
         return self::createFromReactHttpClient(

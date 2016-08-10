@@ -12,7 +12,8 @@
     "guzzlehttp/guzzle": "^6.0",
     "react/promise": "^2.2",
     "wyrihaximus/react-guzzle-psr7": "^1.0",
-    "ocramius/generated-hydrator": "^2.0",
+    "api-clients/hydrator": "dev-master",
+    "api-clients/resource": "dev-master",
     "clue/block-react": "^1.1",
     "reactivex/rxphp": "^1.2",
     "react/cache": "^0.4.1",
@@ -33,15 +34,12 @@
   "autoload": {
     "psr-4": {
       "ApiClients\\Foundation\\": "src/"
-    },
-    "files": [
-      "src/bootstrap.php",
-      "src/functions_include.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
-      "ApiClients\\Tests\\Foundation\\": "tests/"
+      "ApiClients\\Tests\\Foundation\\": "tests/",
+      "ApiClients\\Tests\\Foundation\\Hydrator\\": "vendor/api-clients/hydrator/tests/"
     }
   }
 }

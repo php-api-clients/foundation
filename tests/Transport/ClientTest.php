@@ -16,7 +16,7 @@ use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use React\Promise\RejectedPromise;
 use ApiClients\Foundation\Transport\Client;
-use ApiClients\Foundation\Transport\Hydrator;
+use ApiClients\Foundation\Hydrator\Hydrator;
 use function Clue\React\Block\await;
 use function React\Promise\resolve;
 
