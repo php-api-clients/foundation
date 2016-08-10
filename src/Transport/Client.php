@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ApiClients\Foundation\Transport;
 
-use ApiClients\Foundation\Hydrator\Factory;
+use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
@@ -79,7 +79,7 @@ class Client
             return $this->options[Options::HYDRATOR];
         }
 
-        return Factory::create($this->options[Options::HYDRATOR] ?? []);
+        return HydratorFactory::create($this->options[Options::HYDRATOR] ?? []);
     }
 
     /**
