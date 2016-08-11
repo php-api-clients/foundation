@@ -72,6 +72,7 @@ class Client
 
     /**
      * @return Hydrator
+     * @throws \Exception
      */
     protected function determineHydrator(): Hydrator
     {
@@ -79,7 +80,11 @@ class Client
             return $this->options[Options::HYDRATOR];
         }
 
-        return HydratorFactory::create($this->options[Options::HYDRATOR] ?? []);
+        if (!isset($this->options[Options::HYDRATOR_OPTIONS])) {
+            throw new \Exception('Missing Hydrator options');
+        }
+
+        return HydratorFactory::create($this->options[Options::HYDRATOR_OPTIONS]);
     }
 
     /**

@@ -7,6 +7,7 @@ class Options
     const DNS = 'dns';
     const CACHE = 'cache';
     const HYDRATOR = 'hydrator';
+    const HYDRATOR_OPTIONS = 'hydrator_options';
     const SCHEMA = 'schema';
     const HOST = 'host';
     const PORT = 'port';
