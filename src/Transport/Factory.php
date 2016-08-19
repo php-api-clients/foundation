@@ -54,7 +54,7 @@ class Factory
         LoopInterface $loop = null,
         array $options = []
     ): Client {
-        return new Client(
+        return self::createFromGuzzleClient(
             $loop,
             new GuzzleClient(
                 [
@@ -67,6 +67,24 @@ class Factory
                     ),
                 ]
             ),
+            $options
+        );
+    }
+
+    /**
+     * @param LoopInterface $loop
+     * @param GuzzleClient $guzzle
+     * @param array $options
+     * @return Client
+     */
+    public static function createFromGuzzleClient(
+        LoopInterface $loop,
+        GuzzleClient $guzzle,
+        array $options = []
+    ): Client {
+        return new Client(
+            $loop,
+            $guzzle,
             $options
         );
     }

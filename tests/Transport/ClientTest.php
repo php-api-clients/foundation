@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace WyriHaximus\Tests\AppVeyor\Transport;
 
+use ApiClients\Foundation\Transport\Options;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -26,7 +27,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = new Client(
             Factory::create(),
-            Phake::mock(GuzzleClient::class)
+            Phake::mock(GuzzleClient::class),
+            [
+                Options::HYDRATOR_OPTIONS => [],
+            ]
         );
         $this->assertInstanceOf(LoopInterface::class, $client->getLoop());
     }
@@ -35,7 +39,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = new Client(
             Phake::mock(LoopInterface::class),
-            Phake::mock(GuzzleClient::class)
+            Phake::mock(GuzzleClient::class),
+            [
+                Options::HYDRATOR_OPTIONS => [],
+            ]
         );
         $this->assertInstanceOf(Hydrator::class, $client->getHydrator());
     }
@@ -66,6 +73,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $handler,
             [
                 'host' => 'api.example.com',
+                Options::HYDRATOR_OPTIONS => [],
             ]
         );
 
@@ -104,6 +112,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'cache' => $cache,
                 'host' => 'api.example.com',
+                Options::HYDRATOR_OPTIONS => [],
             ]
         );
 
@@ -140,6 +149,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $handler,
             [
                 'host' => 'api.example.com',
+                Options::HYDRATOR_OPTIONS => [],
             ]
         );
 
@@ -175,6 +185,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'cache' => $cache,
                 'host' => 'api.example.com',
+                Options::HYDRATOR_OPTIONS => [],
             ]
         );
 
@@ -210,6 +221,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'cache' => $cache,
                 'host' => 'api.example.com',
+                Options::HYDRATOR_OPTIONS => [],
             ]
         );
 
@@ -228,6 +240,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'schema' => 'http',
                 'host' => 'api.wyrihaximus.net',
+                Options::HYDRATOR_OPTIONS => [],
             ],
             'http://api.wyrihaximus.net/'
         ];
@@ -236,6 +249,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'host' => 'wyrihaximus.net',
                 'path' => '/api/',
+                Options::HYDRATOR_OPTIONS => [],
             ],
             'https://wyrihaximus.net/api/'
         ];
@@ -244,6 +258,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'schema' => 'gopher',
                 'host' => 'thorerik.com',
+                Options::HYDRATOR_OPTIONS => [],
             ],
             'gopher://thorerik.com/'
         ];
