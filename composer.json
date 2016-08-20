@@ -40,5 +40,30 @@
       "ApiClients\\Tests\\Foundation\\": "tests/",
       "ApiClients\\Tests\\Foundation\\Hydrator\\": "vendor/api-clients/hydrator/tests/"
     }
+  },
+  "scripts": {
+    "ensure-installed": "composer install --ansi --prefer-dist -n -q",
+    "cs": [
+      "@ensure-installed",
+      "phpcs --standard=PSR2 src/"
+    ],
+    "unit": [
+      "@ensure-installed",
+      "phpunit --colors=always -c phpunit.xml.dist --coverage-text --coverage-html covHtml"
+    ],
+    "qa-all": [
+      "@ensure-installed",
+      "@cs",
+      "@unit"
+    ],
+    "qa-ci": [
+      "@qa-all"
+    ],
+    "qa-contrib": [
+      "@qa-all"
+    ],
+    "ci-coverage": [
+      "if [ -f ./build/logs/clover.xml ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi"
+    ]
   }
 }

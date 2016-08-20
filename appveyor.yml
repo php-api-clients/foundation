@@ -1,6 +1,5 @@
 build: false
 platform:
-  - x86
   - x64
 clone_folder: c:\projects\php-api-client
 
@@ -48,4 +47,4 @@ install:
 ## Run the actual test
 test_script:
     - cd c:\projects\php-api-client
-    - vendor/bin/phpunit -c phpunit.xml.dist
+    - composer qa-ci
