@@ -45,11 +45,11 @@
     "ensure-installed": "composer install --ansi --prefer-dist -n -q",
     "cs": [
       "@ensure-installed",
-      "./vendor/bin/phpcs --standard=PSR2 src/"
+      "phpcs --standard=PSR2 src/"
     ],
     "unit": [
       "@ensure-installed",
-      "./vendor/bin/phpunit --colors=always -c phpunit.xml.dist --coverage-text --coverage-html covHtml"
+      "phpunit --colors=always -c phpunit.xml.dist --coverage-text --coverage-html covHtml"
     ],
     "qa-all": [
       "@ensure-installed",
