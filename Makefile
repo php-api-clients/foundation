@@ -11,9 +11,6 @@ cs: init
 unit: init
 	./vendor/bin/phpunit --coverage-text --coverage-html covHtml
 
-dunit: init
-	./vendor/bin/dunit
-
 travis-unit: init
 	./vendor/bin/phpunit --coverage-text --coverage-clover ./build/logs/clover.xml
 
