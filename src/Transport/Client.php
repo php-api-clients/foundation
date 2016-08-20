@@ -85,13 +85,21 @@ class Client
             throw new \Exception('Missing Hydrator options');
         }
 
+        $this->ensureExtraProperties();
+
+        return HydratorFactory::create($this->options[Options::HYDRATOR_OPTIONS]);
+    }
+
+    protected function ensureExtraProperties()
+    {
         if (!isset($this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES])) {
             $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES] = [];
         }
 
-        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES]['setTransport'] = $this;
-
-        return HydratorFactory::create($this->options[Options::HYDRATOR_OPTIONS]);
+        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES]['transport'] = [
+            'method' => 'setTransport',
+            'value'  => $this,
+        ];
     }
 
     /**
