@@ -42,7 +42,7 @@
     }
   },
   "scripts": {
-    "ensure-installed": "php -r 'exit((int)(file_exists(__DIR__ . DIRECTORY_SEPARATOR . \"vendor\") === false));' || composer install --ansi --prefer-dist",
+    "ensure-installed": "composer install --ansi --prefer-dist -n -q",
     "cs": [
       "@ensure-installed",
       "./vendor/bin/phpcs --standard=PSR2 src/"
