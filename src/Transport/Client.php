@@ -96,10 +96,7 @@ class Client
             $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES] = [];
         }
 
-        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES]['transport'] = [
-            'method' => 'setTransport',
-            'value'  => $this,
-        ];
+        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES]['transport'] = $this;
     }
 
     /**
