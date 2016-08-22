@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ApiClients\Foundation\Resource;
-
-use ApiClients\Foundation\Transport\Client;
+namespace ApiClients\Foundation\Transport;
 
 trait TransportAwareTrait
 {

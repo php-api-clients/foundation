@@ -1,9 +1,8 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-namespace ApiClients\Tests\Foundation\Resource;
+namespace ApiClients\Tests\Foundation\Transport;
 
-use ApiClients\Tests\Foundation\Hydrator\DummyResource;
+use ApiClients\Tests\Foundation\Transport\TransportAwareTraitDummyResource;
 use Phake;
 use ApiClients\Foundation\Transport\Client;
 use ApiClients\Tests\Foundation\TestCase;
@@ -12,9 +11,11 @@ class TransportAwareTraitTest extends TestCase
 {
     public function testAccess()
     {
-        $resource = new DummyResource();
+        $resource = new TransportAwareTraitDummyResource();
         $transport = Phake::mock(Client::class);
-        $resource->setTransport($transport);
-        $this->assertSame($transport, $resource->getTransportWrapper());
+        $resource->setExtraProperties([
+            'transport' => $transport,
+        ]);
+        $this->assertSame($transport, $resource->wrapper('getTransport'));
     }
 }
