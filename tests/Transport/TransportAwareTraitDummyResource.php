@@ -3,7 +3,7 @@
 namespace ApiClients\Tests\Foundation\Transport;
 
 use ApiClients\Foundation\Transport\TransportAwareTrait;
-use ApiClients\Tests\Foundation\Hydrator\DummyResource;
+use ApiClients\Foundation\Resource\DummyResource;
 
 class TransportAwareTraitDummyResource extends DummyResource
 {
