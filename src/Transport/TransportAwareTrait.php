@@ -13,14 +13,6 @@ trait TransportAwareTrait
     private $transport;
 
     /**
-     * @param Client $transport
-     */
-    public function setTransport(Client $transport)
-    {
-        $this->transport = $transport;
-    }
-
-    /**
      * @return Client
      */
     protected function getTransport(): Client
@@ -29,10 +21,10 @@ trait TransportAwareTrait
     }
 
     /**
-     * @return string
+     * @param Client $transport
      */
-    protected function transportSetter(): string
+    public function transportSetter(Client $transport)
     {
-        return 'setTransport';
+        $this->transport = $transport;
     }
 }
