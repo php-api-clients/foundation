@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/hydrator.git",
-                "reference": "8f90cb34d6af00011f2b6045d9886f7789e0294e"
+                "reference": "26eda2cbce3654eee6ed91e27fb72589f286dc94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/8f90cb34d6af00011f2b6045d9886f7789e0294e",
-                "reference": "8f90cb34d6af00011f2b6045d9886f7789e0294e",
+                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/26eda2cbce3654eee6ed91e27fb72589f286dc94",
+                "reference": "26eda2cbce3654eee6ed91e27fb72589f286dc94",
                 "shasum": ""
             },
             "require": {
@@ -65,7 +65,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-08-15 20:46:02"
+            "time": "2016-08-22 15:16:05"
         },
         {
             "name": "api-clients/resource",
@@ -73,12 +73,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/resource.git",
-                "reference": "049868daa9529ca3c4bc70c1041b6c883519603e"
+                "reference": "3bbd230620049f8ce6ffc86ee8cea36bc0f853f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/resource/zipball/049868daa9529ca3c4bc70c1041b6c883519603e",
-                "reference": "049868daa9529ca3c4bc70c1041b6c883519603e",
+                "url": "https://api.github.com/repos/php-api-clients/resource/zipball/3bbd230620049f8ce6ffc86ee8cea36bc0f853f1",
+                "reference": "3bbd230620049f8ce6ffc86ee8cea36bc0f853f1",
                 "shasum": ""
             },
             "require": {
@@ -109,7 +109,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-08-15 20:00:57"
+            "time": "2016-08-22 14:42:41"
         },
         {
             "name": "clue/block-react",
