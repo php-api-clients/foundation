@@ -42,7 +42,7 @@
     }
   },
   "scripts": {
-    "ensure-installed": "composer install --ansi --prefer-dist -n -q",
+    "ensure-installed": "composer install --ansi -n -q",
     "cs": [
       "@ensure-installed",
       "phpcs --standard=PSR2 src/"

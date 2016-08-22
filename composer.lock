@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "89342a47c42e6eeec2a4067589e5df0c",
+    "hash": "63d10d937c6a6f5a7a6fd6846e96bae2",
     "content-hash": "353aad55787a72fd9fb9f5db56d4852e",
     "packages": [
         {
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/hydrator.git",
-                "reference": "c651ff4cfe7ce3cf2a721854d37b1292bc1e65b5"
+                "reference": "7b4b44561cfa74b33f454eb96f79f01fb916b7b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/c651ff4cfe7ce3cf2a721854d37b1292bc1e65b5",
-                "reference": "c651ff4cfe7ce3cf2a721854d37b1292bc1e65b5",
+                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/7b4b44561cfa74b33f454eb96f79f01fb916b7b9",
+                "reference": "7b4b44561cfa74b33f454eb96f79f01fb916b7b9",
                 "shasum": ""
             },
             "require": {
@@ -38,8 +38,7 @@
                 "phake/phake": "^2.3",
                 "phpbench/phpbench": "^0.11",
                 "phpunit/phpunit": "^5.5",
-                "squizlabs/php_codesniffer": "^2.6",
-                "vectorface/dunit": "~2.0"
+                "squizlabs/php_codesniffer": "^2.6"
             },
             "suggest": {
                 "api-clients/resource-generator": "Easy wireframing of resources",
@@ -65,7 +64,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-08-22 18:23:00"
+            "time": "2016-08-22 18:49:40"
         },
         {
             "name": "api-clients/resource",
@@ -73,12 +72,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/resource.git",
-                "reference": "3bbd230620049f8ce6ffc86ee8cea36bc0f853f1"
+                "reference": "cf7a41afdfbc05fdc619362e231cec0b2c546cd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/resource/zipball/3bbd230620049f8ce6ffc86ee8cea36bc0f853f1",
-                "reference": "3bbd230620049f8ce6ffc86ee8cea36bc0f853f1",
+                "url": "https://api.github.com/repos/php-api-clients/resource/zipball/cf7a41afdfbc05fdc619362e231cec0b2c546cd3",
+                "reference": "cf7a41afdfbc05fdc619362e231cec0b2c546cd3",
                 "shasum": ""
             },
             "require": {
@@ -109,7 +108,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-08-22 14:42:41"
+            "time": "2016-08-22 18:37:55"
         },
         {
             "name": "clue/block-react",
