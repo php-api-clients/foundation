@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WyriHaximus\Tests\AppVeyor\Transport;
+namespace ApiClients\Tests\Foundation\Transport;
 
 use ApiClients\Foundation\Transport\Options;
 use GuzzleHttp\Promise\FulfilledPromise;
