@@ -27,4 +27,12 @@ trait TransportAwareTrait
     {
         return $this->transport;
     }
+
+    /**
+     * @return string
+     */
+    protected function transportSetter(): string
+    {
+        return 'setTransport';
+    }
 }
