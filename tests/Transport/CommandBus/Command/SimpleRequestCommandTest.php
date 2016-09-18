@@ -8,7 +8,7 @@ use Psr\Http\Message\RequestInterface;
 
 class SimpleRequestCommandTest extends TestCase
 {
-    public function _testCommand()
+    public function testCommand()
     {
         $method = 'GET';
         $path = '/foo/bar.json';
