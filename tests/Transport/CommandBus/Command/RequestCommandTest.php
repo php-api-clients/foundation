@@ -4,15 +4,17 @@ declare(strict_types=1);
 namespace ApiClients\Tests\Foundation\Transport\CommandBus\Command;
 
 use ApiClients\Foundation\Transport\CommandBus\Command\RequestCommand;
-use ApiClients\Tests\Foundation\Hydrator\TestCase;
+use ApiClients\Tests\Foundation\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 class RequestCommandTest extends TestCase
 {
-    public function testCommand()
+    /**
+     * @dataProvider provideTrueFalse
+     */
+    public function testCommand(bool $refresh)
     {
         $request = $this->prophesize(RequestInterface::class)->reveal();
-        $refresh = true;
         $command = new RequestCommand($request, $refresh);
         $this->assertSame($request, $command->getRequest());
         $this->assertSame($refresh, $command->getRefresh());

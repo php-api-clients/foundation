@@ -3,16 +3,18 @@
 namespace ApiClients\Tests\Foundation\Transport\CommandBus\Command;
 
 use ApiClients\Foundation\Transport\CommandBus\Command\SimpleRequestCommand;
-use ApiClients\Tests\Foundation\Hydrator\TestCase;
+use ApiClients\Tests\Foundation\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 class SimpleRequestCommandTest extends TestCase
 {
-    public function testCommand()
+    /**
+     * @dataProvider provideTrueFalse
+     */
+    public function testCommand(bool $refresh)
     {
         $method = 'GET';
         $path = '/foo/bar.json';
-        $refresh = true;
         $command = new SimpleRequestCommand($path, $refresh);
         $this->assertInstanceOf(RequestInterface::class, $command->getRequest());
         $this->assertSame($method, $command->getRequest()->getMethod());
