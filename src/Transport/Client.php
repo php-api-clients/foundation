@@ -1,11 +1,9 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ApiClients\Foundation\Transport;
 
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
-use ApiClients\Foundation\Hydrator\Options as HydratorOptions;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -85,18 +83,7 @@ class Client
             throw new \Exception('Missing Hydrator options');
         }
 
-        $this->ensureExtraProperties();
-
         return HydratorFactory::create($this->options[Options::HYDRATOR_OPTIONS]);
-    }
-
-    protected function ensureExtraProperties()
-    {
-        if (!isset($this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES])) {
-            $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES] = [];
-        }
-
-        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES]['transport'] = $this;
     }
 
     /**
