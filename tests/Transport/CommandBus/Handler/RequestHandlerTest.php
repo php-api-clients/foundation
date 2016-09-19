@@ -6,7 +6,6 @@ use ApiClients\Foundation\Transport\Client;
 use ApiClients\Foundation\Transport\CommandBus\Command\SimpleRequestCommand;
 use ApiClients\Foundation\Transport\CommandBus\Handler\RequestHandler;
 use ApiClients\Tests\Foundation\TestCase;
-use function Clue\React\Block\await;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use React\Promise\FulfilledPromise;
