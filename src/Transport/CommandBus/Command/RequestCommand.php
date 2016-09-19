@@ -4,7 +4,7 @@ namespace ApiClients\Foundation\Transport\CommandBus\Command;
 
 use Psr\Http\Message\RequestInterface;
 
-class RequestCommand implements RequestCommandInterface
+final class RequestCommand implements RequestCommandInterface
 {
     /**
      * @var RequestInterface

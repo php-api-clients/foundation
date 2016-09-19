@@ -2,7 +2,7 @@
 
 namespace ApiClients\Foundation\Transport\CommandBus\Command;
 
-class JsonDecodeCommand
+final class JsonDecodeCommand
 {
     /**
      * @var string

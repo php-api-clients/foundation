@@ -2,7 +2,7 @@
 
 namespace ApiClients\Foundation\Transport\CommandBus\Command;
 
-class JsonEncodeCommand
+final class JsonEncodeCommand
 {
     /**
      * @var array

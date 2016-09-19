@@ -7,7 +7,7 @@ use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use function WyriHaximus\React\futureFunctionPromise;
 
-class JsonEncodeHandler
+final class JsonEncodeHandler
 {
     /**
      * @var LoopInterface
