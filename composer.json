@@ -21,9 +21,10 @@
     "doctrine/annotations": "^1.2"
   },
   "require-dev": {
+    "phake/phake": "^2.3",
+    "phpspec/prophecy": "^1.6",
     "phpunit/phpunit": "^5.2.3",
-    "squizlabs/php_codesniffer": "^2.6",
-    "phake/phake": "^2.3"
+    "squizlabs/php_codesniffer": "^2.6"
   },
   "suggest": {
     "api-clients/resource-generator": "Easy wireframing of resources",
