@@ -4,7 +4,7 @@ namespace ApiClients\Foundation\Transport\CommandBus\Handler;
 
 use ApiClients\Foundation\Transport\Client;
 use ApiClients\Foundation\Transport\CommandBus\Command\RequestCommandInterface;
-use GuzzleHttp\Promise\PromiseInterface;
+use React\Promise\PromiseInterface;
 
 final class RequestHandler
 {
