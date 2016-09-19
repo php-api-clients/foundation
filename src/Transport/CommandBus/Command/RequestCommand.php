@@ -17,13 +17,20 @@ final class RequestCommand implements RequestCommandInterface
     private $refresh;
 
     /**
+     * @var array
+     */
+    private $options;
+
+    /**
      * @param RequestInterface $request
      * @param bool $refresh
+     * @param array $options
      */
-    public function __construct(RequestInterface $request, bool $refresh = false)
+    public function __construct(RequestInterface $request, bool $refresh = false, array $options = [])
     {
         $this->request = $request;
         $this->refresh = $refresh;
+        $this->options = $options;
     }
 
     /**
@@ -40,5 +47,13 @@ final class RequestCommand implements RequestCommandInterface
     public function getRefresh(): bool
     {
         return $this->refresh;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }

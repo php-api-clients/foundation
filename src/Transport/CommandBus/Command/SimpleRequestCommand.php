@@ -18,16 +18,23 @@ final class SimpleRequestCommand implements RequestCommandInterface
     private $refresh;
 
     /**
+     * @var array
+     */
+    private $options;
+
+    /**
      * @param string $path
      * @param bool $refresh
+     * @param array $options
      */
-    public function __construct(string $path, bool $refresh = false)
+    public function __construct(string $path, bool $refresh = false, array $options = [])
     {
         $this->request = new Request(
             'GET',
             $path
         );
         $this->refresh = $refresh;
+        $this->options = $options;
     }
 
     /**
@@ -44,5 +51,13 @@ final class SimpleRequestCommand implements RequestCommandInterface
     public function getRefresh(): bool
     {
         return $this->refresh;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }
