@@ -5,7 +5,7 @@ namespace ApiClients\Foundation\Transport\CommandBus\Command;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
-class SimpleRequestCommand
+class SimpleRequestCommand implements RequestCommandInterface
 {
     /**
      * @var RequestInterface
