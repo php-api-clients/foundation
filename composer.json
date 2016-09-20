@@ -38,8 +38,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ApiClients\\Tests\\Foundation\\": "tests/",
-      "ApiClients\\Tests\\Foundation\\Hydrator\\": "vendor/api-clients/hydrator/tests/"
+      "ApiClients\\Tests\\Foundation\\": "tests/"
     }
   },
   "config": {
