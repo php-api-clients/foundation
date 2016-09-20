@@ -13,7 +13,7 @@
     "api-clients/resource": "dev-master",
     "clue/block-react": "^1.1",
     "doctrine/annotations": "^1.2",
-    "guzzlehttp/guzzle": "^6.0",
+    "guzzlehttp/guzzle": "^6.2",
     "react/cache": "^0.4.1",
     "react/promise": "^2.2",
     "reactivex/rxphp": "^1.2",
