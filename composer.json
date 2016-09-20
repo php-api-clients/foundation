@@ -55,7 +55,6 @@
       "phpunit --colors=always -c phpunit.xml.dist --coverage-text --coverage-html covHtml"
     ],
     "qa-all": [
-      "@ensure-installed",
       "@cs",
       "@unit"
     ],
