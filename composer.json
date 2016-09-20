@@ -9,16 +9,16 @@
   ],
   "require": {
     "php": "^7.0",
-    "guzzlehttp/guzzle": "^6.0",
-    "react/promise": "^2.2",
-    "wyrihaximus/react-guzzle-psr7": "^1.0",
     "api-clients/hydrator": "dev-master",
     "api-clients/resource": "dev-master",
     "clue/block-react": "^1.1",
-    "reactivex/rxphp": "^1.2",
+    "doctrine/annotations": "^1.2",
+    "guzzlehttp/guzzle": "^6.0",
     "react/cache": "^0.4.1",
-    "wyrihaximus/ticking-promise": "^1.6",
-    "doctrine/annotations": "^1.2"
+    "react/promise": "^2.2",
+    "reactivex/rxphp": "^1.2",
+    "wyrihaximus/react-guzzle-psr7": "^1.0",
+    "wyrihaximus/ticking-promise": "^1.6"
   },
   "require-dev": {
     "phake/phake": "^2.3",
@@ -41,6 +41,9 @@
       "ApiClients\\Tests\\Foundation\\": "tests/",
       "ApiClients\\Tests\\Foundation\\Hydrator\\": "vendor/api-clients/hydrator/tests/"
     }
+  },
+  "config": {
+    "sort-packages": true
   },
   "scripts": {
     "ensure-installed": "composer install --ansi -n -q",
