@@ -10,7 +10,6 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use GuzzleHttp\RequestOptions;
-use League\Tactician\CommandBus as Tactician;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -52,11 +51,6 @@ class Client
     protected $hydrator;
 
     /**
-     * @var Tactician
-     */
-    protected $commandBus;
-
-    /**
      * @var CacheInterface
      */
     protected $cache;
@@ -77,7 +71,6 @@ class Client
         }
 
         $this->hydrator = $this->determineHydrator();
-        $this->commandBus = $this->hydrator->getCommandBus();
     }
 
     /**
