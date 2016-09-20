@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2c70585a5964d421d4499c4d22ec6ccf",
-    "content-hash": "a14f9507ec7715b78981eaee5f81abae",
+    "hash": "2ac4b9a4a3198a6e30af72854cf762bf",
+    "content-hash": "cd61cf868ca20b169b26381c7e53cd96",
     "packages": [
         {
             "name": "api-clients/hydrator",
