@@ -16,14 +16,14 @@ class RequestCommandTest extends TestCase
     public function testCommand(bool $refresh)
     {
         $request = $this->prophesize(RequestInterface::class)->reveal();
-        $command = new RequestCommand($request, $refresh, [
+        $command = new RequestCommand($request, [
             RequestOptions::STREAM => true,
-        ]);
+        ], $refresh);
         $this->assertSame($request, $command->getRequest());
-        $this->assertSame($refresh, $command->getRefresh());
         $this->assertSame([
             RequestOptions::STREAM => true,
         ], $command->getOptions());
+        $this->assertSame($refresh, $command->getRefresh());
     }
 
     public function testCommandDefaults()
@@ -32,7 +32,7 @@ class RequestCommandTest extends TestCase
         $refresh = false;
         $command = new RequestCommand($request);
         $this->assertSame($request, $command->getRequest());
-        $this->assertSame($refresh, $command->getRefresh());
         $this->assertSame([], $command->getOptions());
+        $this->assertSame($refresh, $command->getRefresh());
     }
 }

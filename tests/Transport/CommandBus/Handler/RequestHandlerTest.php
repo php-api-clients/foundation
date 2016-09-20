@@ -19,7 +19,7 @@ class RequestHandlerTest extends TestCase
         $promise = new FulfilledPromise();
         $client->request(Argument::that(function (RequestInterface $request) use ($path) {
             return $request->getUri()->getPath() === $path;
-        }), false)->willReturn($promise);
+        }), [], false)->willReturn($promise);
         $command = new SimpleRequestCommand($path);
         $handler = new RequestHandler($client->reveal());
         $this->assertSame($promise, $handler->handle($command));

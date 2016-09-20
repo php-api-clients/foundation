@@ -16,16 +16,16 @@ class SimpleRequestCommandTest extends TestCase
     {
         $method = 'GET';
         $path = '/foo/bar.json';
-        $command = new SimpleRequestCommand($path, $refresh, [
+        $command = new SimpleRequestCommand($path, [
             RequestOptions::STREAM => true,
-        ]);
+        ], $refresh);
         $this->assertInstanceOf(RequestInterface::class, $command->getRequest());
         $this->assertSame($method, $command->getRequest()->getMethod());
         $this->assertSame($path, $command->getRequest()->getUri()->getPath());
-        $this->assertSame($refresh, $command->getRefresh());
         $this->assertSame([
             RequestOptions::STREAM => true,
         ], $command->getOptions());
+        $this->assertSame($refresh, $command->getRefresh());
     }
 
     public function testCommandDefaults()
@@ -37,7 +37,7 @@ class SimpleRequestCommandTest extends TestCase
         $this->assertInstanceOf(RequestInterface::class, $command->getRequest());
         $this->assertSame($method, $command->getRequest()->getMethod());
         $this->assertSame($path, $command->getRequest()->getUri()->getPath());
-        $this->assertSame($refresh, $command->getRefresh());
         $this->assertSame([], $command->getOptions());
+        $this->assertSame($refresh, $command->getRefresh());
     }
 }

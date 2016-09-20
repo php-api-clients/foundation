@@ -23,6 +23,6 @@ final class RequestHandler
 
     public function handle(RequestCommandInterface $command): PromiseInterface
     {
-        return $this->client->request($command->getRequest(), $command->getRefresh());
+        return $this->client->request($command->getRequest(), $command->getOptions(), $command->getRefresh());
     }
 }
