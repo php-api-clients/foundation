@@ -1,20 +1,20 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ApiClients\Foundation\Transport;
 
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Hydrator\Options as HydratorOptions;
+use ApiClients\Foundation\Transport\CommandBus;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use GuzzleHttp\Psr7\Response as Psr7Response;
+use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use React\Cache\CacheInterface;
 use React\EventLoop\LoopInterface;
-use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use function React\Promise\reject;
 use React\Promise\RejectedPromise;
@@ -65,9 +65,11 @@ class Client
         $this->loop = $loop;
         $this->handler = $handler;
         $this->options = $options + self::DEFAULT_OPTIONS;
+
         if (isset($this->options[Options::CACHE]) && $this->options[Options::CACHE] instanceof CacheInterface) {
             $this->cache = $this->options[Options::CACHE];
         }
+
         $this->hydrator = $this->determineHydrator();
     }
 
@@ -85,45 +87,25 @@ class Client
             throw new \Exception('Missing Hydrator options');
         }
 
-        $this->ensureExtraProperties();
+        $this->ensureCommandHandlers();
 
         return HydratorFactory::create($this->options[Options::HYDRATOR_OPTIONS]);
     }
 
-    protected function ensureExtraProperties()
+    protected function ensureCommandHandlers()
     {
-        if (!isset($this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES])) {
-            $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES] = [];
+        $mapping = [];
+        if (isset($this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::COMMAND_BUS])) {
+            $mapping = $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::COMMAND_BUS];
         }
 
-        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::EXTRA_PROPERTIES]['transport'] = $this;
-    }
+        $requestHandler = new CommandBus\Handler\RequestHandler($this);
+        $mapping[CommandBus\Command\RequestCommand::class] = $requestHandler;
+        $mapping[CommandBus\Command\SimpleRequestCommand::class] = $requestHandler;
+        $mapping[CommandBus\Command\JsonEncodeCommand::class] = new CommandBus\Handler\JsonEncodeHandler($this->loop);
+        $mapping[CommandBus\Command\JsonDecodeCommand::class] = new CommandBus\Handler\JsonDecodeHandler($this->loop);
 
-    /**
-     * @param string $path
-     * @param bool $refresh
-     * @return PromiseInterface
-     */
-    public function request(string $path, bool $refresh = false): PromiseInterface
-    {
-        return $this->requestRaw($path, $refresh)->then(function ($json) {
-            return $this->jsonDecode($json);
-        });
-    }
-
-    /**
-     * @param string $path
-     * @param bool $refresh
-     * @return PromiseInterface
-     */
-    public function requestRaw(string $path, bool $refresh = false): PromiseInterface
-    {
-        return $this->requestPsr7(
-            $this->createRequest($path),
-            $refresh
-        )->then(function ($response) {
-            return resolve($response->getBody()->getContents());
-        });
+        $this->options[Options::HYDRATOR_OPTIONS][HydratorOptions::COMMAND_BUS] = $mapping;
     }
 
     /**
@@ -139,7 +121,7 @@ class Client
         $key = $this->determineCacheKey($uri);
         return $this->cache->get($key)->then(function ($document) {
             $document = json_decode($document, true);
-            $response = new Response(
+            $response = new Psr7Response(
                 $document['status_code'],
                 $document['headers'],
                 $document['body'],
@@ -206,59 +188,71 @@ class Client
     /**
      * @param RequestInterface $request
      * @param bool $refresh
+     * @param array $options
      * @return PromiseInterface
      */
-    public function requestPsr7(RequestInterface $request, bool $refresh = false): PromiseInterface
+    public function request(RequestInterface $request, array $options = [], bool $refresh = false): PromiseInterface
     {
         $promise = new RejectedPromise();
 
-        if (!$refresh) {
+        $request = $this->applyApiSettingsToRequest($request);
+
+        if ((!isset($options[RequestOptions::STREAM]) || !$options[RequestOptions::STREAM]) && !$refresh) {
             $promise = $this->checkCache($request->getUri());
         }
 
-        return $promise->otherwise(function () use ($request) {
-            $deferred = new Deferred();
-
-            $this->handler->sendAsync(
-                $request
-            )->then(function (ResponseInterface $response) use ($deferred, $request) {
-                $contents = $response->getBody()->getContents();
-                $this->storeCache(
-                    $request,
+        return $promise->otherwise(function () use ($request, $options) {
+            return resolve($this->handler->sendAsync(
+                $request,
+                $options
+            ));
+        })->then(function (ResponseInterface $response) use ($request, $options, $refresh) {
+            if (isset($options[RequestOptions::STREAM]) && $options[RequestOptions::STREAM] === true) {
+                return resolve(
                     new Response(
+                        '',
+                        $response
+                    )
+                );
+            }
+
+            $contents = $response->getBody()->getContents();
+
+            $this->storeCache(
+                $request,
+                new Psr7Response(
+                    $response->getStatusCode(),
+                    $response->getHeaders(),
+                    $contents,
+                    $response->getProtocolVersion(),
+                    $response->getReasonPhrase()
+                )
+            );
+
+            return resolve(
+                new Response(
+                    $contents,
+                    new Psr7Response(
                         $response->getStatusCode(),
                         $response->getHeaders(),
                         $contents,
                         $response->getProtocolVersion(),
                         $response->getReasonPhrase()
                     )
-                );
-                $deferred->resolve(
-                    new Response(
-                        $response->getStatusCode(),
-                        $response->getHeaders(),
-                        $contents,
-                        $response->getProtocolVersion(),
-                        $response->getReasonPhrase()
-                    )
-                );
-            }, function ($error) use ($deferred) {
-                $deferred->reject($error);
-            });
-
-            return $deferred->promise();
+                )
+            );
         });
     }
 
-    /**
-     * @param string $path
-     * @return RequestInterface
-     */
-    protected function createRequest(string $path): RequestInterface
+    protected function applyApiSettingsToRequest(RequestInterface $request): RequestInterface
     {
-        $url = $this->getBaseURL() . $path;
-        $headers = $this->getHeaders();
-        return new Request('GET', $url, $headers);
+        return new Psr7Request(
+            $request->getMethod(),
+            $this->getBaseURL() . $request->getUri(),
+            $this->getHeaders() + $request->getHeaders(),
+            $request->getBody(),
+            $request->getProtocolVersion()
+        );
     }
 
     /**
@@ -271,17 +265,6 @@ class Client
         ];
         $headers += $this->options[Options::HEADERS];
         return $headers;
-    }
-
-    /**
-     * @param string $json
-     * @return PromiseInterface
-     */
-    public function jsonDecode(string $json): PromiseInterface
-    {
-        return futureFunctionPromise($this->loop, $json, function ($json) {
-            return json_decode($json, true);
-        });
     }
 
     /**
