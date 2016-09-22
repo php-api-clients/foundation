@@ -9,6 +9,7 @@ use ApiClients\Foundation\Transport\CommandBus;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use GuzzleHttp\Psr7\Response as Psr7Response;
+use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -248,7 +249,7 @@ class Client
     {
         return new Psr7Request(
             $request->getMethod(),
-            $this->getBaseURL() . $request->getUri(),
+            Uri::resolve(new Uri($this->getBaseURL()), $request->getUri()),
             $this->getHeaders() + $request->getHeaders(),
             $request->getBody(),
             $request->getProtocolVersion()
