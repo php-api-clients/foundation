@@ -247,9 +247,14 @@ class Client
 
     protected function applyApiSettingsToRequest(RequestInterface $request): RequestInterface
     {
+        $uri = $request->getUri();
+        if (substr((string)$uri, 0, 4) !== 'http') {
+            $uri = Uri::resolve(new Uri($this->getBaseURL()), $request->getUri());
+        }
+
         return new Psr7Request(
             $request->getMethod(),
-            Uri::resolve(new Uri($this->getBaseURL()), $request->getUri()),
+            $uri,
             $this->getHeaders() + $request->getHeaders(),
             $request->getBody(),
             $request->getProtocolVersion()
