@@ -12,9 +12,12 @@ class JsonDecodeHandlerTest extends TestCase
 {
     public function testHandler()
     {
+        $json = [
+            'foo' => 'bar',
+        ];
         $loop = Factory::create();
-        $command = new JsonDecodeCommand('[]');
+        $command = new JsonDecodeCommand(json_encode($json));
         $handler = new JsonDecodeHandler($loop);
-        $this->assertSame([], await($handler->handle($command), $loop));
+        $this->assertSame($json, await($handler->handle($command), $loop));
     }
 }
