@@ -21,6 +21,7 @@
     "wyrihaximus/ticking-promise": "^1.6"
   },
   "require-dev": {
+    "humbug/humbug": "1.0.0-alpha2",
     "phake/phake": "^2.3",
     "phpspec/prophecy": "^1.6",
     "phpunit/phpunit": "^5.2.3",
@@ -54,12 +55,24 @@
       "@ensure-installed",
       "phpunit --colors=always -c phpunit.xml.dist --coverage-text --coverage-html covHtml"
     ],
+    "mutation": [
+      "@ensure-installed",
+      "if [ `php -m | grep xdebug | wc -l` -gt 0 ]; then humbug --ansi --incremental; fi"
+    ],
     "qa-all": [
+      "@cs",
+      "@unit",
+      "@mutation"
+    ],
+    "qa-windows": [
       "@cs",
       "@unit"
     ],
     "qa-ci": [
       "@qa-all"
+    ],
+    "qa-ci-windows": [
+      "@qa-windows"
     ],
     "qa-contrib": [
       "@qa-all"
