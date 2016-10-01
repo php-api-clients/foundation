@@ -64,8 +64,15 @@
       "@unit",
       "@mutation"
     ],
+    "qa-windows": [
+      "@cs",
+      "@unit"
+    ],
     "qa-ci": [
       "@qa-all"
+    ],
+    "qa-ci-windows": [
+      "@qa-windows"
     ],
     "qa-contrib": [
       "@qa-all"
