@@ -72,18 +72,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $loop,
             $handler,
             [
-                'host' => 'api.example.com',
                 Options::HYDRATOR_OPTIONS => [],
             ]
         );
 
-        $client->request(new Request('GET', 'status'), [], true);
+        $client->request(new Request('GET', 'http://api.example.com/status'), [], true);
 
         $this->assertSame('GET', $request->getMethod());
-        $this->assertSame('https://api.example.com/status', (string) $request->getUri());
+        $this->assertSame('http://api.example.com/status', (string) $request->getUri());
         $this->assertSame([
-            'Host' => ['api.example.com'],
             'User-Agent' => ['WyriHaximus/php-api-client'],
+            'Host' => ['api.example.com'],
         ], $request->getHeaders());
     }
 
@@ -194,12 +193,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         Phake::inOrder(
             Phake::verify($cache)->get('https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e'),
-            Phake::verify($handler)->sendAsync($this->isInstanceOf(RequestInterface::class), $this->isType('array')),
+            Phake::verify($handler)->sendAsync(Phake::capture($request), $this->isType('array')),
             Phake::verify($cache)->set(
                 'https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e',
                 '{"body":"{\"foo\":\"bar\"}","headers":[],"protocol_version":"1.1","reason_phrase":"OK","status_code":200}'
             )
         );
+
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('https://api.example.com/status', (string)$request->getUri());
     }
 
     public function testRequestCacheHitIgnoreAPI()
