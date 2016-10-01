@@ -57,7 +57,7 @@
     ],
     "mutation": [
       "@ensure-installed",
-      "humbug --ansi --incremental"
+      "if [ `php -m | grep xdebug | wc -l` -gt 0 ]; then humbug --ansi --incremental; fi"
     ],
     "qa-all": [
       "@cs",
