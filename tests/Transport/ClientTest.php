@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace ApiClients\Tests\Foundation\Transport;
 
 use ApiClients\Foundation\Transport\Options;
+use ApiClients\Foundation\Transport\Response as TransportResponse;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\RequestOptions;
 use Phake;
 use GuzzleHttp\Client as GuzzleClient;
 use Psr\Http\Message\RequestInterface;
@@ -230,6 +232,51 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($cache)->get('https/api.example.com/status/d41d8cd98f00b204e9800998ecf8427e');
         Phake::verify($handler, Phake::never())->sendAsync($this->isInstanceOf(RequestInterface::class));
+    }
+
+    public function testRequestStreaming()
+    {
+        $loop = Factory::create();
+
+        $cache = Phake::mock(CacheInterface::class);
+
+        $stream = Phake::mock(StreamInterface::class);
+        Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
+
+        $response = Phake::mock(Response::class);
+        Phake::when($response)->getBody()->thenReturn($stream);
+        Phake::when($response)->getStatusCode()->thenReturn(200);
+        Phake::when($response)->getHeaders()->thenReturn([]);
+        Phake::when($response)->getProtocolVersion()->thenReturn('1.1');
+        Phake::when($response)->getReasonPhrase()->thenReturn('OK');
+
+        $handler = Phake::mock(GuzzleClient::class);
+        Phake::when($handler)->sendAsync($this->isInstanceOf(Request::class), $this->isType('array'))->thenReturn(resolve($response));
+
+        $client = new Client(
+            $loop,
+            $handler,
+            [
+                'cache' => $cache,
+                'host' => 'api.example.com',
+                Options::HYDRATOR_OPTIONS => [],
+            ]
+        );
+
+        $result = await(
+            $client->request(
+                new Request('GET', 'status'),
+                [
+                    RequestOptions::STREAM => true,
+                ]
+            ),
+            $loop,
+            3
+        );
+        $this->assertInstanceOf(TransportResponse::class, $result);
+        $this->assertSame('', $result->getBody());
+
+        Phake::verifyNoInteraction($cache);
     }
 
     public function provideGetBaseURL()
