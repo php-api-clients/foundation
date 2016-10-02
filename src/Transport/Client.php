@@ -16,6 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use React\Cache\CacheInterface;
 use React\EventLoop\LoopInterface;
+use React\EventLoop\Timer\TimerInterface;
 use React\Promise\PromiseInterface;
 use function React\Promise\reject;
 use React\Promise\RejectedPromise;
@@ -209,12 +210,9 @@ class Client
             ));
         })->then(function (ResponseInterface $response) use ($request, $options, $refresh) {
             if (isset($options[RequestOptions::STREAM]) && $options[RequestOptions::STREAM] === true) {
-                return resolve(
-                    new Response(
-                        '',
-                        $response
-                    )
-                );
+                $responseWrapper = new Response('', $response);
+                $this->streamBody($responseWrapper);
+                return resolve($responseWrapper);
             }
 
             $contents = $response->getBody()->getContents();
@@ -242,6 +240,25 @@ class Client
                     )
                 )
             );
+        });
+    }
+
+    protected function streamBody(Response $response)
+    {
+        $stream = $response->getResponse()->getBody();
+        $this->loop->addPeriodicTimer(0.001, function (TimerInterface $timer) use ($stream, $response) {
+            if ($stream->eof()) {
+                $timer->cancel();
+                $response->emit('end');
+                return;
+            }
+
+            $size = $stream->getSize();
+            if ($size === 0) {
+                return;
+            }
+
+            $response->emit('data', [$stream->read($size)]);
         });
     }
 
