@@ -2,6 +2,7 @@
 
 namespace ApiClients\Foundation;
 
+use InvalidArgumentException;
 use League\Container\ContainerInterface;
 use League\Tactician\CommandBus;
 
@@ -13,19 +14,16 @@ final class Client
     private $container;
 
     /**
-     * @var CommandBus
-     */
-    private $commandBus;
-
-    /**
      * Client constructor.
      * @param ContainerInterface $container
-     * @param CommandBus $commandBus
      */
-    public function __construct(ContainerInterface $container, CommandBus $commandBus)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->commandBus = $commandBus;
+
+        if (!$this->container->has(CommandBus::class)) {
+            throw new InvalidArgumentException();
+        }
     }
 
     /**
@@ -38,6 +36,6 @@ final class Client
 
     public function handle($command)
     {
-        return $this->commandBus->handle($command);
+        return $this->container->get(CommandBus::class)->handle($command);
     }
 }
