@@ -1,6 +1,8 @@
 {
   "name": "api-clients/foundation",
   "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Cees-Jan Kiewiet",
@@ -10,15 +12,13 @@
   "require": {
     "php": "^7.0",
     "api-clients/hydrator": "dev-master",
-    "api-clients/resource": "dev-master",
-    "clue/block-react": "^1.1",
-    "doctrine/annotations": "^1.2",
-    "guzzlehttp/guzzle": "^6.2",
-    "react/cache": "^0.4.1",
-    "react/promise": "^2.4",
-    "reactivex/rxphp": "^1.2",
-    "wyrihaximus/react-guzzle-psr7": "^1.0",
-    "wyrihaximus/ticking-promise": "^1.6"
+    "api-clients/test-utilities": "dev-master",
+    "api-clients/transport": "dev-master",
+    "league/container": "^2.2",
+    "league/event": "^2.1",
+    "league/tactician": "^1.0",
+    "league/tactician-container": "^1.0",
+    "wyrihaximus/tactician-command-handler-mapper": "^1.0"
   },
   "require-dev": {
     "humbug/humbug": "1.0.0-alpha2",
@@ -39,7 +39,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ApiClients\\Tests\\Foundation\\": "tests/"
+      "ApiClients\\Tests\\Foundation\\": "tests/",
+      "ApiClients\\TestApp\\Foundation\\": "test_app/"
     }
   },
   "config": {
