@@ -14,7 +14,6 @@ final class Client
     private $container;
 
     /**
-     * Client constructor.
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
