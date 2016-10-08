@@ -2,10 +2,14 @@
 
 namespace ApiClients\Foundation\Transport;
 
+use Evenement\EventEmitterInterface;
+use Evenement\EventEmitterTrait;
 use Psr\Http\Message\ResponseInterface;
 
-final class Response
+final class Response implements EventEmitterInterface
 {
+    use EventEmitterTrait;
+
     /**
      * @var string
      */

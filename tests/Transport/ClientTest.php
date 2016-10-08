@@ -241,7 +241,22 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $cache = Phake::mock(CacheInterface::class);
 
         $stream = Phake::mock(StreamInterface::class);
-        Phake::when($stream)->getContents()->thenReturn('{"foo":"bar"}');
+        Phake::when($stream)->eof()
+            ->thenReturn(false)
+            ->thenReturn(false)
+            ->thenReturn(false)
+            ->thenReturn(true)
+        ;
+        Phake::when($stream)->getSize()
+            ->thenReturn(1)
+            ->thenReturn(1)
+            ->thenReturn(1)
+        ;
+        Phake::when($stream)->read(1)
+            ->thenReturn('a')
+            ->thenReturn('b')
+            ->thenReturn('c')
+        ;
 
         $response = Phake::mock(Response::class);
         Phake::when($response)->getBody()->thenReturn($stream);
@@ -275,6 +290,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertInstanceOf(TransportResponse::class, $result);
         $this->assertSame('', $result->getBody());
+
+        $buffer = '';
+        $result->on('data', function ($data) use (&$buffer) {
+            $buffer .= $data;
+        });
+        $loop->run();
+
+        $this->assertSame('abc', $buffer);
 
         Phake::verifyNoInteraction($cache);
     }
