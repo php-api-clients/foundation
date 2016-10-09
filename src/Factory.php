@@ -2,12 +2,11 @@
 
 namespace ApiClients\Foundation;
 
+use ApiClients\Foundation\Events\CommandLocatorEvent;
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
-use ApiClients\Foundation\Hydrator\Options as HydratorOptions;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
-use ApiClients\Foundation\Transport\Options as TransportOptions;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
@@ -83,21 +82,19 @@ final class Factory
         LoopInterface $loop = null,
         array $options = []
     ): TransportClient {
-        $transport = TransportFactory::create($loop, $options);
-        $container->share(LoopInterface::class, $transport->getLoop());
-        return $transport;
+        return TransportFactory::create($container, $loop, $options);
     }
 
     private static function createHydrator(ContainerInterface $container, array $options = [])
     {
-        if (isset($options[TransportOptions::HYDRATOR]) && $options[TransportOptions::HYDRATOR] instanceof Hydrator) {
-            return $options[TransportOptions::HYDRATOR];
+        if (isset($options[Options::HYDRATOR]) && $options[Options::HYDRATOR] instanceof Hydrator) {
+            return $options[Options::HYDRATOR];
         }
 
-        if (!isset($options[TransportOptions::HYDRATOR_OPTIONS])) {
+        if (!isset($options[Options::HYDRATOR_OPTIONS])) {
             throw new \Exception('Missing Hydrator options');
         }
 
-        return HydratorFactory::create($options[TransportOptions::HYDRATOR_OPTIONS]);
+        return HydratorFactory::create($options[Options::HYDRATOR_OPTIONS]);
     }
 }

@@ -11,6 +11,7 @@
   ],
   "require": {
     "php": "^7.0",
+    "api-clients/events": "dev-master",
     "api-clients/hydrator": "dev-master",
     "api-clients/test-utilities": "dev-master",
     "api-clients/transport": "dev-master",

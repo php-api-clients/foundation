@@ -3,13 +3,12 @@
 namespace ApiClients\Tests\Foundation;
 
 use ApiClients\Foundation\Client;
-use ApiClients\Foundation\CommandLocatorEvent;
+use ApiClients\Foundation\Events\CommandLocatorEvent;
 use ApiClients\Foundation\Factory;
-use ApiClients\Foundation\Transport\Options;
+use ApiClients\Foundation\Options;
 use ApiClients\Tools\TestUtilities\TestCase;
 use League\Container\Container;
 use League\Event\CallbackListener;
-use League\Event\Emitter;
 use League\Event\EmitterInterface;
 use League\Tactician\Exception\MissingHandlerException;
 use React\EventLoop\LoopInterface;
@@ -37,7 +36,7 @@ final class FactoryTest extends TestCase
             CommandLocatorEvent::NAME,
             CallbackListener::fromCallable(
                 function (CommandLocatorEvent $event) use (&$called) {
-                    //$this->assertSame([], $event->getMap());
+                    $this->assertSame([], $event->getMap());
                     $called = true;
                 }
             )

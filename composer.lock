@@ -4,9 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6882cba02696e2456a44c0fbf8d32a02",
-    "content-hash": "307679762157bfcaa8dba2197e305fb5",
+    "hash": "b3e8a168d7285b308de27d269ac872e1",
+    "content-hash": "30657c8ee3a9685fa40255d348014b63",
     "packages": [
+        {
+            "name": "api-clients/events",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-api-clients/events.git",
+                "reference": "3073760f3231e3f133a1325a487ea303632668d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-api-clients/events/zipball/3073760f3231e3f133a1325a487ea303632668d6",
+                "reference": "3073760f3231e3f133a1325a487ea303632668d6",
+                "shasum": ""
+            },
+            "require": {
+                "api-clients/test-utilities": "dev-master",
+                "league/event": "^2.1",
+                "php": "^7.0",
+                "wyrihaximus/tactician-command-handler-mapper": "^1.0"
+            },
+            "require-dev": {
+                "humbug/humbug": "1.0.0-alpha2",
+                "phake/phake": "^2.3",
+                "phpspec/prophecy": "^1.6",
+                "phpunit/phpunit": "^5.2.3",
+                "squizlabs/php_codesniffer": "^2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ApiClients\\Foundation\\Events\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                }
+            ],
+            "time": "2016-10-09 00:00:03"
+        },
         {
             "name": "api-clients/hydrator",
             "version": "dev-master",
@@ -120,12 +165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/test-utilities.git",
-                "reference": "2c206fc588329c0b652a6dc8f6f383a877549d51"
+                "reference": "9352c32ad2fb7fda6835aa86bce027153b1219a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/test-utilities/zipball/2c206fc588329c0b652a6dc8f6f383a877549d51",
-                "reference": "2c206fc588329c0b652a6dc8f6f383a877549d51",
+                "url": "https://api.github.com/repos/php-api-clients/test-utilities/zipball/9352c32ad2fb7fda6835aa86bce027153b1219a8",
+                "reference": "9352c32ad2fb7fda6835aa86bce027153b1219a8",
                 "shasum": ""
             },
             "require": {
@@ -152,7 +197,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-08 18:49:12"
+            "time": "2016-10-09 10:47:21"
         },
         {
             "name": "api-clients/transport",
@@ -160,20 +205,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "14d27b5966f8a4ea991ad1bcf4163296540cfe13"
+                "reference": "b19dd53991f4b1f8e97f590432c753b6fc04eb43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/14d27b5966f8a4ea991ad1bcf4163296540cfe13",
-                "reference": "14d27b5966f8a4ea991ad1bcf4163296540cfe13",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/b19dd53991f4b1f8e97f590432c753b6fc04eb43",
+                "reference": "b19dd53991f4b1f8e97f590432c753b6fc04eb43",
                 "shasum": ""
             },
             "require": {
-                "api-clients/hydrator": "dev-master",
+                "api-clients/events": "dev-master",
                 "api-clients/resource": "dev-master",
+                "api-clients/test-utilities": "dev-master",
                 "clue/block-react": "^1.1",
                 "doctrine/annotations": "^1.2",
                 "guzzlehttp/guzzle": "^6.2",
+                "league/container": "^2.2",
+                "league/event": "^2.1",
                 "php": "^7.0",
                 "react/cache": "^0.4.1",
                 "react/promise": "^2.4",
@@ -209,7 +257,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-08 13:14:11"
+            "time": "2016-10-09 10:49:57"
         },
         {
             "name": "clue/block-react",
@@ -2046,16 +2094,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.3.1",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "03500345483e1e17b52e2e4d34a89c9408ab2902"
+                "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/03500345483e1e17b52e2e4d34a89c9408ab2902",
-                "reference": "03500345483e1e17b52e2e4d34a89c9408ab2902",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/238d7a2723bce689c79eeac9c7d5e1d623bb9dc2",
+                "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2",
                 "shasum": ""
             },
             "require": {
@@ -2101,7 +2149,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-10-04 11:03:26"
+            "time": "2016-10-09 07:01:45"
         },
         {
             "name": "psr/http-message",
@@ -3958,6 +4006,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "api-clients/events": 20,
         "api-clients/hydrator": 20,
         "api-clients/test-utilities": 20,
         "api-clients/transport": 20
