@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b3e8a168d7285b308de27d269ac872e1",
-    "content-hash": "30657c8ee3a9685fa40255d348014b63",
+    "hash": "fca9d68e99b2c7b675657dcb82525399",
+    "content-hash": "eda2b652d09d13636f82e6d9aee538e9",
     "packages": [
         {
             "name": "api-clients/events",
@@ -205,12 +205,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "b19dd53991f4b1f8e97f590432c753b6fc04eb43"
+                "reference": "c85fab8d1d879aeb22280243a7bb1e83ba505f28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/b19dd53991f4b1f8e97f590432c753b6fc04eb43",
-                "reference": "b19dd53991f4b1f8e97f590432c753b6fc04eb43",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/c85fab8d1d879aeb22280243a7bb1e83ba505f28",
+                "reference": "c85fab8d1d879aeb22280243a7bb1e83ba505f28",
                 "shasum": ""
             },
             "require": {
@@ -257,7 +257,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-09 10:49:57"
+            "time": "2016-10-09 15:26:02"
         },
         {
             "name": "clue/block-react",
@@ -4008,8 +4008,8 @@
     "stability-flags": {
         "api-clients/events": 20,
         "api-clients/hydrator": 20,
-        "api-clients/test-utilities": 20,
-        "api-clients/transport": 20
+        "api-clients/transport": 20,
+        "api-clients/test-utilities": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
