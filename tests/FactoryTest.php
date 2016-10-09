@@ -36,7 +36,6 @@ final class FactoryTest extends TestCase
             CommandLocatorEvent::NAME,
             CallbackListener::fromCallable(
                 function (CommandLocatorEvent $event) use (&$called) {
-                    $this->assertSame([], $event->getMap());
                     $called = true;
                 }
             )

@@ -95,6 +95,6 @@ final class Factory
             throw new \Exception('Missing Hydrator options');
         }
 
-        return HydratorFactory::create($options[Options::HYDRATOR_OPTIONS]);
+        return HydratorFactory::create($container, $options[Options::HYDRATOR_OPTIONS]);
     }
 }
