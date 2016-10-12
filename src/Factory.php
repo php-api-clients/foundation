@@ -7,12 +7,12 @@ use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
+use ApiClients\Tools\CommandBus\CommandBus;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use League\Event\Emitter;
 use League\Event\EmitterInterface;
-use League\Tactician\CommandBus;
 use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
@@ -67,12 +67,13 @@ final class Factory
             new HandleInflector()
         );
 
-        return new CommandBus([
-            $commandHandlerMiddleware,
-        ]);
+        return new CommandBus(
+            $container->get(LoopInterface::class),
+            $commandHandlerMiddleware
+        );
     }
 
-    private static function mapCommandsToHandlers(Emitter $emitter): array
+    private static function mapCommandsToHandlers(EmitterInterface $emitter): array
     {
         return $emitter->emit(CommandLocatorEvent::create())->getMap();
     }

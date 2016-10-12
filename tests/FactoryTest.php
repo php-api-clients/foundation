@@ -11,16 +11,18 @@ use League\Container\Container;
 use League\Event\CallbackListener;
 use League\Event\EmitterInterface;
 use League\Tactician\Exception\MissingHandlerException;
-use React\EventLoop\LoopInterface;
+use React\EventLoop\Factory as LoopFactory;
+use Throwable;
+use function Clue\React\Block\await;
 
 final class FactoryTest extends TestCase
 {
     public function testCreate()
     {
-        $loop = $this->prophesize(LoopInterface::class);
+        $loop = LoopFactory::create();
 
         $client = Factory::create(
-            $loop->reveal(),
+            $loop,
             new Container(),
             [
                 Options::HYDRATOR_OPTIONS => [],
@@ -44,8 +46,8 @@ final class FactoryTest extends TestCase
         $this->assertFalse($called);
 
         try {
-            $client->handle(new class() {});
-        } catch (\Throwable $exception) {
+            await($client->handle(new class() {}), $loop);
+        } catch (Throwable $exception) {
 
         }
 

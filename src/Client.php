@@ -4,7 +4,8 @@ namespace ApiClients\Foundation;
 
 use InvalidArgumentException;
 use League\Container\ContainerInterface;
-use League\Tactician\CommandBus;
+use ApiClients\Tools\CommandBus\CommandBus;
+use React\Promise\CancellablePromiseInterface;
 
 final class Client
 {
@@ -33,7 +34,7 @@ final class Client
         return $this->container;
     }
 
-    public function handle($command)
+    public function handle($command): CancellablePromiseInterface
     {
         return $this->container->get(CommandBus::class)->handle($command);
     }

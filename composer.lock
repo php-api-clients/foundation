@@ -4,9 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fca9d68e99b2c7b675657dcb82525399",
-    "content-hash": "eda2b652d09d13636f82e6d9aee538e9",
+    "hash": "2283e0db333dac7e67225891be66f609",
+    "content-hash": "d23016c818f89ddca7428df043cb6634",
     "packages": [
+        {
+            "name": "api-clients/command-bus",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-api-clients/command-bus.git",
+                "reference": "aa851059c0377984dee054a460aeeee645b42f77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-api-clients/command-bus/zipball/aa851059c0377984dee054a460aeeee645b42f77",
+                "reference": "aa851059c0377984dee054a460aeeee645b42f77",
+                "shasum": ""
+            },
+            "require": {
+                "league/tactician": "^1.0",
+                "php": "^7.0",
+                "react/event-loop": "^0.4.2",
+                "wyrihaximus/ticking-promise": "^1.6"
+            },
+            "require-dev": {
+                "api-clients/test-utilities": "dev-master",
+                "clue/block-react": "^1.1",
+                "phake/phake": "^2.3",
+                "phpunit/phpunit": "^5.2.3",
+                "squizlabs/php_codesniffer": "^2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ApiClients\\Tools\\CommandBus\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                }
+            ],
+            "time": "2016-10-11 19:37:47"
+        },
         {
             "name": "api-clients/events",
             "version": "dev-master",
@@ -58,20 +103,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/hydrator.git",
-                "reference": "06b165cf74fe21bb984bbb87d3dcdef01da980be"
+                "reference": "8e0a9e2ef6ada3f2d9fdf4c87240482bcecdc243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/06b165cf74fe21bb984bbb87d3dcdef01da980be",
-                "reference": "06b165cf74fe21bb984bbb87d3dcdef01da980be",
+                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/8e0a9e2ef6ada3f2d9fdf4c87240482bcecdc243",
+                "reference": "8e0a9e2ef6ada3f2d9fdf4c87240482bcecdc243",
                 "shasum": ""
             },
             "require": {
+                "api-clients/events": "dev-master",
                 "api-clients/resource": "dev-master",
                 "clue/block-react": "^1.1",
+                "container-interop/container-interop": "^1.1",
                 "doctrine/annotations": "^1.2",
                 "doctrine/cache": "^1.6",
                 "guzzlehttp/guzzle": "^6.0",
+                "league/container": "^2.2",
                 "league/tactician": "^1.0",
                 "ocramius/generated-hydrator": "^2.0",
                 "php": "^7.0",
@@ -82,6 +130,7 @@
                 "wyrihaximus/ticking-promise": "^1.6"
             },
             "require-dev": {
+                "api-clients/test-utilities": "dev-master",
                 "phake/phake": "^2.3",
                 "phpbench/phpbench": "^0.11",
                 "phpspec/prophecy": "^1.6",
@@ -113,7 +162,7 @@
                 }
             ],
             "description": "Hydrator wrapping ocramius/generated-hydrator specifically for api clients",
-            "time": "2016-10-08 09:05:04"
+            "time": "2016-10-09 16:52:41"
         },
         {
             "name": "api-clients/resource",
@@ -205,12 +254,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "c85fab8d1d879aeb22280243a7bb1e83ba505f28"
+                "reference": "86e472aa2a158adec351321ae8682d3ceb130e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/c85fab8d1d879aeb22280243a7bb1e83ba505f28",
-                "reference": "c85fab8d1d879aeb22280243a7bb1e83ba505f28",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/86e472aa2a158adec351321ae8682d3ceb130e66",
+                "reference": "86e472aa2a158adec351321ae8682d3ceb130e66",
                 "shasum": ""
             },
             "require": {
@@ -257,7 +306,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-09 15:26:02"
+            "time": "2016-10-09 16:25:39"
         },
         {
             "name": "clue/block-react",
@@ -4006,6 +4055,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "api-clients/command-bus": 20,
         "api-clients/events": 20,
         "api-clients/hydrator": 20,
         "api-clients/transport": 20,

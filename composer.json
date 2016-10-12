@@ -11,12 +11,12 @@
   ],
   "require": {
     "php": "^7.0",
+    "api-clients/command-bus": "dev-master",
     "api-clients/events": "dev-master",
     "api-clients/hydrator": "dev-master",
     "api-clients/transport": "dev-master",
     "league/container": "^2.2",
     "league/event": "^2.1",
-    "league/tactician": "^1.0",
     "league/tactician-container": "^1.0",
     "wyrihaximus/tactician-command-handler-mapper": "^1.0"
   },
