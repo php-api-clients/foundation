@@ -26,6 +26,7 @@ final class FactoryTest extends TestCase
             new Container(),
             [
                 Options::HYDRATOR_OPTIONS => [],
+                Options::TRANSPORT_OPTIONS => [],
             ]
         );
 
