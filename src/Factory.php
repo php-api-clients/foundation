@@ -83,7 +83,7 @@ final class Factory
         LoopInterface $loop = null,
         array $options = []
     ): TransportClient {
-        return TransportFactory::create($container, $loop, $options);
+        return TransportFactory::create($container, $loop, $options[Options::TRANSPORT_OPTIONS]);
     }
 
     private static function createHydrator(ContainerInterface $container, array $options = [])
