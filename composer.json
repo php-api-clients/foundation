@@ -14,6 +14,7 @@
     "api-clients/command-bus": "dev-master",
     "api-clients/events": "dev-master",
     "api-clients/hydrator": "dev-master",
+    "api-clients/service": "dev-master",
     "api-clients/transport": "dev-master",
     "league/container": "^2.2",
     "league/event": "^2.1",

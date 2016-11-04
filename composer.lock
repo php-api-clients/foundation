@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2283e0db333dac7e67225891be66f609",
-    "content-hash": "d23016c818f89ddca7428df043cb6634",
+    "hash": "36941af79ca2857e1e3dba8be0d0b3cf",
+    "content-hash": "e21fbc0a34e5b86d9dd5973e7b37eff4",
     "packages": [
         {
             "name": "api-clients/command-bus",
@@ -58,15 +58,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/events.git",
-                "reference": "3073760f3231e3f133a1325a487ea303632668d6"
+                "reference": "6d4d755b86babfd01d17fb6ec47f0feb0cc4cc02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/events/zipball/3073760f3231e3f133a1325a487ea303632668d6",
-                "reference": "3073760f3231e3f133a1325a487ea303632668d6",
+                "url": "https://api.github.com/repos/php-api-clients/events/zipball/6d4d755b86babfd01d17fb6ec47f0feb0cc4cc02",
+                "reference": "6d4d755b86babfd01d17fb6ec47f0feb0cc4cc02",
                 "shasum": ""
             },
             "require": {
+                "api-clients/service": "dev-master",
                 "api-clients/test-utilities": "dev-master",
                 "league/event": "^2.1",
                 "php": "^7.0",
@@ -95,7 +96,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-09 00:00:03"
+            "time": "2016-11-03 21:19:35"
         },
         {
             "name": "api-clients/hydrator",
@@ -207,6 +208,44 @@
                 }
             ],
             "time": "2016-10-02 17:08:56"
+        },
+        {
+            "name": "api-clients/service",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-api-clients/service.git",
+                "reference": "1085ed0ff137f2e36fd8ff49ee25bf451c42dc3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-api-clients/service/zipball/1085ed0ff137f2e36fd8ff49ee25bf451c42dc3d",
+                "reference": "1085ed0ff137f2e36fd8ff49ee25bf451c42dc3d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "api-clients/test-utilities": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ApiClients\\Foundation\\Service\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                }
+            ],
+            "time": "2016-11-03 20:56:51"
         },
         {
             "name": "api-clients/test-utilities",
@@ -4058,6 +4097,7 @@
         "api-clients/command-bus": 20,
         "api-clients/events": 20,
         "api-clients/hydrator": 20,
+        "api-clients/service": 20,
         "api-clients/transport": 20,
         "api-clients/test-utilities": 20
     },

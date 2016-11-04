@@ -3,11 +3,13 @@
 namespace ApiClients\Foundation;
 
 use ApiClients\Foundation\Events\CommandLocatorEvent;
+use ApiClients\Foundation\Events\ServiceLocatorEvent;
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBus;
+use Generator;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
@@ -34,6 +36,12 @@ final class Factory
         $container->share(CommandBus::class, function () use ($container) {
             return self::createCommandBus($container);
         });
+        array_map(
+            [$container, 'share'],
+            iterator_to_array(
+                self::locateServices($container->get(EmitterInterface::class))
+            )
+        );
 
         return new Client(
             $container
@@ -76,6 +84,11 @@ final class Factory
     private static function mapCommandsToHandlers(EmitterInterface $emitter): array
     {
         return $emitter->emit(CommandLocatorEvent::create())->getMap();
+    }
+
+    private static function locateServices(EmitterInterface $emitter): Generator
+    {
+        return $emitter->emit(ServiceLocatorEvent::create())->getMap();
     }
 
     private static function createTransport(
