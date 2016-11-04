@@ -36,12 +36,10 @@ final class Factory
         $container->share(CommandBus::class, function () use ($container) {
             return self::createCommandBus($container);
         });
-        array_map(
-            [$container, 'share'],
-            iterator_to_array(
-                self::locateServices($container->get(EmitterInterface::class))
-            )
-        );
+
+        foreach (self::locateServices($container->get(EmitterInterface::class)) as $service) {
+            $container->share($service);
+        }
 
         return new Client(
             $container
