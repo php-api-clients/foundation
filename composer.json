@@ -19,6 +19,7 @@
     "league/container": "^2.2",
     "league/event": "^2.1",
     "league/tactician-container": "^1.0",
+    "php-di/php-di": "^5.4",
     "wyrihaximus/tactician-command-handler-mapper": "^1.0"
   },
   "require-dev": {

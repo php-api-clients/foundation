@@ -9,11 +9,10 @@ use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBus;
+use DI\ContainerBuilder;
 use Generator;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
-use League\Container\ReflectionContainer;
-use League\Event\Emitter;
 use League\Event\EmitterInterface;
 use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
@@ -25,37 +24,35 @@ final class Factory
 {
     public static function create(
         LoopInterface $loop = null,
-        ContainerInterface $wrappedContainer = null,
         array $options = []
     ): Client {
-        $container = self::createContainer($wrappedContainer);
-
-        $container->share(EmitterInterface::class, new Emitter());
-        $container->share(TransportClient::class, self::createTransport($container, $loop, $options));
-        $container->share(Hydrator::class, self::createHydrator($container, $options));
-        $container->share(CommandBus::class, function () use ($container) {
-            return self::createCommandBus($container);
-        });
-
-        foreach (self::locateServices($container->get(EmitterInterface::class)) as $service) {
-            $container->share($service);
-        }
-
         return new Client(
-            $container
+            self::createContainer($loop, $options)
         );
     }
 
-    private static function createContainer(ContainerInterface $wrappedContainer = null): Container
+    private static function createContainer(LoopInterface $loop, array $options): Container
     {
-        $container = new Container();
-        $container->delegate(new ReflectionContainer());
+        $container = new ContainerBuilder();
 
-        if ($wrappedContainer instanceof ContainerInterface) {
-            $container->delegate($wrappedContainer);
-        }
+        $container->addDefinitions([
+            LoopInterface::class => $loop,
+            TransportClient::class => function (ContainerInterface $container, LoopInterface $loop) use ($options) {
+                return self::createTransport($container, $loop, $options);
+            },
+            Hydrator::class => function (ContainerInterface $container) use ($options) {
+                return self::createHydrator($container, $options);
+            },
+            CommandBus::class => function (ContainerInterface $container) {
+                return self::createCommandBus($container);
+            },
+        ]);
 
-        return $container;
+        /*foreach (self::locateServices($container->get(EmitterInterface::class)) as $service) {
+            $container->share($service);
+        }*/
+
+        return $container->build();
     }
 
     private static function createCommandBus(ContainerInterface $container): CommandBus
