@@ -2,9 +2,9 @@
 
 namespace ApiClients\Foundation;
 
-use InvalidArgumentException;
-use League\Container\ContainerInterface;
 use ApiClients\Tools\CommandBus\CommandBus;
+use Interop\Container\ContainerInterface;
+use InvalidArgumentException;
 use React\Promise\CancellablePromiseInterface;
 
 final class Client
