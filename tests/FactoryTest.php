@@ -7,7 +7,6 @@ use ApiClients\Foundation\Events\CommandLocatorEvent;
 use ApiClients\Foundation\Factory;
 use ApiClients\Foundation\Options;
 use ApiClients\Tools\TestUtilities\TestCase;
-use League\Container\Container;
 use League\Event\CallbackListener;
 use League\Event\EmitterInterface;
 use League\Tactician\Exception\MissingHandlerException;
@@ -23,7 +22,6 @@ final class FactoryTest extends TestCase
 
         $client = Factory::create(
             $loop,
-            new Container(),
             [
                 Options::HYDRATOR_OPTIONS => [],
                 Options::TRANSPORT_OPTIONS => [],

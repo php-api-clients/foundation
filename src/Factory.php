@@ -12,7 +12,7 @@ use ApiClients\Tools\CommandBus\CommandBus;
 use DI\ContainerBuilder;
 use Generator;
 use Interop\Container\ContainerInterface;
-use League\Container\Container;
+use League\Event\Emitter;
 use League\Event\EmitterInterface;
 use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandHandlerMiddleware;
@@ -31,11 +31,12 @@ final class Factory
         );
     }
 
-    private static function createContainer(LoopInterface $loop, array $options): Container
+    private static function createContainer(LoopInterface $loop, array $options): ContainerInterface
     {
         $container = new ContainerBuilder();
 
         $container->addDefinitions([
+            EmitterInterface::class => new Emitter(),
             LoopInterface::class => $loop,
             TransportClient::class => function (ContainerInterface $container, LoopInterface $loop) use ($options) {
                 return self::createTransport($container, $loop, $options);
