@@ -4,27 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f85fd9f1059f8965b255aad013026e97",
-    "content-hash": "0c0cb8413c43920b3e9c0c8def752c11",
+    "hash": "78ba73e7a7e7acb5e617883c0da30dc3",
+    "content-hash": "582996981b2bcf48e4a92dacdeca4825",
     "packages": [
         {
             "name": "api-clients/command-bus",
-            "version": "dev-master",
+            "version": "dev-feature-factory",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/command-bus.git",
-                "reference": "aa851059c0377984dee054a460aeeee645b42f77"
+                "reference": "10976c1379e6ddd8976a2f41cefd7ff6212c74d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/command-bus/zipball/aa851059c0377984dee054a460aeeee645b42f77",
-                "reference": "aa851059c0377984dee054a460aeeee645b42f77",
+                "url": "https://api.github.com/repos/php-api-clients/command-bus/zipball/10976c1379e6ddd8976a2f41cefd7ff6212c74d1",
+                "reference": "10976c1379e6ddd8976a2f41cefd7ff6212c74d1",
                 "shasum": ""
             },
             "require": {
+                "container-interop/container-interop": "^1.1",
+                "igorw/get-in": "^1.0",
+                "joshdifabio/composed": "^1.0",
                 "league/tactician": "^1.0",
+                "league/tactician-container": "^1.0",
                 "php": "^7.0",
                 "react/event-loop": "^0.4.2",
+                "wyrihaximus/tactician-command-handler-mapper": "^1.0",
                 "wyrihaximus/ticking-promise": "^1.6"
             },
             "require-dev": {
@@ -50,7 +55,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-11 19:37:47"
+            "time": "2016-11-13 17:54:32"
         },
         {
             "name": "api-clients/events",
@@ -152,6 +157,47 @@
             ],
             "description": "Hydrator wrapping ocramius/generated-hydrator specifically for api clients",
             "time": "2016-11-09 09:04:01"
+        },
+        {
+            "name": "api-clients/middleware",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-api-clients/middleware.git",
+                "reference": "c5537587160f3c766aa6eda45a3750ac2920d193"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-api-clients/middleware/zipball/c5537587160f3c766aa6eda45a3750ac2920d193",
+                "reference": "c5537587160f3c766aa6eda45a3750ac2920d193",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "psr/http-message": "^1.0",
+                "react/promise": "^2.4"
+            },
+            "require-dev": {
+                "api-clients/test-utilities": "dev-master",
+                "guzzlehttp/psr7": "^1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ApiClients\\Foundation\\Middleware\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                }
+            ],
+            "time": "2016-11-12 20:49:55"
         },
         {
             "name": "api-clients/resource",
@@ -283,41 +329,44 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "435b11c843f891bce932ab678068875e1c6590da"
+                "reference": "233f15661f7d59bafcbfd028c285c487eddde973"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/435b11c843f891bce932ab678068875e1c6590da",
-                "reference": "435b11c843f891bce932ab678068875e1c6590da",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/233f15661f7d59bafcbfd028c285c487eddde973",
+                "reference": "233f15661f7d59bafcbfd028c285c487eddde973",
                 "shasum": ""
             },
             "require": {
                 "api-clients/events": "dev-master",
+                "api-clients/middleware": "dev-master",
                 "api-clients/resource": "dev-master",
+                "api-clients/service": "dev-master",
                 "api-clients/test-utilities": "dev-master",
                 "clue/block-react": "^1.1",
+                "clue/buzz-react": "^1.1",
+                "container-interop/container-interop": "^1.1",
+                "daverandom/exceptional-json": "^1.0.1",
                 "doctrine/annotations": "^1.2",
-                "guzzlehttp/guzzle": "^6.2",
-                "league/container": "^2.2",
                 "league/event": "^2.1",
                 "php": "^7.0",
                 "react/cache": "^0.4.1",
                 "react/promise": "^2.4",
-                "reactivex/rxphp": "^1.2",
-                "wyrihaximus/react-guzzle-psr7": "^1.0",
+                "reactivex/rxphp": "^1.4",
                 "wyrihaximus/ticking-promise": "^1.6"
             },
             "require-dev": {
                 "humbug/humbug": "1.0.0-alpha2",
                 "phake/phake": "^2.3",
+                "php-di/php-di": "^5.4",
                 "phpspec/prophecy": "^1.6",
                 "phpunit/phpunit": "^5.2.3",
                 "squizlabs/php_codesniffer": "^2.6"
             },
             "suggest": {
-                "api-clients/resource-generator": "Easy wireframing of resources",
-                "wyrihaximus/react-cache-filesystem": "Filesystem cache",
-                "wyrihaximus/react-cache-redis": "Redis cache"
+                "api-clients/middleware-cache": "Caching middleware",
+                "api-clients/middleware-oauth1": "Oauth 1.0 middleware",
+                "api-clients/resource-generator": "Easy wireframing of resources"
             },
             "type": "library",
             "autoload": {
@@ -335,7 +384,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-10-16 19:14:55"
+            "time": "2016-11-13 11:48:41"
         },
         {
             "name": "clue/block-react",
@@ -386,6 +435,61 @@
             "time": "2016-03-09 15:10:22"
         },
         {
+            "name": "clue/buzz-react",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clue/php-buzz-react.git",
+                "reference": "693c96d35f0cd0e4f0e1a51b976433a91792eff9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clue/php-buzz-react/zipball/693c96d35f0cd0e4f0e1a51b976433a91792eff9",
+                "reference": "693c96d35f0cd0e4f0e1a51b976433a91792eff9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "psr/http-message": "^1.0",
+                "react/dns": "^0.4.1 || ^0.3",
+                "react/event-loop": "^0.4 || ^0.3",
+                "react/http-client": "^0.4 || ^0.3",
+                "react/promise": "^2 || ^1.1",
+                "react/socket-client": "^0.5 || ^0.4.5",
+                "react/stream": "^0.4 || ^0.3.1",
+                "ringcentral/psr7": "^1.2"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.0",
+                "phpunit/phpunit": "^4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clue\\React\\Buzz\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@lueck.tv"
+                }
+            ],
+            "description": "Simple, async HTTP client for concurrently processing any number of HTTP requests, built on top of React PHP",
+            "homepage": "https://github.com/clue/php-buzz-react",
+            "keywords": [
+                "async",
+                "http",
+                "http client",
+                "reactphp"
+            ],
+            "time": "2016-10-21 10:29:37"
+        },
+        {
             "name": "container-interop/container-interop",
             "version": "1.1.0",
             "source": {
@@ -411,6 +515,41 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "time": "2014-12-30 15:22:37"
+        },
+        {
+            "name": "daverandom/exceptional-json",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DaveRandom/ExceptionalJSON.git",
+                "reference": "4998f41b4da90b3720ecb4f895ca488f0f2c83f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DaveRandom/ExceptionalJSON/zipball/4998f41b4da90b3720ecb4f895ca488f0f2c83f7",
+                "reference": "4998f41b4da90b3720ecb4f895ca488f0f2c83f7",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ExceptionalJSON\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Wright"
+                }
+            ],
+            "description": "JSON encoding and decoding that throws exceptions on failure",
+            "time": "2016-05-04 15:52:54"
         },
         {
             "name": "doctrine/annotations",
@@ -941,6 +1080,100 @@
                 "unit testing"
             ],
             "time": "2016-08-01 10:27:00"
+        },
+        {
+            "name": "igorw/get-in",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/igorw/get-in.git",
+                "reference": "170ded831f49abc6a6061f655aba9bdbcf7b8111"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/igorw/get-in/zipball/170ded831f49abc6a6061f655aba9bdbcf7b8111",
+                "reference": "170ded831f49abc6a6061f655aba9bdbcf7b8111",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/get_in.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                }
+            ],
+            "description": "Functions for for hash map (assoc array) traversal.",
+            "keywords": [
+                "assoc-array",
+                "hash-map"
+            ],
+            "time": "2014-12-15 23:03:51"
+        },
+        {
+            "name": "joshdifabio/composed",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joshdifabio/composed.git",
+                "reference": "ba6019e070679a4bf371bbf92a2093bc73c99d07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joshdifabio/composed/zipball/ba6019e070679a4bf371bbf92a2093bc73c99d07",
+                "reference": "ba6019e070679a4bf371bbf92a2093bc73c99d07",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composed\\": "src"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Di Fabio",
+                    "email": "joshdifabio@gmail.com"
+                }
+            ],
+            "description": "Easily parse your project's Composer configuration, and those of its dependencies, at runtime.",
+            "keywords": [
+                "composer",
+                "dependency",
+                "package"
+            ],
+            "time": "2015-07-16 22:30:20"
         },
         {
             "name": "league/container",
@@ -2904,6 +3137,64 @@
             "time": "2016-08-23 17:17:58"
         },
         {
+            "name": "ringcentral/psr7",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ringcentral/psr7.git",
+                "reference": "2594fb47cdc659f3fcf0aa1559b7355460555303"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ringcentral/psr7/zipball/2594fb47cdc659f3fcf0aa1559b7355460555303",
+                "reference": "2594fb47cdc659f3fcf0aa1559b7355460555303",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "psr/http-message": "~1.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RingCentral\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "PSR-7 message implementation",
+            "keywords": [
+                "http",
+                "message",
+                "stream",
+                "uri"
+            ],
+            "time": "2016-03-25 17:36:49"
+        },
+        {
             "name": "sebastian/code-unit-reverse-lookup",
             "version": "1.0.0",
             "source": {
@@ -4221,7 +4512,14 @@
         }
     ],
     "packages-dev": [],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-feature-factory",
+            "package": "api-clients/command-bus"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "api-clients/command-bus": 20,

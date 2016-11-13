@@ -2,22 +2,16 @@
 
 namespace ApiClients\Foundation;
 
-use ApiClients\Foundation\Events\CommandLocatorEvent;
-use ApiClients\Foundation\Events\ServiceLocatorEvent;
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBus;
+use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
 use DI\ContainerBuilder;
-use Generator;
 use Interop\Container\ContainerInterface;
 use League\Event\Emitter;
 use League\Event\EmitterInterface;
-use League\Tactician\Container\ContainerLocator;
-use League\Tactician\Handler\CommandHandlerMiddleware;
-use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
-use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use React\EventLoop\LoopInterface;
 
 final class Factory
@@ -45,46 +39,11 @@ final class Factory
                 return self::createHydrator($container, $options);
             },
             CommandBus::class => function (ContainerInterface $container) {
-                return self::createCommandBus($container);
+                return CommandBusFactory::create($container);
             },
         ]);
 
-        /*foreach (self::locateServices($container->get(EmitterInterface::class)) as $service) {
-            $container->share($service);
-        }*/
-
         return $container->build();
-    }
-
-    private static function createCommandBus(ContainerInterface $container): CommandBus
-    {
-        $commandToHandlerMap = self::mapCommandsToHandlers($container->get(EmitterInterface::class));
-
-        $containerLocator = new ContainerLocator(
-            $container,
-            $commandToHandlerMap
-        );
-
-        $commandHandlerMiddleware = new CommandHandlerMiddleware(
-            new ClassNameExtractor(),
-            $containerLocator,
-            new HandleInflector()
-        );
-
-        return new CommandBus(
-            $container->get(LoopInterface::class),
-            $commandHandlerMiddleware
-        );
-    }
-
-    private static function mapCommandsToHandlers(EmitterInterface $emitter): array
-    {
-        return $emitter->emit(CommandLocatorEvent::create())->getMap();
-    }
-
-    private static function locateServices(EmitterInterface $emitter): Generator
-    {
-        return $emitter->emit(ServiceLocatorEvent::create())->getMap();
     }
 
     private static function createTransport(
