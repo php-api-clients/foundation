@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": "^7.0",
-    "api-clients/command-bus": "dev-feature-factory as dev-master",
+    "api-clients/command-bus": "dev-master",
     "api-clients/events": "dev-master",
     "api-clients/hydrator": "dev-master",
     "api-clients/service": "dev-master",
