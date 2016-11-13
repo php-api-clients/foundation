@@ -324,12 +324,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "233f15661f7d59bafcbfd028c285c487eddde973"
+                "reference": "4185a6f175281f49290e600b528c8121ec3c0823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/233f15661f7d59bafcbfd028c285c487eddde973",
-                "reference": "233f15661f7d59bafcbfd028c285c487eddde973",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/4185a6f175281f49290e600b528c8121ec3c0823",
+                "reference": "4185a6f175281f49290e600b528c8121ec3c0823",
                 "shasum": ""
             },
             "require": {
@@ -364,6 +364,14 @@
                 "api-clients/resource-generator": "Easy wireframing of resources"
             },
             "type": "library",
+            "extra": {
+                "api-clients": {
+                    "command-bus": {
+                        "path": "src/CommandBus",
+                        "namespace": "ApiClients\\Foundation\\Transport\\CommandBus"
+                    }
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "ApiClients\\Foundation\\Transport\\": "src/"
@@ -379,7 +387,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-11-13 11:48:41"
+            "time": "2016-11-13 18:05:08"
         },
         {
             "name": "clue/block-react",
