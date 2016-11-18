@@ -12,7 +12,6 @@
   "require": {
     "php": "^7.0",
     "api-clients/command-bus": "dev-master",
-    "api-clients/events": "dev-master",
     "api-clients/hydrator": "dev-master",
     "api-clients/service": "dev-master",
     "api-clients/transport": "dev-master",
@@ -20,12 +19,7 @@
     "php-di/php-di": "^5.4"
   },
   "require-dev": {
-    "api-clients/test-utilities": "dev-master",
-    "humbug/humbug": "1.0.0-alpha2",
-    "phake/phake": "^2.3",
-    "phpspec/prophecy": "^1.6",
-    "phpunit/phpunit": "^5.2.3",
-    "squizlabs/php_codesniffer": "^2.6"
+    "api-clients/test-utilities": "dev-master"
   },
   "suggest": {
     "api-clients/resource-generator": "Easy wireframing of resources",
