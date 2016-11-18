@@ -45,6 +45,15 @@ final class ClientTest extends TestCase
         $client = new Client($container);
 
         $this->assertSame($container, $client->getContainer());
+        $this->assertSame($commandBus, $client->getFromContainer(CommandBus::class));
         $this->assertSame($command, await($client->handle($command), $loop));
+    }
+
+    /**
+     * @expectedException \DI\Definition\Exception\DefinitionException
+     */
+    public function testCommandBusMissing()
+    {
+        new Client(ContainerBuilder::buildDevContainer());
     }
 }

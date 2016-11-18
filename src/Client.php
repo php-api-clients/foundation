@@ -4,7 +4,6 @@ namespace ApiClients\Foundation;
 
 use ApiClients\Tools\CommandBus\CommandBus;
 use Interop\Container\ContainerInterface;
-use InvalidArgumentException;
 use React\Promise\CancellablePromiseInterface;
 
 final class Client
@@ -15,15 +14,17 @@ final class Client
     private $container;
 
     /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
+    /**
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-
-        if (!$this->container->has(CommandBus::class)) {
-            throw new InvalidArgumentException();
-        }
+        $this->commandBus = $this->container->get(CommandBus::class);
     }
 
     /**
@@ -34,8 +35,20 @@ final class Client
         return $this->container;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFromContainer(string $id)
+    {
+        return $this->container->get($id);
+    }
+
+    /**
+     * @param $command
+     * @return CancellablePromiseInterface
+     */
     public function handle($command): CancellablePromiseInterface
     {
-        return $this->container->get(CommandBus::class)->handle($command);
+        return $this->commandBus->handle($command);
     }
 }
