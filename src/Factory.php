@@ -2,109 +2,67 @@
 
 namespace ApiClients\Foundation;
 
-use ApiClients\Foundation\Events\CommandLocatorEvent;
-use ApiClients\Foundation\Events\ServiceLocatorEvent;
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBus;
-use Generator;
+use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
+use DI\ContainerBuilder;
 use Interop\Container\ContainerInterface;
-use League\Container\Container;
-use League\Container\ReflectionContainer;
+use InvalidArgumentException;
 use League\Event\Emitter;
 use League\Event\EmitterInterface;
-use League\Tactician\Container\ContainerLocator;
-use League\Tactician\Handler\CommandHandlerMiddleware;
-use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
-use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use React\EventLoop\LoopInterface;
 
 final class Factory
 {
     public static function create(
-        LoopInterface $loop = null,
-        ContainerInterface $wrappedContainer = null,
+        LoopInterface $loop,
         array $options = []
     ): Client {
-        $container = self::createContainer($wrappedContainer);
-
-        $container->share(EmitterInterface::class, new Emitter());
-        $container->share(TransportClient::class, self::createTransport($container, $loop, $options));
-        $container->share(Hydrator::class, self::createHydrator($container, $options));
-        $container->share(CommandBus::class, function () use ($container) {
-            return self::createCommandBus($container);
-        });
-
-        foreach (self::locateServices($container->get(EmitterInterface::class)) as $service) {
-            $container->share($service);
-        }
-
         return new Client(
-            $container
+            self::createContainer($loop, $options)
         );
     }
 
-    private static function createContainer(ContainerInterface $wrappedContainer = null): Container
+    private static function createContainer(LoopInterface $loop, array $options): ContainerInterface
     {
-        $container = new Container();
-        $container->delegate(new ReflectionContainer());
+        $container = new ContainerBuilder();
 
-        if ($wrappedContainer instanceof ContainerInterface) {
-            $container->delegate($wrappedContainer);
-        }
+        $container->addDefinitions([
+            EmitterInterface::class => new Emitter(),
+            LoopInterface::class => $loop,
+            TransportClient::class => function (ContainerInterface $container, LoopInterface $loop) use ($options) {
+                return self::createTransport($container, $loop, $options);
+            },
+            Hydrator::class => function (ContainerInterface $container) use ($options) {
+                return self::createHydrator($container, $options);
+            },
+            CommandBus::class => function (ContainerInterface $container) {
+                return CommandBusFactory::create($container);
+            },
+        ]);
 
-        return $container;
-    }
-
-    private static function createCommandBus(ContainerInterface $container): CommandBus
-    {
-        $commandToHandlerMap = self::mapCommandsToHandlers($container->get(EmitterInterface::class));
-
-        $containerLocator = new ContainerLocator(
-            $container,
-            $commandToHandlerMap
-        );
-
-        $commandHandlerMiddleware = new CommandHandlerMiddleware(
-            new ClassNameExtractor(),
-            $containerLocator,
-            new HandleInflector()
-        );
-
-        return new CommandBus(
-            $container->get(LoopInterface::class),
-            $commandHandlerMiddleware
-        );
-    }
-
-    private static function mapCommandsToHandlers(EmitterInterface $emitter): array
-    {
-        return $emitter->emit(CommandLocatorEvent::create())->getMap();
-    }
-
-    private static function locateServices(EmitterInterface $emitter): Generator
-    {
-        return $emitter->emit(ServiceLocatorEvent::create())->getMap();
+        return $container->build();
     }
 
     private static function createTransport(
         ContainerInterface $container,
-        LoopInterface $loop = null,
+        LoopInterface $loop,
         array $options = []
     ): TransportClient {
+        if (!isset($options[Options::TRANSPORT_OPTIONS])) {
+            throw new InvalidArgumentException('Missing Transport options');
+        }
+
         return TransportFactory::create($container, $loop, $options[Options::TRANSPORT_OPTIONS]);
     }
 
     private static function createHydrator(ContainerInterface $container, array $options = [])
     {
-        if (isset($options[Options::HYDRATOR]) && $options[Options::HYDRATOR] instanceof Hydrator) {
-            return $options[Options::HYDRATOR];
-        }
-
         if (!isset($options[Options::HYDRATOR_OPTIONS])) {
-            throw new \Exception('Missing Hydrator options');
+            throw new InvalidArgumentException('Missing Hydrator options');
         }
 
         return HydratorFactory::create($container, $options[Options::HYDRATOR_OPTIONS]);

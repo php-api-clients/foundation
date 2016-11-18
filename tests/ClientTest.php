@@ -5,8 +5,7 @@ namespace ApiClients\Tests\Foundation;
 use ApiClients\Foundation\Client;
 use ApiClients\Tools\CommandBus\CommandBus;
 use ApiClients\Tools\TestUtilities\TestCase;
-use InvalidArgumentException;
-use League\Container\Container;
+use DI\ContainerBuilder;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\Locator\InMemoryLocator;
@@ -41,19 +40,20 @@ final class ClientTest extends TestCase
 
         $commandBus = new CommandBus($loop, $handlerMiddleware);
 
-        $container = new Container();
-        $container->share(CommandBus::class, $commandBus);
+        $container = ContainerBuilder::buildDevContainer();
+        $container->set(CommandBus::class, $commandBus);
         $client = new Client($container);
 
         $this->assertSame($container, $client->getContainer());
+        $this->assertSame($commandBus, $client->getFromContainer(CommandBus::class));
         $this->assertSame($command, await($client->handle($command), $loop));
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \DI\Definition\Exception\DefinitionException
      */
-    public function testMissingCommandBus()
+    public function testCommandBusMissing()
     {
-        new Client(new Container());
+        new Client(ContainerBuilder::buildDevContainer());
     }
 }
