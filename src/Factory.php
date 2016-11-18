@@ -10,6 +10,7 @@ use ApiClients\Tools\CommandBus\CommandBus;
 use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
 use DI\ContainerBuilder;
 use Interop\Container\ContainerInterface;
+use InvalidArgumentException;
 use League\Event\Emitter;
 use League\Event\EmitterInterface;
 use React\EventLoop\LoopInterface;
@@ -51,17 +52,17 @@ final class Factory
         LoopInterface $loop = null,
         array $options = []
     ): TransportClient {
+        if (!isset($options[Options::TRANSPORT_OPTIONS])) {
+            throw new InvalidArgumentException('Missing Transport options');
+        }
+
         return TransportFactory::create($container, $loop, $options[Options::TRANSPORT_OPTIONS]);
     }
 
     private static function createHydrator(ContainerInterface $container, array $options = [])
     {
-        if (isset($options[Options::HYDRATOR]) && $options[Options::HYDRATOR] instanceof Hydrator) {
-            return $options[Options::HYDRATOR];
-        }
-
         if (!isset($options[Options::HYDRATOR_OPTIONS])) {
-            throw new \Exception('Missing Hydrator options');
+            throw new InvalidArgumentException('Missing Hydrator options');
         }
 
         return HydratorFactory::create($container, $options[Options::HYDRATOR_OPTIONS]);

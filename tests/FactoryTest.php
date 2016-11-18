@@ -3,14 +3,15 @@
 namespace ApiClients\Tests\Foundation;
 
 use ApiClients\Foundation\Client;
-use ApiClients\Foundation\Events\CommandLocatorEvent;
 use ApiClients\Foundation\Factory;
+use ApiClients\Foundation\Hydrator\Hydrator;
+use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Options;
 use ApiClients\Tools\TestUtilities\TestCase;
-use League\Event\CallbackListener;
-use League\Event\EmitterInterface;
+use InvalidArgumentException;
 use League\Tactician\Exception\MissingHandlerException;
 use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\LoopInterface;
 use Throwable;
 use function Clue\React\Block\await;
 
@@ -31,18 +32,10 @@ final class FactoryTest extends TestCase
         $this->assertInstanceOf(Client::class, $client);
 
         $container = $client->getContainer();
-
-        $called = false;
-        $container->get(EmitterInterface::class)->addListener(
-            CommandLocatorEvent::NAME,
-            CallbackListener::fromCallable(
-                function (CommandLocatorEvent $event) use (&$called) {
-                    $called = true;
-                }
-            )
-        );
-
-        $this->assertFalse($called);
+        $this->assertInstanceOf(LoopInterface::class, $container->get(LoopInterface::class));
+        $this->assertSame($loop, $container->get(LoopInterface::class));
+        $this->assertInstanceOf(Hydrator::class, $container->get(Hydrator::class));
+        $this->assertInstanceOf(TransportClient::class, $container->get(TransportClient::class));
 
         try {
             await($client->handle(new class() {}), $loop);
@@ -50,8 +43,35 @@ final class FactoryTest extends TestCase
 
         }
 
-        $this->assertTrue($called);
         $this->assertTrue(isset($exception));
         $this->assertInstanceOf(MissingHandlerException::class, $exception);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Missing Hydrator options
+     */
+    public function testCreateMissingHydratorOptions()
+    {
+        Factory::create(
+            LoopFactory::create(),
+            [
+                Options::TRANSPORT_OPTIONS => [],
+            ]
+        )->getContainer()->get(Hydrator::class);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Missing Transport options
+     */
+    public function testCreateMissingTransportOptions()
+    {
+        Factory::create(
+            LoopFactory::create(),
+            [
+                Options::HYDRATOR_OPTIONS => [],
+            ]
+        )->getContainer()->get(TransportClient::class);
     }
 }
