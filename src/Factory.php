@@ -18,7 +18,7 @@ use React\EventLoop\LoopInterface;
 final class Factory
 {
     public static function create(
-        LoopInterface $loop = null,
+        LoopInterface $loop,
         array $options = []
     ): Client {
         return new Client(
@@ -49,7 +49,7 @@ final class Factory
 
     private static function createTransport(
         ContainerInterface $container,
-        LoopInterface $loop = null,
+        LoopInterface $loop,
         array $options = []
     ): TransportClient {
         if (!isset($options[Options::TRANSPORT_OPTIONS])) {
