@@ -43,6 +43,7 @@ final class Factory
                 return CommandBusFactory::create($container);
             },
         ]);
+        $container->addDefinitions($options[Options::CONTAINER_DEFINITIONS] ?? []);
 
         return $container->build();
     }
