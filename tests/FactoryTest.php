@@ -7,6 +7,7 @@ use ApiClients\Foundation\Factory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Options;
+use ApiClients\Foundation\Transport\Options as TransportOptions;;
 use ApiClients\Tools\TestUtilities\TestCase;
 use InvalidArgumentException;
 use League\Tactician\Exception\MissingHandlerException;
@@ -28,7 +29,9 @@ final class FactoryTest extends TestCase
             $loop,
             [
                 Options::HYDRATOR_OPTIONS => [],
-                Options::TRANSPORT_OPTIONS => [],
+                Options::TRANSPORT_OPTIONS => [
+                    TransportOptions::USER_AGENT => '',
+                ],
                 Options::CONTAINER_DEFINITIONS => [
                     \stdClass::class => $stdClass,
                 ],
