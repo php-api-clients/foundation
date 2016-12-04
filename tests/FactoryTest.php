@@ -6,6 +6,7 @@ use ApiClients\Foundation\Client;
 use ApiClients\Foundation\Factory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
+use ApiClients\Foundation\Transport\Options as TransportOptions;
 use ApiClients\Foundation\Options;
 use ApiClients\Tools\TestUtilities\TestCase;
 use InvalidArgumentException;
@@ -25,7 +26,9 @@ final class FactoryTest extends TestCase
             $loop,
             [
                 Options::HYDRATOR_OPTIONS => [],
-                Options::TRANSPORT_OPTIONS => [],
+                Options::TRANSPORT_OPTIONS => [
+                    TransportOptions::USER_AGENT => 'User Agent',
+                ],
             ]
         );
 
