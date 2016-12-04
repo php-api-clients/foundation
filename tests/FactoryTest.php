@@ -22,12 +22,21 @@ final class FactoryTest extends TestCase
     {
         $loop = LoopFactory::create();
 
+        $stdClass = new \stdClass();
+        $stdClass->foo = 'bar';
+
         $client = Factory::create(
             $loop,
             [
                 Options::HYDRATOR_OPTIONS => [],
                 Options::TRANSPORT_OPTIONS => [
                     TransportOptions::USER_AGENT => 'User Agent',
+                ],
+                Options::TRANSPORT_OPTIONS => [
+                    TransportOptions::USER_AGENT => '',
+                ],
+                Options::CONTAINER_DEFINITIONS => [
+                    \stdClass::class => $stdClass,
                 ],
             ]
         );
@@ -39,6 +48,9 @@ final class FactoryTest extends TestCase
         $this->assertSame($loop, $container->get(LoopInterface::class));
         $this->assertInstanceOf(Hydrator::class, $container->get(Hydrator::class));
         $this->assertInstanceOf(TransportClient::class, $container->get(TransportClient::class));
+        $this->assertInstanceOf(\stdClass::class, $container->get(\stdClass::class));
+        $this->assertSame($stdClass, $container->get(\stdClass::class));
+        $this->assertSame('bar', $container->get(\stdClass::class)->foo);
 
         try {
             await($client->handle(new class() {}), $loop);
