@@ -19,7 +19,7 @@
     "php-di/php-di": "^5.4"
   },
   "require-dev": {
-    "api-clients/test-utilities": "dev-master"
+    "api-clients/test-utilities": "^1.0"
   },
   "suggest": {
     "api-clients/resource-generator": "Easy wireframing of resources",
