@@ -6,7 +6,7 @@ use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
-use ApiClients\Tools\CommandBus\CommandBus;
+use ApiClients\Tools\CommandBus\CommandBusInterface;
 use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
 use DI\ContainerBuilder;
 use Interop\Container\ContainerInterface;
@@ -39,7 +39,7 @@ final class Factory
             Hydrator::class => function (ContainerInterface $container) use ($options) {
                 return self::createHydrator($container, $options);
             },
-            CommandBus::class => function (ContainerInterface $container) {
+            CommandBusInterface::class => function (ContainerInterface $container) {
                 return CommandBusFactory::create($container);
             },
         ]);

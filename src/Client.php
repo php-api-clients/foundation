@@ -2,7 +2,7 @@
 
 namespace ApiClients\Foundation;
 
-use ApiClients\Tools\CommandBus\CommandBus;
+use ApiClients\Tools\CommandBus\CommandBusInterface;
 use Interop\Container\ContainerInterface;
 use React\Promise\CancellablePromiseInterface;
 
@@ -14,7 +14,7 @@ final class Client
     private $container;
 
     /**
-     * @var CommandBus
+     * @var CommandBusInterface
      */
     private $commandBus;
 
@@ -24,7 +24,7 @@ final class Client
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->commandBus = $this->container->get(CommandBus::class);
+        $this->commandBus = $this->container->get(CommandBusInterface::class);
     }
 
     /**

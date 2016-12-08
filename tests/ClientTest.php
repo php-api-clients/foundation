@@ -4,6 +4,7 @@ namespace ApiClients\Tests\Foundation;
 
 use ApiClients\Foundation\Client;
 use ApiClients\Tools\CommandBus\CommandBus;
+use ApiClients\Tools\CommandBus\CommandBusInterface;
 use ApiClients\Tools\TestUtilities\TestCase;
 use DI\ContainerBuilder;
 use League\Tactician\Handler\CommandHandlerMiddleware;
@@ -41,11 +42,11 @@ final class ClientTest extends TestCase
         $commandBus = new CommandBus($loop, $handlerMiddleware);
 
         $container = ContainerBuilder::buildDevContainer();
-        $container->set(CommandBus::class, $commandBus);
+        $container->set(CommandBusInterface::class, $commandBus);
         $client = new Client($container);
 
         $this->assertSame($container, $client->getContainer());
-        $this->assertSame($commandBus, $client->getFromContainer(CommandBus::class));
+        $this->assertSame($commandBus, $client->getFromContainer(CommandBusInterface::class));
         $this->assertSame($command, await($client->handle($command), $loop));
     }
 
