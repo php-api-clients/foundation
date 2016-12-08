@@ -1,8 +1,6 @@
 {
   "name": "api-clients/foundation",
   "license": "MIT",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "authors": [
     {
       "name": "Cees-Jan Kiewiet",
@@ -11,7 +9,8 @@
   ],
   "require": {
     "php": "^7.0",
-    "api-clients/command-bus": "^1.0",
+    "api-clients/command-bus": "^2.0",
+    "api-clients/events": "dev-master",
     "api-clients/hydrator": "dev-master",
     "api-clients/service": "dev-master",
     "api-clients/transport": "dev-master",
@@ -19,7 +18,7 @@
     "php-di/php-di": "^5.4"
   },
   "require-dev": {
-    "api-clients/test-utilities": "^1.0"
+    "api-clients/test-utilities": "^2.0"
   },
   "suggest": {
     "api-clients/resource-generator": "Easy wireframing of resources",
@@ -50,14 +49,9 @@
       "@ensure-installed",
       "phpunit --colors=always -c phpunit.xml.dist --coverage-text --coverage-html covHtml"
     ],
-    "mutation": [
-      "@ensure-installed",
-      "if [ `php -m | grep xdebug | wc -l` -gt 0 ]; then humbug --ansi --incremental; fi"
-    ],
     "qa-all": [
       "@cs",
-      "@unit",
-      "@mutation"
+      "@unit"
     ],
     "qa-windows": [
       "@cs",
