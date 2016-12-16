@@ -11,8 +11,6 @@ use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
 use DI\ContainerBuilder;
 use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
-use League\Event\Emitter;
-use League\Event\EmitterInterface;
 use React\EventLoop\LoopInterface;
 
 final class Factory
@@ -31,7 +29,6 @@ final class Factory
         $container = new ContainerBuilder();
 
         $container->addDefinitions([
-            EmitterInterface::class => new Emitter(),
             LoopInterface::class => $loop,
             TransportClient::class => function (ContainerInterface $container, LoopInterface $loop) use ($options) {
                 return self::createTransport($container, $loop, $options);
