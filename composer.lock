@@ -217,12 +217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/service.git",
-                "reference": "0a8e653620dc13692883bb74ab0249e8e3f17760"
+                "reference": "535eb87807fd23996153a84cf864dd1c461de6bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/service/zipball/0a8e653620dc13692883bb74ab0249e8e3f17760",
-                "reference": "0a8e653620dc13692883bb74ab0249e8e3f17760",
+                "url": "https://api.github.com/repos/php-api-clients/service/zipball/535eb87807fd23996153a84cf864dd1c461de6bd",
+                "reference": "535eb87807fd23996153a84cf864dd1c461de6bd",
                 "shasum": ""
             },
             "require": {
@@ -248,7 +248,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-11-05 17:17:37"
+            "time": "2016-12-16 22:34:48"
         },
         {
             "name": "api-clients/transport",
@@ -256,12 +256,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "f216560b0f35ec4421974ebec160d07e70afce58"
+                "reference": "56b6f5045265351452d379ffe3c041de53f94984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/f216560b0f35ec4421974ebec160d07e70afce58",
-                "reference": "f216560b0f35ec4421974ebec160d07e70afce58",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/56b6f5045265351452d379ffe3c041de53f94984",
+                "reference": "56b6f5045265351452d379ffe3c041de53f94984",
                 "shasum": ""
             },
             "require": {
@@ -314,7 +314,7 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2016-12-16 21:28:40"
+            "time": "2016-12-17 20:58:41"
         },
         {
             "name": "clue/block-react",
