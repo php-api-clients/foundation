@@ -6,6 +6,7 @@ use ApiClients\Foundation\Client;
 use ApiClients\Foundation\Factory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Transport\Client as TransportClient;
+use ApiClients\Foundation\Transport\ClientInterface;
 use ApiClients\Foundation\Transport\Options as TransportOptions;
 use ApiClients\Foundation\Options;
 use ApiClients\Tools\TestUtilities\TestCase;
@@ -47,7 +48,7 @@ final class FactoryTest extends TestCase
         $this->assertInstanceOf(LoopInterface::class, $container->get(LoopInterface::class));
         $this->assertSame($loop, $container->get(LoopInterface::class));
         $this->assertInstanceOf(Hydrator::class, $container->get(Hydrator::class));
-        $this->assertInstanceOf(TransportClient::class, $container->get(TransportClient::class));
+        $this->assertInstanceOf(TransportClient::class, $container->get(ClientInterface::class));
         $this->assertInstanceOf(\stdClass::class, $container->get(\stdClass::class));
         $this->assertSame($stdClass, $container->get(\stdClass::class));
         $this->assertSame('bar', $container->get(\stdClass::class)->foo);
@@ -87,6 +88,6 @@ final class FactoryTest extends TestCase
             [
                 Options::HYDRATOR_OPTIONS => [],
             ]
-        )->getContainer()->get(TransportClient::class);
+        )->getContainer()->get(ClientInterface::class);
     }
 }
