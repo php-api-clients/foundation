@@ -1,6 +1,8 @@
 {
   "name": "api-clients/foundation",
   "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Cees-Jan Kiewiet",
@@ -27,7 +29,10 @@
   "autoload": {
     "psr-4": {
       "ApiClients\\Foundation\\": "src/"
-    }
+    },
+    "files": [
+      "src/functions_include.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
