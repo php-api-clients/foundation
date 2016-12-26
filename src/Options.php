@@ -2,7 +2,7 @@
 
 namespace ApiClients\Foundation;
 
-class Options
+final class Options
 {
     const HYDRATOR              = 'hydrator';
     const HYDRATOR_OPTIONS      = 'hydrator_options';
