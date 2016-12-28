@@ -6,7 +6,7 @@ use ApiClients\Tools\CommandBus\CommandBusInterface;
 use Interop\Container\ContainerInterface;
 use React\Promise\CancellablePromiseInterface;
 
-final class Client
+final class Client implements ClientInterface
 {
     /**
      * @var ContainerInterface
