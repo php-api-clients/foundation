@@ -4,7 +4,7 @@ namespace ApiClients\Foundation;
 
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
-use ApiClients\Foundation\Transport\ClientInterface;
+use ApiClients\Foundation\Transport\ClientInterface as TransportClientInterface;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBusInterface;
 use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
@@ -30,7 +30,10 @@ final class Factory
 
         $container->addDefinitions([
             LoopInterface::class => $loop,
-            ClientInterface::class => function (ContainerInterface $container, LoopInterface $loop) use ($options) {
+            TransportClientInterface::class => function (
+                ContainerInterface $container,
+                LoopInterface $loop
+            ) use ($options) {
                 return self::createTransport($container, $loop, $options);
             },
             Hydrator::class => function (ContainerInterface $container) use ($options) {
@@ -49,7 +52,7 @@ final class Factory
         ContainerInterface $container,
         LoopInterface $loop,
         array $options = []
-    ): ClientInterface {
+    ): TransportClientInterface {
         if (!isset($options[Options::TRANSPORT_OPTIONS])) {
             throw new InvalidArgumentException('Missing Transport options');
         }
