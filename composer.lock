@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "535168e3eeb9281bc3b5c7593d4db452",
+    "content-hash": "394d9fd4a1ec2dcf8eec9304fd45a870",
     "packages": [
         {
             "name": "api-clients/command-bus",
@@ -56,16 +56,16 @@
         },
         {
             "name": "api-clients/hydrator",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/hydrator.git",
-                "reference": "3961cd61f639fcc959e57d47fa7fbc12b963c740"
+                "reference": "1cde8c66c4d9d52f9f6a9db03334c2214d98342e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/3961cd61f639fcc959e57d47fa7fbc12b963c740",
-                "reference": "3961cd61f639fcc959e57d47fa7fbc12b963c740",
+                "url": "https://api.github.com/repos/php-api-clients/hydrator/zipball/1cde8c66c4d9d52f9f6a9db03334c2214d98342e",
+                "reference": "1cde8c66c4d9d52f9f6a9db03334c2214d98342e",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
                 "wyrihaximus/ticking-promise": "^1.6"
             },
             "require-dev": {
-                "api-clients/test-utilities": "^3.0.1",
+                "api-clients/test-utilities": "^4.2",
                 "phpbench/phpbench": "^0.11"
             },
             "type": "library",
@@ -108,7 +108,7 @@
                 }
             ],
             "description": "Hydrator wrapping ocramius/generated-hydrator specifically for api clients",
-            "time": "2017-06-20T15:28:48+00:00"
+            "time": "2017-11-30T01:34:35+00:00"
         },
         {
             "name": "api-clients/middleware",
@@ -208,16 +208,16 @@
         },
         {
             "name": "api-clients/rx",
-            "version": "2.1.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/rx.git",
-                "reference": "e5fc4181a1050e0a6ff14ba0875647ac88e71d33"
+                "reference": "c38d42768ebdb6e396066bc03055c3c9117bc6e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/rx/zipball/e5fc4181a1050e0a6ff14ba0875647ac88e71d33",
-                "reference": "e5fc4181a1050e0a6ff14ba0875647ac88e71d33",
+                "url": "https://api.github.com/repos/php-api-clients/rx/zipball/c38d42768ebdb6e396066bc03055c3c9117bc6e9",
+                "reference": "c38d42768ebdb6e396066bc03055c3c9117bc6e9",
                 "shasum": ""
             },
             "require": {
@@ -248,20 +248,20 @@
                     "email": "ceesjank@gmail.com"
                 }
             ],
-            "time": "2017-05-07T16:23:52+00:00"
+            "time": "2017-10-04T20:00:12+00:00"
         },
         {
             "name": "api-clients/transport",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/transport.git",
-                "reference": "bdc854f195c41041b8be75b62634b4e21613c9b5"
+                "reference": "50a78302cde17130d566f336b403a4ef87331f3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/bdc854f195c41041b8be75b62634b4e21613c9b5",
-                "reference": "bdc854f195c41041b8be75b62634b4e21613c9b5",
+                "url": "https://api.github.com/repos/php-api-clients/transport/zipball/50a78302cde17130d566f336b403a4ef87331f3f",
+                "reference": "50a78302cde17130d566f336b403a4ef87331f3f",
                 "shasum": ""
             },
             "require": {
@@ -269,7 +269,7 @@
                 "api-clients/rx": "^2.0",
                 "clue/buzz-react": "^1.1",
                 "php": "^7.0",
-                "react/http-client": "^0.4.17",
+                "react/http-client": "^0.4.17 || ^0.5",
                 "react/promise-stream": "^0.1.0"
             },
             "require-dev": {
@@ -305,7 +305,7 @@
                 }
             ],
             "description": "Middleware infused clue/buzz-react",
-            "time": "2017-07-22T20:55:25+00:00"
+            "time": "2017-09-08T18:05:10+00:00"
         },
         {
             "name": "clue/block-react",
@@ -1113,148 +1113,6 @@
             "time": "2017-07-22T13:48:48+00:00"
         },
         {
-            "name": "php-di/invoker",
-            "version": "1.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHP-DI/Invoker.git",
-                "reference": "1f4ca63b9abc66109e53b255e465d0ddb5c2e3f7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/Invoker/zipball/1f4ca63b9abc66109e53b255e465d0ddb5c2e3f7",
-                "reference": "1f4ca63b9abc66109e53b255e465d0ddb5c2e3f7",
-                "shasum": ""
-            },
-            "require": {
-                "container-interop/container-interop": "~1.1"
-            },
-            "require-dev": {
-                "athletic/athletic": "~0.1.8",
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Invoker\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Generic and extensible callable invoker",
-            "homepage": "https://github.com/PHP-DI/Invoker",
-            "keywords": [
-                "callable",
-                "dependency",
-                "dependency-injection",
-                "injection",
-                "invoke",
-                "invoker"
-            ],
-            "time": "2016-07-14T13:09:58+00:00"
-        },
-        {
-            "name": "php-di/php-di",
-            "version": "5.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHP-DI/PHP-DI.git",
-                "reference": "8ecded470bb0255c93f2996f78bb3b644c06599a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/8ecded470bb0255c93f2996f78bb3b644c06599a",
-                "reference": "8ecded470bb0255c93f2996f78bb3b644c06599a",
-                "shasum": ""
-            },
-            "require": {
-                "container-interop/container-interop": "~1.2",
-                "php": ">=5.5.0",
-                "php-di/invoker": "^1.3.2",
-                "php-di/phpdoc-reader": "^2.0.1",
-                "psr/container": "~1.0"
-            },
-            "provide": {
-                "container-interop/container-interop-implementation": "^1.0",
-                "psr/container-implementation": "^1.0"
-            },
-            "replace": {
-                "mnapoli/php-di": "*"
-            },
-            "require-dev": {
-                "doctrine/annotations": "~1.2",
-                "doctrine/cache": "~1.4",
-                "mnapoli/phpunit-easymock": "~0.2.0",
-                "ocramius/proxy-manager": "~1.0|~2.0",
-                "phpunit/phpunit": "~4.5"
-            },
-            "suggest": {
-                "doctrine/annotations": "Install it if you want to use annotations (version ~1.2)",
-                "doctrine/cache": "Install it if you want to use the cache (version ~1.4)",
-                "ocramius/proxy-manager": "Install it if you want to use lazy injection (version ~1.0 or ~2.0)"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DI\\": "src/DI/"
-                },
-                "files": [
-                    "src/DI/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "The dependency injection container for humans",
-            "homepage": "http://php-di.org/",
-            "keywords": [
-                "container",
-                "dependency injection",
-                "di"
-            ],
-            "time": "2017-04-11T19:42:20+00:00"
-        },
-        {
-            "name": "php-di/phpdoc-reader",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHP-DI/PhpDocReader.git",
-                "reference": "83f5ead159defccfa8e7092e5b6c1c533b326d68"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/PhpDocReader/zipball/83f5ead159defccfa8e7092e5b6c1c533b326d68",
-                "reference": "83f5ead159defccfa8e7092e5b6c1c533b326d68",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PhpDocReader\\": "src/PhpDocReader"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "PhpDocReader parses @var and @param values in PHP docblocks (supports namespaced class names with the same resolution rules as PHP)",
-            "keywords": [
-                "phpdoc",
-                "reflection"
-            ],
-            "time": "2015-11-29T10:34:25+00:00"
-        },
-        {
             "name": "psr/container",
             "version": "1.0.0",
             "source": {
@@ -1808,16 +1666,16 @@
         },
         {
             "name": "reactivex/rxphp",
-            "version": "2.0.3",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ReactiveX/RxPHP.git",
-                "reference": "cc84689ab8061fafbfa58078c60f865155ac6c5f"
+                "reference": "e44b2ae3fe36bf3479457f58113b620df4a92f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ReactiveX/RxPHP/zipball/cc84689ab8061fafbfa58078c60f865155ac6c5f",
-                "reference": "cc84689ab8061fafbfa58078c60f865155ac6c5f",
+                "url": "https://api.github.com/repos/ReactiveX/RxPHP/zipball/e44b2ae3fe36bf3479457f58113b620df4a92f1f",
+                "reference": "e44b2ae3fe36bf3479457f58113b620df4a92f1f",
                 "shasum": ""
             },
             "require": {
@@ -1869,7 +1727,7 @@
                 "reactive",
                 "rx"
             ],
-            "time": "2017-08-16T23:27:59+00:00"
+            "time": "2017-11-02T20:58:41+00:00"
         },
         {
             "name": "ringcentral/psr7",
@@ -2200,7 +2058,7 @@
             ],
             "authors": [
                 {
-                    "name": "Cees-Jan Kiewiet",
+                    "name": "Cees-jan Kiewiet",
                     "email": "ceesjank@gmail.com"
                 }
             ],
