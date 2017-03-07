@@ -4,6 +4,8 @@ namespace ApiClients\Foundation;
 
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
+use ApiClients\Foundation\Middleware\Locator\ContainerLocator;
+use ApiClients\Foundation\Middleware\Locator\Locator;
 use ApiClients\Foundation\Transport\ClientInterface as TransportClientInterface;
 use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBusInterface;
@@ -30,6 +32,9 @@ final class Factory
 
         $container->addDefinitions([
             LoopInterface::class => $loop,
+            Locator::class => function (ContainerInterface $container) {
+                return new ContainerLocator($container);
+            },
             TransportClientInterface::class => function (
                 ContainerInterface $container,
                 LoopInterface $loop
