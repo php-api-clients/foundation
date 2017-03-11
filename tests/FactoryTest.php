@@ -30,12 +30,7 @@ final class FactoryTest extends TestCase
             $loop,
             [
                 Options::HYDRATOR_OPTIONS => [],
-                Options::TRANSPORT_OPTIONS => [
-                    TransportOptions::USER_AGENT => 'User Agent',
-                ],
-                Options::TRANSPORT_OPTIONS => [
-                    TransportOptions::USER_AGENT => '',
-                ],
+                Options::TRANSPORT_OPTIONS => [],
                 Options::CONTAINER_DEFINITIONS => [
                     \stdClass::class => $stdClass,
                 ],
