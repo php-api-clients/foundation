@@ -3,7 +3,7 @@
 namespace ApiClients\Foundation;
 
 use ApiClients\Tools\CommandBus\CommandBusInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use React\Promise\CancellablePromiseInterface;
 
 final class Client implements ClientInterface
