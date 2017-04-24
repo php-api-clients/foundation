@@ -16,8 +16,7 @@
     "api-clients/middleware": "^2.0||^1.1",
     "api-clients/transport": "^1.0",
     "league/event": "^2.1",
-    "php-di/php-di": "^5.4.3"
-    "php-di/php-di": "^5.4.1",
+    "php-di/php-di": "^5.4.3",
     "psr/container": "^1.0"
   },
   "require-dev": {
