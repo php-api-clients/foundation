@@ -2,6 +2,7 @@
 
 namespace ApiClients\Foundation;
 
+use Acclimate\Container\CompositeContainer;
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Middleware\Locator\ContainerLocator;
@@ -25,21 +26,22 @@ final class Factory
             self::createContainer($loop, $options)
         );
     }
+    private static function createContainer(
+        LoopInterface $loop,
+        array $options
+    ): ContainerInterface {
+        $builder = new ContainerBuilder();
 
-    private static function createContainer(LoopInterface $loop, array $options): ContainerInterface
-    {
-        $container = new ContainerBuilder();
-
-        $container->addDefinitions([
+        $builder->addDefinitions([
             LoopInterface::class => $loop,
             Locator::class => function (ContainerInterface $container) {
                 return new ContainerLocator($container);
             },
             TransportClientInterface::class => function (
-                ContainerInterface $container,
+                Locator $locator,
                 LoopInterface $loop
             ) use ($options) {
-                return self::createTransport($container, $loop, $options);
+                return self::createTransport($locator, $loop, $options);
             },
             Hydrator::class => function (ContainerInterface $container) use ($options) {
                 return self::createHydrator($container, $options);
@@ -48,13 +50,13 @@ final class Factory
                 return CommandBusFactory::create($container);
             },
         ]);
-        $container->addDefinitions($options[Options::CONTAINER_DEFINITIONS] ?? []);
+        $builder->addDefinitions($options[Options::CONTAINER_DEFINITIONS] ?? []);
 
-        return $container->build();
+        return $builder->build();
     }
 
     private static function createTransport(
-        ContainerInterface $container,
+        Locator $locator,
         LoopInterface $loop,
         array $options = []
     ): TransportClientInterface {
@@ -62,7 +64,7 @@ final class Factory
             throw new InvalidArgumentException('Missing Transport options');
         }
 
-        return TransportFactory::create($container, $loop, $options[Options::TRANSPORT_OPTIONS]);
+        return TransportFactory::create($locator, $loop, $options[Options::TRANSPORT_OPTIONS]);
     }
 
     private static function createHydrator(ContainerInterface $container, array $options = [])
