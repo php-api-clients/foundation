@@ -2,7 +2,7 @@
 
 namespace ApiClients\Foundation;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use React\Promise\CancellablePromiseInterface;
 
 interface ClientInterface

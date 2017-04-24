@@ -12,7 +12,7 @@ use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBusInterface;
 use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
 use DI\ContainerBuilder;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use InvalidArgumentException;
 use React\EventLoop\LoopInterface;
 

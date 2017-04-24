@@ -17,6 +17,8 @@
     "api-clients/transport": "^1.0",
     "league/event": "^2.1",
     "php-di/php-di": "^5.4.3"
+    "php-di/php-di": "^5.4.1",
+    "psr/container": "^1.0"
   },
   "require-dev": {
     "api-clients/test-utilities": "^3.0.1"
