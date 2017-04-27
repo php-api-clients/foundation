@@ -43,8 +43,8 @@ final class Factory
             ) use ($options) {
                 return self::createTransport($locator, $loop, $options);
             },
-            Hydrator::class => function (ContainerInterface $container) use ($options) {
-                return self::createHydrator($container, $options);
+            Hydrator::class => function (LoopInterface $loop, CommandBusInterface $commandBus) use ($options) {
+                return self::createHydrator($loop, $commandBus, $options);
             },
             CommandBusInterface::class => function (ContainerInterface $container) {
                 return CommandBusFactory::create($container);
@@ -67,12 +67,12 @@ final class Factory
         return TransportFactory::create($locator, $loop, $options[Options::TRANSPORT_OPTIONS]);
     }
 
-    private static function createHydrator(ContainerInterface $container, array $options = [])
+    private static function createHydrator(LoopInterface $loop, CommandBusInterface $commandBus, array $options = [])
     {
         if (!isset($options[Options::HYDRATOR_OPTIONS])) {
             throw new InvalidArgumentException('Missing Hydrator options');
         }
 
-        return HydratorFactory::create($container, $options[Options::HYDRATOR_OPTIONS]);
+        return HydratorFactory::create($loop, $commandBus, $options[Options::HYDRATOR_OPTIONS]);
     }
 }

@@ -1,8 +1,6 @@
 {
   "name": "api-clients/foundation",
   "license": "MIT",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "authors": [
     {
       "name": "Cees-Jan Kiewiet",
@@ -12,7 +10,7 @@
   "require": {
     "php": "^7.0",
     "api-clients/command-bus": "^2.0",
-    "api-clients/hydrator": "dev-master",
+    "api-clients/hydrator": "^1.0.1",
     "api-clients/middleware": "^2.0||^1.1",
     "api-clients/transport": "^1.0",
     "league/event": "^2.1",
