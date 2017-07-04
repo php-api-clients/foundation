@@ -11,8 +11,8 @@
     "php": "^7.0",
     "api-clients/command-bus": "^2.0",
     "api-clients/hydrator": "^1.0.1",
-    "api-clients/middleware": "^2.0||^1.1",
-    "api-clients/transport": "^1.0",
+    "api-clients/middleware": "^4.0 || ^3.0 || ^2.0 || ^1.1",
+    "api-clients/transport": "^2.0 || ^1.0",
     "league/event": "^2.1",
     "php-di/php-di": "^5.4.3",
     "psr/container": "^1.0"
@@ -21,9 +21,7 @@
     "api-clients/test-utilities": "^3.0.1"
   },
   "suggest": {
-    "api-clients/resource-generator": "Easy wireframing of resources",
-    "wyrihaximus/react-cache-filesystem": "Filesystem cache",
-    "wyrihaximus/react-cache-redis": "Redis cache"
+    "api-clients/resource-generator": "Easy wireframing of resources"
   },
   "autoload": {
     "psr-4": {
