@@ -3,6 +3,9 @@
 namespace ApiClients\Tests\Foundation;
 
 use ApiClients\Foundation\Client;
+use ApiClients\Foundation\Hydrator\CommandBus\Command\ExtractFQCNCommand;
+use ApiClients\Foundation\Hydrator\CommandBus\Command\HydrateFQCNCommand;
+use ApiClients\Foundation\Resource\ResourceInterface;
 use ApiClients\Tools\CommandBus\CommandBus;
 use ApiClients\Tools\CommandBus\CommandBusInterface;
 use ApiClients\Tools\TestUtilities\TestCase;
@@ -56,5 +59,43 @@ final class ClientTest extends TestCase
     public function testCommandBusMissing()
     {
         new Client(ContainerBuilder::buildDevContainer());
+    }
+
+    public function testHydrate()
+    {
+        $resource = $this->prophesize(ResourceInterface::class)->reveal();
+
+        $commandBus = $this->prophesize(CommandBusInterface::class);
+        $commandBus->handle(new HydrateFQCNCommand('stdClass', []))->shouldBeCalled()->willReturn(resolve($resource));
+
+        $container = ContainerBuilder::buildDevContainer();
+        $container->set(CommandBusInterface::class, $commandBus->reveal());
+        $client = new Client($container);
+
+        $json = json_encode([
+            'class' => 'stdClass',
+            'properties' => [],
+        ]);
+
+        self::assertSame($resource, await($client->hydrate($json), Factory::create()));
+    }
+
+    public function testExtract()
+    {
+        $resource = $this->prophesize(ResourceInterface::class)->reveal();
+
+        $json = json_encode([
+            'class' => get_class($resource),
+            'properties' => [],
+        ]);
+
+        $commandBus = $this->prophesize(CommandBusInterface::class);
+        $commandBus->handle(new ExtractFQCNCommand(get_class($resource), $resource))->shouldBeCalled()->willReturn(resolve([]));
+
+        $container = ContainerBuilder::buildDevContainer();
+        $container->set(CommandBusInterface::class, $commandBus->reveal());
+        $client = new Client($container);
+
+        self::assertSame($json, await($client->extract($resource), Factory::create()));
     }
 }
