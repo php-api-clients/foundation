@@ -90,7 +90,9 @@ final class ClientTest extends TestCase
         ]);
 
         $commandBus = $this->prophesize(CommandBusInterface::class);
-        $commandBus->handle(new ExtractFQCNCommand(get_class($resource), $resource))->shouldBeCalled()->willReturn(resolve([]));
+        $commandBus->handle(
+            new ExtractFQCNCommand(get_class($resource), $resource)
+        )->shouldBeCalled()->willReturn(resolve([]));
 
         $container = ContainerBuilder::buildDevContainer();
         $container->set(CommandBusInterface::class, $commandBus->reveal());
