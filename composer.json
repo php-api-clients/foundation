@@ -19,9 +19,6 @@
   "require-dev": {
     "api-clients/test-utilities": "^4.1"
   },
-  "suggest": {
-    "api-clients/resource-generator": "Easy wireframing of resources"
-  },
   "autoload": {
     "psr-4": {
       "ApiClients\\Foundation\\": "src/"
