@@ -25,6 +25,7 @@ matrix:
     - php: 7.2
       env:
         - dependencies=lowest
+        - dropPlatform=false
     - php: nightly
       env:
         - dependencies=lowest
@@ -38,6 +39,7 @@ matrix:
     - php: 7.2
       env:
         - dependencies=highest
+        - dropPlatform=false
     - php: nightly
       env:
         - dependencies=highest
