@@ -14,15 +14,16 @@ use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
-use function Clue\React\Block\await;
 use React\EventLoop\Factory;
+use function Clue\React\Block\await;
 use function React\Promise\resolve;
 
 final class ClientTest extends TestCase
 {
     public function testClient()
     {
-        $command = new class() {};
+        $command = new class() {
+        };
         $handler = new class() {
             public function handle($command)
             {

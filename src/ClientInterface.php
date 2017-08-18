@@ -25,13 +25,13 @@ interface ClientInterface
     public function handle($command): CancellablePromiseInterface;
 
     /**
-     * @param string $resource
+     * @param  string                      $resource
      * @return CancellablePromiseInterface
      */
     public function hydrate(string $resource): CancellablePromiseInterface;
 
     /**
-     * @param ResourceInterface $resource
+     * @param  ResourceInterface           $resource
      * @return CancellablePromiseInterface
      */
     public function extract(ResourceInterface $resource): CancellablePromiseInterface;

@@ -70,12 +70,14 @@ final class Client implements ClientInterface
 
         $class = $resource['class'];
         $json = $resource['properties'];
+
         return $this->handle(new HydrateFQCNCommand($class, $json));
     }
 
     public function extract(ResourceInterface $resource): CancellablePromiseInterface
     {
         $class = get_class($resource);
+
         return $this->handle(
             new ExtractFQCNCommand($class, $resource)
         )->then(function ($json) use ($class) {

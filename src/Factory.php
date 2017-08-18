@@ -2,7 +2,6 @@
 
 namespace ApiClients\Foundation;
 
-use Acclimate\Container\CompositeContainer;
 use ApiClients\Foundation\Hydrator\Factory as HydratorFactory;
 use ApiClients\Foundation\Hydrator\Hydrator;
 use ApiClients\Foundation\Middleware\Locator\ContainerLocator;
@@ -12,8 +11,8 @@ use ApiClients\Foundation\Transport\Factory as TransportFactory;
 use ApiClients\Tools\CommandBus\CommandBusInterface;
 use ApiClients\Tools\CommandBus\Factory as CommandBusFactory;
 use DI\ContainerBuilder;
-use Psr\Container\ContainerInterface;
 use InvalidArgumentException;
+use Psr\Container\ContainerInterface;
 use React\EventLoop\LoopInterface;
 
 final class Factory
@@ -26,6 +25,7 @@ final class Factory
             self::createContainer($loop, $options)
         );
     }
+
     private static function createContainer(
         LoopInterface $loop,
         array $options

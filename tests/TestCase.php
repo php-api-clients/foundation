@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace ApiClients\Tests\Foundation;
 
-use GeneratedHydrator\Configuration;
-use Phake;
 use ApiClients\Foundation\Transport\Client;
 use ApiClients\Foundation\Transport\Hydrator;
+use GeneratedHydrator\Configuration;
+use Phake;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -37,11 +37,33 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $this->rmdir($this->tmpDir);
     }
 
+    public function hydrate($class, $json, $namespace)
+    {
+        return (new Hydrator(Phake::mock(Client::class), [
+            'namespace' => 'ApiClients\Tests\Foundation\Resources',
+            'resource_namespace' => $namespace,
+            'resource_hydrator_cache_dir' => $this->getTmpDir(),
+            'resource_hydrator_namespace' => $this->getRandomNameSpace(),
+        ]))->hydrateFQCN($class, $json);
+    }
+
+    public function provideTrueFalse(): array
+    {
+        return [
+            [
+                true,
+            ],
+            [
+                false,
+            ],
+        ];
+    }
+
     protected function rmdir($dir)
     {
         $directory = dir($dir);
         while (false !== ($entry = $directory->read())) {
-            if (in_array($entry, ['.', '..'])) {
+            if (in_array($entry, ['.', '..'], true)) {
                 continue;
             }
 
@@ -69,16 +91,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         return $this->tmpNamespace;
     }
 
-    public function hydrate($class, $json, $namespace)
-    {
-        return (new Hydrator(Phake::mock(Client::class), [
-            'namespace' => 'ApiClients\Tests\Foundation\Resources',
-            'resource_namespace' => $namespace,
-            'resource_hydrator_cache_dir' => $this->getTmpDir(),
-            'resource_hydrator_namespace' => $this->getRandomNameSpace(),
-        ]))->hydrateFQCN($class, $json);
-    }
-
     protected function getJson()
     {
         return [
@@ -101,18 +113,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
                     'id' => 3,
                     'slug' => 'Wyrihaximus/php-travis-client',
                 ],
-            ],
-        ];
-    }
-
-    public function provideTrueFalse(): array
-    {
-        return [
-            [
-                true,
-            ],
-            [
-                false,
             ],
         ];
     }

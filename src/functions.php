@@ -3,8 +3,8 @@
 namespace ApiClients\Foundation;
 
 /**
- * @param array $base
- * @param array $options
+ * @param  array $base
+ * @param  array $options
  * @return array
  */
 function options_merge(array $base, array $options): array
@@ -25,13 +25,13 @@ function options_merge(array $base, array $options): array
         $new = [];
 
         foreach ($base as $key => $value) {
-            if (in_array($value, $new)) {
+            if (in_array($value, $new, true)) {
                 continue;
             }
             $new[] = $value;
         }
         foreach ($options as $name => $option) {
-            if (in_array($option, $new)) {
+            if (in_array($option, $new, true)) {
                 continue;
             }
             $new[] = $option;

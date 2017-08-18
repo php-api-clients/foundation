@@ -48,9 +48,9 @@ final class FactoryTest extends TestCase
         $this->assertSame('bar', $container->get(\stdClass::class)->foo);
 
         try {
-            await($client->handle(new class() {}), $loop);
+            await($client->handle(new class() {
+            }), $loop);
         } catch (Throwable $exception) {
-
         }
 
         $this->assertTrue(isset($exception));
