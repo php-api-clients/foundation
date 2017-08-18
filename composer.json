@@ -1,5 +1,6 @@
 {
   "name": "api-clients/foundation",
+  "description": "Foundation for creating synchronous and asynchronous API clients",
   "license": "MIT",
   "authors": [
     {
