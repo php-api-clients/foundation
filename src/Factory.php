@@ -21,8 +21,9 @@ final class Factory
         LoopInterface $loop,
         array $options = []
     ): Client {
+        $container = self::createContainer($loop, $options);
         return new Client(
-            self::createContainer($loop, $options)
+            $container->get(CommandBusInterface::class)
         );
     }
 

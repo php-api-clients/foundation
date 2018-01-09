@@ -44,13 +44,8 @@ final class ClientTest extends TestCase
         );
 
         $commandBus = new CommandBus($loop, $handlerMiddleware);
+        $client = new Client($commandBus);
 
-        $container = ContainerBuilder::buildDevContainer();
-        $container->set(CommandBusInterface::class, $commandBus);
-        $client = new Client($container);
-
-        $this->assertSame($container, $client->getContainer());
-        $this->assertSame($commandBus, $client->getFromContainer(CommandBusInterface::class));
         $this->assertSame($command, await($client->handle($command), $loop));
     }
 

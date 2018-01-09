@@ -9,16 +9,6 @@ use React\Promise\CancellablePromiseInterface;
 interface ClientInterface
 {
     /**
-     * @return ContainerInterface
-     */
-    public function getContainer(): ContainerInterface;
-
-    /**
-     * @return mixed
-     */
-    public function getFromContainer(string $id);
-
-    /**
      * @param $command
      * @return CancellablePromiseInterface
      */

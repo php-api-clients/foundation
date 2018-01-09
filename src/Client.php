@@ -14,38 +14,16 @@ use function React\Promise\resolve;
 final class Client implements ClientInterface
 {
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var CommandBusInterface
      */
     private $commandBus;
 
     /**
-     * @param ContainerInterface $container
+     * @param CommandBusInterface $commandBus
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(CommandBusInterface $commandBus)
     {
-        $this->container = $container;
-        $this->commandBus = $this->container->get(CommandBusInterface::class);
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFromContainer(string $id)
-    {
-        return $this->container->get($id);
+        $this->commandBus = $commandBus;
     }
 
     /**
