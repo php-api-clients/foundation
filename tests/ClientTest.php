@@ -54,12 +54,21 @@ final class ClientTest extends TestCase
         $this->assertSame($command, await($client->handle($command), $loop));
     }
 
-    /**
-     * @expectedException \DI\Definition\Exception\DefinitionException
-     */
     public function testCommandBusMissing()
     {
-        new Client(ContainerBuilder::buildDevContainer());
+        try {
+            new Client(ContainerBuilder::buildDevContainer());
+        } catch (\DI\Definition\Exception\InvalidDefinition $exception) {
+            self::assertTrue(true);
+
+            return;
+        } catch (\DI\Definition\Exception\DefinitionException $exception) {
+            self::assertTrue(true);
+
+            return;
+        }
+
+        self::assertTrue(false);
     }
 
     public function testHydrate()
