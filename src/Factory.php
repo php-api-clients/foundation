@@ -46,8 +46,8 @@ final class Factory
             Hydrator::class => function (LoopInterface $loop, CommandBusInterface $commandBus) use ($options) {
                 return self::createHydrator($loop, $commandBus, $options);
             },
-            CommandBusInterface::class => function (ContainerInterface $container) {
-                return CommandBusFactory::create($container);
+            CommandBusInterface::class => function (ContainerInterface $container) use ($options) {
+                return CommandBusFactory::create($container, $options[Options::COMMAND_BUS_OPTIONS] ?? []);
             },
         ]);
         $builder->addDefinitions($options[Options::CONTAINER_DEFINITIONS] ?? []);
