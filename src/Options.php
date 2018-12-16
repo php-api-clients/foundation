@@ -9,4 +9,6 @@ final class Options
     const TRANSPORT             = 'transport';
     const TRANSPORT_OPTIONS     = 'transport_options';
     const CONTAINER_DEFINITIONS = 'container_definitions';
+    const CONTAINER             = 'container';
+    const COMMAND_BUS_OPTIONS   = 'command_bus_options';
 }
