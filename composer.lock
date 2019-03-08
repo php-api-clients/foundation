@@ -1153,16 +1153,16 @@
         },
         {
             "name": "php-di/php-di",
-            "version": "6.0.6",
+            "version": "6.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-DI/PHP-DI.git",
-                "reference": "f16f27b7bc0876c7e76f568e0733d59997c8ec9c"
+                "reference": "78326779037852fb8c13be606110434b9911eebd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/f16f27b7bc0876c7e76f568e0733d59997c8ec9c",
-                "reference": "f16f27b7bc0876c7e76f568e0733d59997c8ec9c",
+                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/78326779037852fb8c13be606110434b9911eebd",
+                "reference": "78326779037852fb8c13be606110434b9911eebd",
                 "shasum": ""
             },
             "require": {
@@ -1212,7 +1212,7 @@
                 "ioc",
                 "psr11"
             ],
-            "time": "2019-02-28T14:45:49+00:00"
+            "time": "2019-03-07T20:02:32+00:00"
         },
         {
             "name": "php-di/phpdoc-reader",
@@ -5314,7 +5314,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
